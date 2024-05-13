@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:maxLines="2"
-        android:text="@string/channel_by_category"
+        android:text="Lorem ipsum dolor sit amet consectetur."
         style="@style/body_text_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
