@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="head_line_text_view" parent="android:Widget.TextView">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="body_text_view" parent="android:Widget.TextView">
+        <item name="android:textSize">20sp</item>
+    </style>
+</resources>
