@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -33,10 +35,19 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    viewBinding{
+        enable = true
+    }
 }
 
 dependencies {
-
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation(libs.converter.gson)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.logging.interceptor)
+    implementation(libs.glide)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
