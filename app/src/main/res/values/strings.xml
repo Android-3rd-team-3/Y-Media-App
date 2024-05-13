@@ -3,4 +3,5 @@
     <string name="popular_video">Popular Video</string>
     <string name="category">Category</string>
     <string name="channel_by_category">Channel By Category</string>
+    <string name="hello_blank_fragment">Hello Blank Fragment!</string>
 </resources>
