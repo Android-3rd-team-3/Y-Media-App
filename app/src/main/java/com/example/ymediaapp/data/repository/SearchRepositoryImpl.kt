@@ -1,4 +1,9 @@
 package com.example.ymediaapp.data.repository
 
-class SearchRepositoryImpl {
+import com.example.ymediaapp.presentation.repository.SearchRepository
+
+class SearchRepositoryImpl(): SearchRepository {
+    override suspend fun getSearchList(searchWord: String) {
+        TODO("Not yet implemented")
+    }
 }
