@@ -29,6 +29,7 @@ class MyVideoFragment : Fragment() {
         binding.apply {
             Glide.with(this@MyVideoFragment)
                 .load(user.profileImage)
+                .circleCrop()
                 .into(ivProfile)
             Glide.with(this@MyVideoFragment)
                 .load(user.backgroundImage)
@@ -37,6 +38,11 @@ class MyVideoFragment : Fragment() {
             tvChannelName.text = user.channelName
             tvChannelDescription.text = user.channelDescription
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
 }
