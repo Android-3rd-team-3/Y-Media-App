@@ -77,15 +77,15 @@ class HomeFragment : Fragment() {
             }
         }
         with(homeViewModel) {
-            popularList.observe(requireActivity()) {
+            popularList.observe(viewLifecycleOwner) {
                 popularListAdapter.itemList = it
                 popularListAdapter.notifyDataSetChanged()
             }
-            categoryList.observe(requireActivity()) {
+            categoryList.observe(viewLifecycleOwner) {
                 categoryListAdapter.itemList = it
                 categoryListAdapter.notifyDataSetChanged()
             }
-            categoryChannelList.observe(requireActivity()) {
+            categoryChannelList.observe(viewLifecycleOwner) {
                 channelListAdapter.itemList = it
                 channelListAdapter.notifyDataSetChanged()
             }
