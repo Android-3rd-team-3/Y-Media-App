@@ -6,7 +6,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.ymediaapp.data.repository.SearchRepositoryImpl
 import com.example.ymediaapp.presentation.repository.SearchRepository
 
-class YoutubeSearchViewModel(private val repository: SearchRepository): ViewModel() {
+class YoutubeSearchViewModel(private val repository: SearchRepositoryImpl): ViewModel() {
 
 }
 

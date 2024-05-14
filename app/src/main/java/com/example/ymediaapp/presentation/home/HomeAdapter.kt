@@ -15,21 +15,15 @@ class HomeAdapter(
         private val binding: RvItemHomeBinding,
         private val onClick: (YoutubeVideoEntity) -> Unit
     ): RecyclerView.ViewHolder(binding.root){
-        private var currentItem: YoutubeVideoEntity? = null
 
-        init {
-            itemView.setOnClickListener {
-                currentItem?.let {
-                    onClick(it)
-                }
-            }
-        }
 
         fun bind(youtubeItemEntity: YoutubeVideoEntity){
             with(binding){
-                currentItem = youtubeItemEntity
                 Glide.with(binding.root).load(youtubeItemEntity.thumbnail).into(ivTitle)
                 tvTitle.text = youtubeItemEntity.name
+                itemView.setOnClickListener {
+                    onClick(youtubeItemEntity)
+                }
             }
         }
     }

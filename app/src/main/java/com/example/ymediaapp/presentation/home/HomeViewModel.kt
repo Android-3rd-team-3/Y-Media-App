@@ -11,7 +11,7 @@ import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 import com.example.ymediaapp.presentation.repository.SearchRepository
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: SearchRepository): ViewModel() {
+class HomeViewModel(private val repository: SearchRepositoryImpl): ViewModel() {
     private val _getPopularList= MutableLiveData<List<YoutubeVideoEntity>>()
     val popularList: LiveData<List<YoutubeVideoEntity>> get() = _getPopularList
 

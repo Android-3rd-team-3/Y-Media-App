@@ -45,9 +45,13 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initView()
         initData()
-        return binding.root
     }
 
     override fun onDestroyView() {
@@ -75,15 +79,15 @@ class HomeFragment : Fragment() {
         with(homeViewModel) {
             popularList.observe(requireActivity()) {
                 popularListAdapter.itemList = it
-                binding.rvPopularVideo.adapter?.notifyDataSetChanged()
+                popularListAdapter.notifyDataSetChanged()
             }
             categoryList.observe(requireActivity()) {
                 categoryListAdapter.itemList = it
-                binding.rvCategory.adapter?.notifyDataSetChanged()
+                categoryListAdapter.notifyDataSetChanged()
             }
             categoryChannelList.observe(requireActivity()) {
                 channelListAdapter.itemList = it
-                binding.rvCategoryChannel.adapter?.notifyDataSetChanged()
+                channelListAdapter.notifyDataSetChanged()
             }
         }
     }
