@@ -1,19 +1,42 @@
 package com.example.ymediaapp.presentation.my_video
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.ymediaapp.R
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.example.ymediaapp.databinding.FragmentMyVideoBinding
 
 class MyVideoFragment : Fragment() {
+
+    private var _binding: FragmentMyVideoBinding? = null
+    private val binding get() = _binding!!
+
+    private val user = DummyAuth.getUser()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_my_video, container, false)
+    ): View {
+        _binding = FragmentMyVideoBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
+            Glide.with(this@MyVideoFragment)
+                .load(user.profileImage)
+                .into(ivProfile)
+            Glide.with(this@MyVideoFragment)
+                .load(user.backgroundImage)
+                .into(ivBackground)
+
+            tvChannelName.text = user.channelName
+            tvChannelDescription.text = user.channelDescription
+        }
     }
 
 }
