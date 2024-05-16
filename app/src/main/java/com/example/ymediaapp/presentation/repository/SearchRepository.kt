@@ -1,6 +1,5 @@
 package com.example.ymediaapp.presentation.repository
 
-import com.example.ymediaapp.presentation.entity.CategoryEntity
 import com.example.ymediaapp.presentation.entity.CategoryResultEntity
 import com.example.ymediaapp.presentation.entity.YoutubeChannelResultEntity
 import com.example.ymediaapp.presentation.entity.YoutubeVideoResultEntity
