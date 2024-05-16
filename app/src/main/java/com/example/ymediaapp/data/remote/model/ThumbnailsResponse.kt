@@ -11,7 +11,7 @@ data class ThumbnailInfoResponse(
     @SerializedName("url")
     val url: String?,
     @SerializedName("width")
-    val width: UInt?,
+    val width: Int?,
     @SerializedName("height")
-    val height: UInt?,
+    val height: Int?,
 )

@@ -14,7 +14,7 @@ interface YoutubeService {
         @Query("regionCode") regionCode: String = "KR"
     ): YoutubeListResponse<VideoCategoryResponse>
 
-    //todo maxResults, pageToken, regionCode param 결정하기
+    //todo maxResults=25, pageToken, regionCode=kr param 결정하기
     @GET("youtube/v3/videos")
     suspend fun getPopularVideos(
         @Query("part") part: String = "snippet",
