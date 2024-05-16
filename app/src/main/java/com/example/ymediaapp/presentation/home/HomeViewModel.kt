@@ -7,12 +7,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.ymediaapp.data.repository.SearchRepositoryImpl
+import com.example.ymediaapp.network.RetrofitClient
 import com.example.ymediaapp.presentation.entity.YoutubeChannelEntity
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 import com.example.ymediaapp.presentation.repository.SearchRepository
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: SearchRepositoryImpl): ViewModel() {
+class HomeViewModel(private val repository: SearchRepository): ViewModel() {
     private val _getPopularList= MutableLiveData<List<YoutubeVideoEntity>>()
     val popularList: LiveData<List<YoutubeVideoEntity>> get() = _getPopularList
 
@@ -135,7 +136,7 @@ class HomeViewModel(private val repository: SearchRepositoryImpl): ViewModel() {
 }
 
 class HomeViewModelFactory: ViewModelProvider.Factory{
-    private val repository = SearchRepositoryImpl()
+    private val repository = SearchRepositoryImpl(RetrofitClient.youtubeService)
 
     override fun <T : ViewModel> create(
         modelClass: Class<T>,
