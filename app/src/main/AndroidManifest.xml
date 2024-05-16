@@ -14,12 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YMediaApp">
         <activity
-            android:name=".presentation.main.NaviActivity"
-            android:exported="true" >
-
-        </activity>
-
-        <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true">
             <intent-filter>
