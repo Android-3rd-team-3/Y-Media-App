@@ -1,22 +1,26 @@
 package com.example.ymediaapp.presentation.entity
 
-data class YoutubeVideoEntity( // 동영상, 채널 안가리고 한번에 띄우기 위해 사용?
+data class YoutubeVideoEntity( // 동영상
     val thumbnail: String,// 썸네일 URL
     val name: String,// 이름
     val description: String, // 설명
+    val channelId: String, // 채널id
     val isLike: Boolean = false // 좋아요 List 포함 여부
 )
 
 data class YoutubeVideoResultEntity(
     val kind: String,
     val eTag: String,
+    val nextPageToken: String,
+    val prevPageToken: String,
     val items: List<YoutubeVideoEntity>
 )
 
-data class YoutubeChannelEntity( // 동영상, 채널 안가리고 한번에 띄우기 위해 사용?
+data class YoutubeChannelEntity( // 채널
     val thumbnail: String,// 썸네일 URL
     val name: String,// 이름
-    val description: String // 설명
+    val description: String, // 설명
+    //val videoList: List<YoutubeVideoEntity>// 비디오 리스트
 )
 
 data class YoutubeChannelResultEntity(
@@ -30,9 +34,11 @@ data class CategoryEntity(
     val name: String
 )
 
-/*data class CategoryResultEntity(
-
-)*/
+data class CategoryResultEntity(
+    val kind: String,
+    val eTag: String,
+    val items: List<CategoryEntity>
+)
 
 
 
