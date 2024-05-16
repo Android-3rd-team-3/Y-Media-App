@@ -19,7 +19,19 @@ interface YoutubeService {
     suspend fun getPopularVideos(
         @Query("part") part: String = "snippet",
         @Query("chart") chart: String = "mostPopular",
-        @Query("fields") fields: String = "kind, etag, nextPageToken, prevPageToken, pageInfo, items(kind, etag, id, snippet(publishedAt, channelId, title, description, thumbnails(default), categoryId))"
+        @Query("fields") fields: String = "kind, etag, nextPageToken, prevPageToken, pageInfo, items(kind, etag, id, snippet(publishedAt, channelId, title, description, thumbnails(default), categoryId))",
+        @Query("maxResults") maxResults: Int = 25,
+        @Query("regionCode") regionCode: String = "KR"
+    ): YoutubeListResponse<VideoResponse>
+
+    @GET("youtube/v3/videos")
+    suspend fun getPopularVideosByCategory(
+        @Query("videoCategoryId") videoCategoryId: String = "10",
+        @Query("part") part: String = "snippet",
+        @Query("chart") chart: String = "mostPopular",
+        @Query("fields") fields: String = "kind, etag, nextPageToken, prevPageToken, pageInfo, items(kind, etag, id, snippet(publishedAt, channelId, title, description, thumbnails(default), categoryId))",
+        @Query("maxResults") maxResults: Int = 25,
+        @Query("regionCode") regionCode: String = "KR"
     ): YoutubeListResponse<VideoResponse>
 
     @GET("youtube/v3/videos")
@@ -29,7 +41,6 @@ interface YoutubeService {
         @Query("fields") fields: String = "kind, etag, nextPageToken, prevPageToken, pageInfo, items(kind, etag, id, snippet(publishedAt, channelId, title, description, thumbnails(default), categoryId))"
     ): YoutubeListResponse<VideoResponse>
 
-    //todo maxResults, pageToken
     @GET("youtube/v3/channels")
     suspend fun getChannelsByChannelId(
         @Query("id") id: String = "UC69Z5Vd-Z6bdCC5LKM_lv_g, UCoUDrzyCl1IwU602xdTsM-g",
