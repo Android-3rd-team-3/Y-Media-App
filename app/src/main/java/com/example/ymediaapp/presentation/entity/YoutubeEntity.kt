@@ -4,6 +4,7 @@ data class YoutubeVideoEntity( // 동영상
     val thumbnail: String,// 썸네일 URL
     val name: String,// 이름
     val description: String, // 설명
+    val videoId: Int, // 해당 동영상의 ID
     val channelId: String, // 채널id
     val isLike: Boolean = false // 좋아요 List 포함 여부
 )
@@ -20,6 +21,7 @@ data class YoutubeChannelEntity( // 채널
     val thumbnail: String,// 썸네일 URL
     val name: String,// 이름
     val description: String, // 설명
+    val channelId: String
     //val videoList: List<YoutubeVideoEntity>// 비디오 리스트
 )
 
