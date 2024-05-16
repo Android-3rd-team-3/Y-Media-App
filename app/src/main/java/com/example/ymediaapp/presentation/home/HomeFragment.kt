@@ -34,6 +34,10 @@ class HomeFragment : Fragment() {
         HomeViewModelFactory()
     }
 
+/*
+    private val popupMenu = MainPopupMenu(requireActivity(), binding.ivPopUp, homeViewModel.categoryList.value)
+*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -72,6 +76,10 @@ class HomeFragment : Fragment() {
             rvCategoryChannel.apply {
                 adapter = channelListAdapter
                 layoutManager = LinearLayoutManager(requireActivity()).apply { orientation =  LinearLayoutManager.HORIZONTAL }
+            }
+
+            ivPopUp.setOnClickListener {
+
             }
         }
         with(homeViewModel) {

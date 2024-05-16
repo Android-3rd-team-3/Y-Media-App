@@ -99,7 +99,31 @@ class HomeViewModel(private val repository: SearchRepositoryImpl): ViewModel() {
                 name = "Ubisoft",
                 description = "When talent meets innovation, gathered to achieve the best gaming experience. Welcome to the official Ubisoft channel.",
                 channelId = "UC0KU8F9jJqSLS11LRXvFWmg"
-            )
+            ),
+            YoutubeChannelEntity(
+                thumbnail ="https://yt3.ggpht.com/1Lm2_GxOcm-dl799vDgA_uHfYskuOOpQ_VhRcth1V7PsNseWEeKhOr8TCPtPrT3Hpo3kYCrNcZs=s88-c-k-c0x00ffffff-no-rj" ,
+                name = "Ubisoft",
+                description = "When talent meets innovation, gathered to achieve the best gaming experience. Welcome to the official Ubisoft channel.",
+                channelId = "UC0KU8F9jJqSLS11LRXvFWmg"
+            ),
+            YoutubeChannelEntity(
+                thumbnail ="https://yt3.ggpht.com/1Lm2_GxOcm-dl799vDgA_uHfYskuOOpQ_VhRcth1V7PsNseWEeKhOr8TCPtPrT3Hpo3kYCrNcZs=s88-c-k-c0x00ffffff-no-rj" ,
+                name = "Ubisoft",
+                description = "When talent meets innovation, gathered to achieve the best gaming experience. Welcome to the official Ubisoft channel.",
+                channelId = "UC0KU8F9jJqSLS11LRXvFWmg"
+            ),
+            YoutubeChannelEntity(
+                thumbnail ="https://yt3.ggpht.com/1Lm2_GxOcm-dl799vDgA_uHfYskuOOpQ_VhRcth1V7PsNseWEeKhOr8TCPtPrT3Hpo3kYCrNcZs=s88-c-k-c0x00ffffff-no-rj" ,
+                name = "Ubisoft",
+                description = "When talent meets innovation, gathered to achieve the best gaming experience. Welcome to the official Ubisoft channel.",
+                channelId = "UC0KU8F9jJqSLS11LRXvFWmg"
+            ),
+            YoutubeChannelEntity(
+                thumbnail ="https://yt3.ggpht.com/1Lm2_GxOcm-dl799vDgA_uHfYskuOOpQ_VhRcth1V7PsNseWEeKhOr8TCPtPrT3Hpo3kYCrNcZs=s88-c-k-c0x00ffffff-no-rj" ,
+                name = "Ubisoft",
+                description = "When talent meets innovation, gathered to achieve the best gaming experience. Welcome to the official Ubisoft channel.",
+                channelId = "UC0KU8F9jJqSLS11LRXvFWmg"
+            ),
         )
     }
 
