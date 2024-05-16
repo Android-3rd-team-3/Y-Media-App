@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ymediaapp.R
 import com.example.ymediaapp.databinding.FragmentHomeBinding
+import com.example.ymediaapp.presentation.detail.DetailFragment
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 
 
@@ -15,26 +17,26 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val popularListAdapter by lazy {
-        HomeAdapter {
+        HomeVideoAdapter {
             videoOnClick(it)
         }
     }
 
     private val categoryListAdapter by lazy {
-        HomeAdapter {
+        HomeVideoAdapter {
             videoOnClick(it)
         }
     }
 
-    private val channelListAdapter by lazy {
-        HomeAdapter {
-            channelOnClick()
-        }
-    }
+    private val channelListAdapter by lazy { HomeChannelAdapter() }
 
     private val homeViewModel by viewModels<HomeViewModel> {
         HomeViewModelFactory()
     }
+
+/*
+    private val popupMenu = MainPopupMenu(requireActivity(), binding.ivPopUp, homeViewModel.categoryList.value)
+*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +77,10 @@ class HomeFragment : Fragment() {
                 adapter = channelListAdapter
                 layoutManager = LinearLayoutManager(requireActivity()).apply { orientation =  LinearLayoutManager.HORIZONTAL }
             }
+
+            ivPopUp.setOnClickListener {
+
+            }
         }
         with(homeViewModel) {
             popularList.observe(viewLifecycleOwner) {
@@ -98,9 +104,5 @@ class HomeFragment : Fragment() {
 
     private fun videoOnClick(youtubeItemEntity: YoutubeVideoEntity) {
         //Detail Fragment 여는 작업
-    }
-
-    private fun channelOnClick() {
-        //어댑터 분리를 하든 뷰홀더 분리를 하든 해야함
     }
 }
