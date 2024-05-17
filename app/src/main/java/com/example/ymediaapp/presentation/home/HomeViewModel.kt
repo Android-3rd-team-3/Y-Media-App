@@ -13,6 +13,7 @@ import com.example.ymediaapp.presentation.entity.YoutubeChannelEntity
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 import com.example.ymediaapp.presentation.repository.SearchRepository
 import kotlinx.coroutines.launch
+import java.lang.StringBuilder
 
 class HomeViewModel(private val repository: SearchRepository): ViewModel() {
     private val _getPopularList= MutableLiveData<List<YoutubeVideoEntity>>()
@@ -30,6 +31,7 @@ class HomeViewModel(private val repository: SearchRepository): ViewModel() {
 
     private fun getPopularList() = viewModelScope.launch {
         // 데이터베이스에서 받아오게(API 요청 part: snippet, chart: mostPopular)
+        //_getPopularList.value = repository.getPopularList().items
         _getPopularList.value = listOf(
             YoutubeVideoEntity(
                 thumbnail = "https://i.ytimg.com/vi/phuiiNCxRMg/default.jpg",
@@ -62,7 +64,7 @@ class HomeViewModel(private val repository: SearchRepository): ViewModel() {
         )
     }
 
-    private fun getCategoryList() = viewModelScope.launch {
+    private fun getCategoryVideoList(categoryId: String = "0") = viewModelScope.launch {
         // 데이터 베이스에서 받아오게 만들기
         _getCategoryVideoList.value = listOf(
             YoutubeVideoEntity(
@@ -94,6 +96,7 @@ class HomeViewModel(private val repository: SearchRepository): ViewModel() {
                 description = "lorem"
             ),
         )
+        //_getCategoryVideoList.value = repository.getVideoByCategoryList(categoryId).items
     }
 
     private fun getCategoryChannelList() = viewModelScope.launch {
@@ -129,12 +132,29 @@ class HomeViewModel(private val repository: SearchRepository): ViewModel() {
                 channelId = "UC0KU8F9jJqSLS11LRXvFWmg"
             ),
         )
+        val channelIds = getChannelIds()
+        _getCategoryChannelList.value = repository.getChannelByCategoryList(channelIds).items
+    }
+
+    private fun getCategoryList() = viewModelScope.launch {
+        _getCategoryList.value = repository.getCategoryList().items
     }
 
     fun getLists(){
         getCategoryList()
+        getCategoryVideoList()
         getPopularList()
         getCategoryChannelList()
+    }
+
+    private fun getChannelIds(): String{
+        val sb = StringBuilder()
+        (categoryChannelList.value?: listOf()).forEach {
+            sb.append(it.channelId)
+            sb.append(",")
+        }
+        sb.deleteAt(sb.lastIndex)
+        return sb.toString()
     }
 }
 
