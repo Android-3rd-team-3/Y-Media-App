@@ -1,6 +1,5 @@
 package com.example.ymediaapp.presentation.search
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.ymediaapp.R
 import com.example.ymediaapp.databinding.FragmentSearchBinding
 import com.example.ymediaapp.presentation.entity.SearchVideoEntity
 
@@ -46,7 +43,6 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-//        initData()
         setupListeners()
     }
 
@@ -71,9 +67,6 @@ class SearchFragment : Fragment() {
         }
     }
 
-//    private fun initData(){
-//        searchViewModel.getSearchList()
-//    }
 
     private fun setupListeners() {
         binding.searchButton.setOnClickListener {
@@ -84,6 +77,27 @@ class SearchFragment : Fragment() {
                 Toast.makeText(requireContext(), "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.chip.setOnClickListener {
+            val chipKid = binding.chip.text.toString()
+            searchViewModel.getSearchList()
+        }
+
+        binding.chip2.setOnClickListener {
+            val chipEnglishTraining = binding.chip2.text.toString()
+            searchViewModel.getSearchList()
+        }
+
+        binding.chip3.setOnClickListener {
+            val chipSleepMusic = binding.chip3.text.toString()
+            searchViewModel.getSearchList()
+        }
+
+        binding.chip4.setOnClickListener {
+            val chipMovie = binding.chip4.text.toString()
+            searchViewModel.getSearchList()
+        }
+
     }
     private fun videoOnClick(searchItemEntity: SearchVideoEntity) {
         //Detail Fragment 여는 작업
