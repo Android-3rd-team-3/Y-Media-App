@@ -15,26 +15,24 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val popularListAdapter by lazy {
-        HomeAdapter {
+        HomeVideoAdapter {
             videoOnClick(it)
         }
     }
 
     private val categoryListAdapter by lazy {
-        HomeAdapter {
+        HomeVideoAdapter {
             videoOnClick(it)
         }
     }
 
-    private val channelListAdapter by lazy {
-        HomeAdapter {
-            channelOnClick()
-        }
-    }
+    private val channelListAdapter by lazy { HomeChannelAdapter() }
 
     private val homeViewModel by viewModels<HomeViewModel> {
         HomeViewModelFactory()
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,13 +73,17 @@ class HomeFragment : Fragment() {
                 adapter = channelListAdapter
                 layoutManager = LinearLayoutManager(requireActivity()).apply { orientation =  LinearLayoutManager.HORIZONTAL }
             }
+
+            ivPopUp.setOnClickListener {
+
+            }
         }
         with(homeViewModel) {
             popularList.observe(viewLifecycleOwner) {
                 popularListAdapter.itemList = it
                 popularListAdapter.notifyDataSetChanged()
             }
-            categoryList.observe(viewLifecycleOwner) {
+            categoryVideoList.observe(viewLifecycleOwner) {
                 categoryListAdapter.itemList = it
                 categoryListAdapter.notifyDataSetChanged()
             }
@@ -98,9 +100,5 @@ class HomeFragment : Fragment() {
 
     private fun videoOnClick(youtubeItemEntity: YoutubeVideoEntity) {
         //Detail Fragment 여는 작업
-    }
-
-    private fun channelOnClick() {
-        //어댑터 분리를 하든 뷰홀더 분리를 하든 해야함
     }
 }

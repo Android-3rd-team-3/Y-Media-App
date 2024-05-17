@@ -43,7 +43,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         tools:text="채널명 확인 텍스트" />
-    
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvChannelDescription"
         android:layout_width="0dp"
@@ -96,7 +96,5 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         tools:listitem="@layout/item_my_video_favorite"/>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
