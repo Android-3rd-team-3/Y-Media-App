@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.ymediaapp.R
 import com.example.ymediaapp.databinding.FragmentHomeBinding
-import com.example.ymediaapp.presentation.detail.DetailFragment
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 
 
