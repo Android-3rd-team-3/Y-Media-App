@@ -11,13 +11,13 @@ class YoutubeSearchViewModel(private val repository: SearchRepositoryImpl): View
 }
 
 class YoutubeSearchViewModelFactory: ViewModelProvider.Factory{
-    private val repository = SearchRepositoryImpl()
-
-    override fun <T : ViewModel> create(
-        modelClass: Class<T>,
-        extras: CreationExtras
-    ): T {
-        return YoutubeSearchViewModel(repository) as T
-    }
+//    private val repository = SearchRepositoryImpl()
+//
+//    override fun <T : ViewModel> create(
+//        modelClass: Class<T>,
+//        extras: CreationExtras
+//    ): T {
+//        return YoutubeSearchViewModel(repository) as T
+//    }
 
 }
