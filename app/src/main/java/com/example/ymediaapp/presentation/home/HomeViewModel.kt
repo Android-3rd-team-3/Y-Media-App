@@ -13,9 +13,7 @@ import com.example.ymediaapp.presentation.entity.CategoryEntity
 import com.example.ymediaapp.presentation.entity.YoutubeChannelEntity
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 import com.example.ymediaapp.presentation.repository.SearchRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.lang.StringBuilder
 
 class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
@@ -49,6 +47,15 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
 
     fun getCategoryList() = viewModelScope.launch {
         _getCategoryList.value = repository.getCategoryList().items
+    }
+
+    fun getCategoryTexts(): List<String> {
+        return listOf("Category") + (categoryList.value ?: listOf()).map { it.name }
+    }
+
+    fun findCategoryIdByPosition(position: Int): String {
+        val currentPosition = if (position == 0) 0 else position - 1
+        return categoryList.value?.get(currentPosition)?.id ?: "0"
     }
 
 

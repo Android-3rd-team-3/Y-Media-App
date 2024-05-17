@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ymediaapp.R
 import com.example.ymediaapp.databinding.FragmentHomeBinding
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 
@@ -20,7 +23,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private val categoryListAdapter by lazy {
+    private val categoryVideoListAdapter by lazy {
         HomeVideoAdapter {
             videoOnClick(it)
         }
@@ -31,8 +34,6 @@ class HomeFragment : Fragment() {
     private val homeViewModel by viewModels<HomeViewModel> {
         HomeViewModelFactory()
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +66,7 @@ class HomeFragment : Fragment() {
             }
 
             rvCategory.apply {
-                adapter = categoryListAdapter
+                adapter = categoryVideoListAdapter
                 layoutManager = LinearLayoutManager(requireActivity()).apply { orientation =  LinearLayoutManager.HORIZONTAL }
             }
 
@@ -74,8 +75,23 @@ class HomeFragment : Fragment() {
                 layoutManager = LinearLayoutManager(requireActivity()).apply { orientation =  LinearLayoutManager.HORIZONTAL }
             }
 
-            ivPopUp.setOnClickListener {
+            spinnerCategory.apply {
+                onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        homeViewModel.apply{
+                            getCategoryVideoList(findCategoryIdByPosition(position))
+                        }
+                    }
 
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+
+                }
             }
         }
         with(homeViewModel) {
@@ -84,12 +100,18 @@ class HomeFragment : Fragment() {
                 popularListAdapter.notifyDataSetChanged()
             }
             categoryVideoList.observe(viewLifecycleOwner) {
-                categoryListAdapter.itemList = it
-                categoryListAdapter.notifyDataSetChanged()
+                getCategoryChannelList()
+                categoryVideoListAdapter.itemList = it
+                categoryVideoListAdapter.notifyDataSetChanged()
             }
             categoryChannelList.observe(viewLifecycleOwner) {
                 channelListAdapter.itemList = it
                 channelListAdapter.notifyDataSetChanged()
+            }
+            categoryList.observe(viewLifecycleOwner){
+                binding.spinnerCategory.adapter = ArrayAdapter(requireActivity(), R.layout.spinner_item_home, homeViewModel.getCategoryTexts()).apply {
+                    setDropDownViewResource(R.layout.spinner_item_dropdown_home)
+                }
             }
         }
     }
@@ -99,14 +121,11 @@ class HomeFragment : Fragment() {
             getPopularList()
             getCategoryList()
             getCategoryVideoList()
-            categoryVideoList.observe(viewLifecycleOwner){
-                getCategoryChannelList()
-            }
         }
 
     }
 
     private fun videoOnClick(youtubeItemEntity: YoutubeVideoEntity) {
-        //Detail Fragment 여는 작업
+        //todo Detail Fragment 여는 작업
     }
 }
