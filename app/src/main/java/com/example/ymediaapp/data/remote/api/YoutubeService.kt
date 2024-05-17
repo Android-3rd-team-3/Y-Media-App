@@ -46,4 +46,13 @@ interface YoutubeService {
         @Query("part") part: String = "id, snippet",
         @Query("fields") fields: String = "kind, etag, nextPageToken, prevPageToken, pageInfo, items(kind, etag, id, snippet(title, description, thumbnails(default)))",
     ): YoutubeListResponse<ChannelResponse>
+
+    @GET("youtube/v3/search")
+    suspend fun searchVideos(
+        @Query("q") query: String,
+        @Query("type") type: String = "video",
+        @Query("order") order: String = "relevance",
+        @Query("part") part: String = "id, snippet",
+        @Query("fields") fields: String = "kind, etag, items(id(videoId), snippet(title, channelTitle, publishedAt, thumbnails(default) ))",
+    ): YoutubeListResponse<ChannelResponse>
 }
