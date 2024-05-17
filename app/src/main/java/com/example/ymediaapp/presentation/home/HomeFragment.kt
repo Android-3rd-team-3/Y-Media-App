@@ -95,7 +95,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun initData(){
-        homeViewModel.getLists()
+        homeViewModel.apply{
+            getPopularList()
+            getCategoryList()
+            getCategoryVideoList()
+            categoryVideoList.observe(viewLifecycleOwner){
+                getCategoryChannelList()
+            }
+        }
+
     }
 
     private fun videoOnClick(youtubeItemEntity: YoutubeVideoEntity) {
