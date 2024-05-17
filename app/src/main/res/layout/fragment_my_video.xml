@@ -96,5 +96,4 @@
         app:spanCount="2"
         tools:listitem="@layout/item_my_video_favorite"/>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
