@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.ymediaapp.data.repository.SearchRepositoryImpl
 import com.example.ymediaapp.databinding.FragmentMyVideoBinding
 import com.example.ymediaapp.network.RetrofitClient
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
@@ -114,28 +115,7 @@ class MyVideoFragment : Fragment() {
             , videoId="zlaUge08FJY", channelId="UCC7kOHXUEsZnRkBB8kt-lCw", isLike=false)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val list = listOf(
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-
-            )
+            val list = SearchRepositoryImpl(RetrofitClient.youtubeService).getPopularList().items
             rvAdapter.submitList(list)
         }
     }
