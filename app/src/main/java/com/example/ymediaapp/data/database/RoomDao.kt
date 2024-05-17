@@ -12,9 +12,9 @@ interface RoomDao {
     fun getAllData(): List<RoomEntity>
 
     @Insert
-    fun insertData(): List<RoomEntity>
+    fun insertData(list: List<RoomEntity>): List<RoomEntity>
 
     @Delete
-    fun deleteData(): List<RoomEntity>
+    fun deleteData(list: List<RoomEntity>): List<RoomEntity>
 
 }
