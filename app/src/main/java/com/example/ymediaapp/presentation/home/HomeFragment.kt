@@ -62,37 +62,41 @@ class HomeFragment : Fragment() {
         with(binding) {
             rvPopularVideo.apply {
                 adapter = popularListAdapter
-                layoutManager = LinearLayoutManager(requireActivity()).apply { orientation =  LinearLayoutManager.HORIZONTAL }
+                val horizontalLinearLayoutManager = LinearLayoutManager(requireActivity())
+                horizontalLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+                layoutManager = horizontalLinearLayoutManager
             }
 
             rvCategory.apply {
                 adapter = categoryVideoListAdapter
-                layoutManager = LinearLayoutManager(requireActivity()).apply { orientation =  LinearLayoutManager.HORIZONTAL }
+                val horizontalLinearLayoutManager = LinearLayoutManager(requireActivity())
+                horizontalLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+                layoutManager = horizontalLinearLayoutManager
             }
 
             rvCategoryChannel.apply {
                 adapter = channelListAdapter
-                layoutManager = LinearLayoutManager(requireActivity()).apply { orientation =  LinearLayoutManager.HORIZONTAL }
+                val horizontalLinearLayoutManager = LinearLayoutManager(requireActivity())
+                horizontalLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+                layoutManager = horizontalLinearLayoutManager
             }
 
-            spinnerCategory.apply {
-                onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                     override fun onItemSelected(
                         parent: AdapterView<*>?,
                         view: View?,
                         position: Int,
                         id: Long
                     ) {
-                        homeViewModel.apply{
+                        homeViewModel.run{
                             getCategoryVideoList(findCategoryIdByPosition(position))
                         }
                     }
-
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                     }
 
                 }
-            }
+
         }
         with(homeViewModel) {
             popularList.observe(viewLifecycleOwner) {
