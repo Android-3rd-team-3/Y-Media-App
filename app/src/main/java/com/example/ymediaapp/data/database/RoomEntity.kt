@@ -8,7 +8,7 @@ import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 @Entity
 data class RoomEntity(
 
-    @PrimaryKey val videoId: Int? = null,
+    @PrimaryKey val videoId: String,
     @ColumnInfo(name = "thumbnail") val thumbnail : String? = null,
     @ColumnInfo(name = "name") val name : String? = null,
     @ColumnInfo(name = "description") val description : String? = null,
