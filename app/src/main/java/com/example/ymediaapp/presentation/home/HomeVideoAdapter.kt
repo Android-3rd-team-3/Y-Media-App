@@ -7,11 +7,11 @@ import com.bumptech.glide.Glide
 import com.example.ymediaapp.databinding.RvItemHomeBinding
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 
-class HomeAdapter(
+class HomeVideoAdapter(
     private val onClick: (YoutubeVideoEntity) -> Unit
-): RecyclerView.Adapter<HomeAdapter.HomeItemViewHolder>() {
+): RecyclerView.Adapter<HomeVideoAdapter.HomeVideoViewHolder>() {
     var itemList = listOf<YoutubeVideoEntity>()
-    class HomeItemViewHolder(
+    class HomeVideoViewHolder(
         private val binding: RvItemHomeBinding,
         private val onClick: (YoutubeVideoEntity) -> Unit
     ): RecyclerView.ViewHolder(binding.root){
@@ -28,16 +28,16 @@ class HomeAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeVideoViewHolder {
         val binding = RvItemHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return HomeItemViewHolder(binding, onClick)
+        return HomeVideoViewHolder(binding, onClick)
     }
 
     override fun getItemCount(): Int {
         return itemList.size
     }
 
-    override fun onBindViewHolder(holder: HomeItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeVideoViewHolder, position: Int) {
         holder.bind(itemList[position])
     }
 }
