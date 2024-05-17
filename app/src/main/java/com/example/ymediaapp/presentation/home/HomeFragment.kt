@@ -34,9 +34,7 @@ class HomeFragment : Fragment() {
         HomeViewModelFactory()
     }
 
-/*
-    private val popupMenu = MainPopupMenu(requireActivity(), binding.ivPopUp, homeViewModel.categoryList.value)
-*/
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +85,7 @@ class HomeFragment : Fragment() {
                 popularListAdapter.itemList = it
                 popularListAdapter.notifyDataSetChanged()
             }
-            categoryList.observe(viewLifecycleOwner) {
+            categoryVideoList.observe(viewLifecycleOwner) {
                 categoryListAdapter.itemList = it
                 categoryListAdapter.notifyDataSetChanged()
             }

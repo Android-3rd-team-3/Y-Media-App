@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.ymediaapp.data.repository.SearchRepositoryImpl
 import com.example.ymediaapp.network.RetrofitClient
+import com.example.ymediaapp.presentation.entity.CategoryEntity
 import com.example.ymediaapp.presentation.entity.YoutubeChannelEntity
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 import com.example.ymediaapp.presentation.repository.SearchRepository
@@ -17,13 +18,15 @@ class HomeViewModel(private val repository: SearchRepository): ViewModel() {
     private val _getPopularList= MutableLiveData<List<YoutubeVideoEntity>>()
     val popularList: LiveData<List<YoutubeVideoEntity>> get() = _getPopularList
 
-    private val _getCategoryList= MutableLiveData<List<YoutubeVideoEntity>>()
-    val categoryList: LiveData<List<YoutubeVideoEntity>> get() = _getCategoryList
-
-    //TODO Channel List에서 사용하는 Entity 변경필요
+    private val _getCategoryVideoList= MutableLiveData<List<YoutubeVideoEntity>>()
+    val categoryVideoList: LiveData<List<YoutubeVideoEntity>> get() = _getCategoryVideoList
 
     private val _getCategoryChannelList= MutableLiveData<List<YoutubeChannelEntity>>()
     val categoryChannelList: LiveData<List<YoutubeChannelEntity>> get() = _getCategoryChannelList
+
+    private val _getCategoryList = MutableLiveData<List<CategoryEntity>>()
+
+    val categoryList: LiveData<List<CategoryEntity>> get() = _getCategoryList
 
     private fun getPopularList() = viewModelScope.launch {
         // 데이터베이스에서 받아오게(API 요청 part: snippet, chart: mostPopular)
@@ -61,7 +64,7 @@ class HomeViewModel(private val repository: SearchRepository): ViewModel() {
 
     private fun getCategoryList() = viewModelScope.launch {
         // 데이터 베이스에서 받아오게 만들기
-        _getCategoryList.value = listOf(
+        _getCategoryVideoList.value = listOf(
             YoutubeVideoEntity(
                 thumbnail = "https://i.ytimg.com/vi/phuiiNCxRMg/default.jpg",
                 name = "aespa 에스파 'Supernova' MV",
