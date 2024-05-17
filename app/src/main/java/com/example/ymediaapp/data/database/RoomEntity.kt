@@ -8,9 +8,10 @@ import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 @Entity
 data class RoomEntity(
 
-    //autoGenerate -> 아이디가 하나씩 추가될 수 있도록 자동 생성, PrimaryKey -> 식별 가능한 키로 선언
-    //PrimaryKey -> 추후 변경될 수 있습니다
-    @PrimaryKey(autoGenerate = true) val id : Int? = null,
-    @ColumnInfo(name = "YoutubeVideoEntity") val video : List<YoutubeVideoEntity>? = null,
-    @ColumnInfo(name = "YoutubeVideoID") val videlId: Int? = null
+    @PrimaryKey val videoId: Int? = null,
+    @ColumnInfo(name = "thumbnail") val thumbnail : String? = null,
+    @ColumnInfo(name = "name") val name : String? = null,
+    @ColumnInfo(name = "description") val description : String? = null,
+    @ColumnInfo(name = "isLike") val isLike : Boolean? = null
+
 )
