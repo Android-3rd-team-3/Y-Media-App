@@ -113,9 +113,7 @@ class HomeFragment : Fragment() {
                 channelListAdapter.notifyDataSetChanged()
             }
             categoryList.observe(viewLifecycleOwner){
-                binding.spinnerCategory.adapter = ArrayAdapter(requireActivity(), R.layout.spinner_item_home, homeViewModel.getCategoryTexts()).apply {
-                    setDropDownViewResource(R.layout.spinner_item_dropdown_home)
-                }
+                binding.spinnerCategory.adapter = HomeSpinnerAdapter(requireActivity(), it)
             }
         }
     }
