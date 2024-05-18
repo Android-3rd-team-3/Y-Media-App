@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.ymediaapp.R
 import com.example.ymediaapp.databinding.FragmentHomeBinding
+import com.example.ymediaapp.presentation.entity.CategoryEntity
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 
 
@@ -88,9 +87,12 @@ class HomeFragment : Fragment() {
                         position: Int,
                         id: Long
                     ) {
-                        homeViewModel.run{
-                            getCategoryVideoList(findCategoryIdByPosition(position))
-                        }
+                        val item =  (parent?.adapter?.getItem(position) as? CategoryEntity) ?:
+                        CategoryEntity(
+                            "0",
+                            "Category"
+                        )
+                        spinnerItemSelected(item)
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                     }
@@ -130,4 +132,9 @@ class HomeFragment : Fragment() {
     private fun videoOnClick(youtubeItemEntity: YoutubeVideoEntity) {
         //todo Detail Fragment 여는 작업
     }
+
+    private fun spinnerItemSelected(categoryEntity: CategoryEntity){
+        homeViewModel.getCategoryVideoList(categoryEntity.id)
+    }
+
 }

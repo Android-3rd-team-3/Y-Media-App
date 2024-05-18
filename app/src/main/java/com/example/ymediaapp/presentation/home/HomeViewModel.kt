@@ -49,16 +49,6 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
         _getCategoryList.value = repository.getCategoryList().items
     }
 
-    fun getCategoryTexts(): List<String> {
-        return listOf("Category") + (categoryList.value ?: listOf()).map { it.name }
-    }
-
-    fun findCategoryIdByPosition(position: Int): String {
-        val currentPosition = if (position == 0) 0 else position - 1
-        return categoryList.value?.get(currentPosition)?.id ?: "0"
-    }
-
-
     private fun getChannelIds(): String {
         val sb = StringBuilder()
         (categoryVideoList.value ?: listOf()).forEach {

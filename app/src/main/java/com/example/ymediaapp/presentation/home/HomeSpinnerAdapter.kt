@@ -9,7 +9,10 @@ import com.example.ymediaapp.databinding.SpinnerItemDropdownHomeBinding
 import com.example.ymediaapp.databinding.SpinnerItemHomeBinding
 import com.example.ymediaapp.presentation.entity.CategoryEntity
 
-class HomeSpinnerAdapter(context: Context, private val items: List<CategoryEntity> ): ArrayAdapter<CategoryEntity>(context, 0, items) {
+class HomeSpinnerAdapter(
+    context: Context,
+    items: List<CategoryEntity>,
+): ArrayAdapter<CategoryEntity>(context, 0, items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding: SpinnerItemHomeBinding
         val view: View
@@ -48,22 +51,4 @@ class HomeSpinnerAdapter(context: Context, private val items: List<CategoryEntit
         return view
     }
 
-
-
-
-
-
-
-/*    private fun createViewFromResource(
-        convertView: View?,
-        parent: ViewGroup,
-        position: Int,
-        resource: Int
-    ): View{
-        val binding: SpinnerItemHomeBinding
-        val view = convertView?: LayoutInflater.from(context).inflate(resource, parent, false)
-        val item = getItem(position)
-
-        val itemId
-    }*/
 }
