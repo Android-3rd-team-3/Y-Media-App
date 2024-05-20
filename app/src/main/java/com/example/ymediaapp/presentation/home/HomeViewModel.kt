@@ -46,7 +46,7 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
     }
 
     fun getCategoryList() = viewModelScope.launch {
-        _getCategoryList.value = repository.getCategoryList().items
+        _getCategoryList.value = repository.getCategoryList().items.filter { it.assignable }
     }
 
     private fun getChannelIds(): String {
