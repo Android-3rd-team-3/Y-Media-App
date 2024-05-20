@@ -1,5 +1,10 @@
 package com.example.ymediaapp.presentation.entity
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import java.util.Date
+
+@Parcelize
 data class YoutubeVideoEntity( // 동영상
     val thumbnail: String,// 썸네일 URL
     val name: String,// 이름
@@ -7,7 +12,7 @@ data class YoutubeVideoEntity( // 동영상
     val videoId: String, // 해당 동영상의 ID
     val channelId: String, // 채널id
     val isLike: Boolean = false // 좋아요 List 포함 여부
-)
+) : Parcelable
 
 data class YoutubeVideoResultEntity(
     val kind: String,
@@ -48,7 +53,7 @@ data class SearchVideoEntity(
     val title: String,
     val channel: String,
     val id: String,
-    val dateTime: String
+    val dateTime: Date
 )
 
 data class SearchVideoResultEntity(

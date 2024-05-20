@@ -22,7 +22,7 @@ class MyVideoViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             val list = videoRepository.getVideoData()
-            _favoriteList.postValue(list)
+            //_favoriteList.postValue(list)
         }
     }
 }

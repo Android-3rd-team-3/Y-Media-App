@@ -1,5 +1,6 @@
 package com.example.ymediaapp.presentation.home
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ymediaapp.databinding.FragmentHomeBinding
 import com.example.ymediaapp.presentation.entity.CategoryEntity
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
+import java.lang.RuntimeException
 
+//
+interface FragmentDataListener{
+    fun onDataReceived(data: YoutubeVideoEntity)
+}
+//
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -21,6 +28,9 @@ class HomeFragment : Fragment() {
             videoOnClick(it)
         }
     }
+    //
+    private var listener: FragmentDataListener? = null
+    //
 
     private val categoryVideoListAdapter by lazy {
         HomeVideoAdapter {
@@ -36,6 +46,16 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onAttach(context: Context){
+        super.onAttach(context)
+
+        if(context is FragmentDataListener){
+            listener = context
+        } else{
+            throw RuntimeException("$context must implement FragmentDataListener")
+        }
     }
 
     override fun onCreateView(
@@ -131,6 +151,7 @@ class HomeFragment : Fragment() {
 
     private fun videoOnClick(youtubeItemEntity: YoutubeVideoEntity) {
         //todo Detail Fragment 여는 작업
+        listener?.onDataReceived(youtubeItemEntity)
     }
 
     private fun spinnerItemSelected(categoryEntity: CategoryEntity){
