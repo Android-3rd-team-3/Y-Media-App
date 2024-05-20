@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ymediaapp.databinding.FragmentSearchBinding
 import com.example.ymediaapp.presentation.entity.SearchVideoEntity
 
@@ -55,7 +55,7 @@ class SearchFragment : Fragment() {
         with(binding) {
             searchRecyclerView.apply {
                 adapter = searchListAdapter
-                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                layoutManager = GridLayoutManager(requireContext(), 2)
             }
 
         }
