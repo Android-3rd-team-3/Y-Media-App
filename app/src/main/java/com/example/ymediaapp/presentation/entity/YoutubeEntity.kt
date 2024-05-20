@@ -1,5 +1,7 @@
 package com.example.ymediaapp.presentation.entity
 
+import java.util.Date
+
 data class YoutubeVideoEntity( // 동영상
     val thumbnail: String,// 썸네일 URL
     val name: String,// 이름
@@ -48,7 +50,7 @@ data class SearchVideoEntity(
     val title: String,
     val channel: String,
     val id: String,
-    val dateTime: String
+    val dateTime: Date
 )
 
 data class SearchVideoResultEntity(
