@@ -29,7 +29,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
                     it.description ?: "값 없음",
                     it.videoId,
                     it.channelId ?: "값 없음",
-                    it.isLike ?: true
+                    it.isLike
                 )
             }
         }
@@ -37,7 +37,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
         return entityList
     }
 
-    override fun insertVideoData(video: YoutubeVideoEntity) {
+    override suspend fun insertVideoData(video: YoutubeVideoEntity) {
         val roomData = RoomEntity(
             video.videoId,
             video.thumbnail,
@@ -49,7 +49,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
         roomDao.insertData(roomData)
     }
 
-    override fun deleteVideoData(video: YoutubeVideoEntity) {
+    override suspend fun deleteVideoData(video: YoutubeVideoEntity) {
         val roomData = RoomEntity(
             video.videoId,
             video.thumbnail,

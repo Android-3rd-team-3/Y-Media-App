@@ -13,6 +13,6 @@ data class RoomEntity(
     @ColumnInfo(name = "name") val name : String? = null,
     @ColumnInfo(name = "description") val description : String? = null,
     @ColumnInfo(name = "channelId") val channelId : String? = null,
-    @ColumnInfo(name = "isLike") val isLike : Boolean? = null
+    @ColumnInfo(name = "isLike") val isLike : Boolean
 
 )
