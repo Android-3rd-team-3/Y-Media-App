@@ -22,7 +22,7 @@ class SearchAdapter(
                 Glide.with(binding.root).load(searchItemEntity.thumbnail).into(itemImageView)
                 itemTitleTextView.text = searchItemEntity.title
                 itemChannelTextView.text = searchItemEntity.channel
-                itemDateTimeTextView.text = searchItemEntity.dateTime
+                itemDateTimeTextView.text = searchItemEntity.dateTime.toString()
                 itemView.setOnClickListener {
                     onClick(searchItemEntity)
                 }

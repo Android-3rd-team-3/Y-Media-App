@@ -17,9 +17,8 @@ class SearchViewModel ( private val repository: SearchRepository): ViewModel() {
     private val _getSearchList= MutableLiveData<List<SearchVideoEntity>>()
     val searchList: LiveData<List<SearchVideoEntity>> get() = _getSearchList
 
-    fun getSearchList() = viewModelScope.launch {
-     // 데이터 베이스에서 받아오게 만들기
-        _getSearchList.value = repository.getSearchList().items
+    fun getSearchList(query: String) = viewModelScope.launch {
+        _getSearchList.value = repository.getSearchList(query).items
     }
 }
 
