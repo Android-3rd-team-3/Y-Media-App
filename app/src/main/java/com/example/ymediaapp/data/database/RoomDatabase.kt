@@ -12,14 +12,14 @@ abstract class YoutubeRoomDatabase : RoomDatabase() {
     abstract fun getRoomDao() : RoomDao
 
     companion object {
-        val databaseName = "db_room"
-        var appDatabase : YoutubeRoomDatabase? = null
+     private const val DATABASE_NAME = "db_room"
+     private var appDatabase : YoutubeRoomDatabase? = null
 
         fun getInstance(context : Context) : YoutubeRoomDatabase? {
             if(appDatabase == null){
                 appDatabase = Room.databaseBuilder(context,
                     YoutubeRoomDatabase::class.java,
-                    databaseName).
+                    DATABASE_NAME).
                     //마이그레이션이 실패할 때 db테이블 재생성, 데이터 사라질 수 있음
                 fallbackToDestructiveMigration()
                     .build()
