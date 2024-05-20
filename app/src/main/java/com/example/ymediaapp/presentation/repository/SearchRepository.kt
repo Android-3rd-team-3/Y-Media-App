@@ -15,5 +15,5 @@ interface SearchRepository {
     // 카테고리 목록 받아오기(assignment true만?)
     suspend fun getCategoryList(): CategoryResultEntity
     // 검색 동영상 받아오기
-//    suspend fun getSearchList(q: String): SearchVideoResultEntity
+    suspend fun getSearchList(q: String): SearchVideoResultEntity
 }
