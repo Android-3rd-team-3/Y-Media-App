@@ -43,6 +43,22 @@ data class CategoryResultEntity(
     val items: List<CategoryEntity>
 )
 
+data class SearchVideoEntity(
+    val thumbnail: String,
+    val title: String,
+    val channel: String,
+    val id: String,
+    val dateTime: String
+)
+
+data class SearchVideoResultEntity(
+    val kind: String,
+    val eTag: String,
+    val nextPageToken: String,
+    val prevPageToken: String,
+    val items: List<SearchVideoEntity>
+)
+
 
 
 

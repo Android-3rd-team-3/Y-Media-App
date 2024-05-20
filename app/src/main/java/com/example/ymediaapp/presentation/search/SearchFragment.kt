@@ -5,56 +5,101 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.ymediaapp.R
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.ymediaapp.databinding.FragmentSearchBinding
+import com.example.ymediaapp.presentation.entity.SearchVideoEntity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SearchFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SearchFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
+    private val searchListAdapter by lazy {
+        SearchAdapter {
+            videoOnClick(it)
+        }
+    }
+
+
+    private val searchViewModel by viewModels<SearchViewModel> {
+        SearchViewModelFactory()
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        _binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SearchFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SearchFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        setupListeners()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initView() {
+        with(binding) {
+            searchRecyclerView.apply {
+                adapter = searchListAdapter
+                layoutManager = GridLayoutManager(requireContext(), 2)
             }
+
+        }
+        with(searchViewModel) {
+            searchList.observe(viewLifecycleOwner) {
+                searchListAdapter.itemList = it
+                searchListAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+
+    private fun setupListeners() {
+        binding.searchButton.setOnClickListener {
+            val query = binding.searchEditText.text.toString()
+            if (query.isNotEmpty()) {
+                searchViewModel.getSearchList()
+            } else {
+                Toast.makeText(requireContext(), "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.chip.setOnClickListener {
+            val chipKid = binding.chip.text.toString()
+            searchViewModel.getSearchList()
+        }
+
+        binding.chip2.setOnClickListener {
+            val chipEnglishTraining = binding.chip2.text.toString()
+            searchViewModel.getSearchList()
+        }
+
+        binding.chip3.setOnClickListener {
+            val chipSleepMusic = binding.chip3.text.toString()
+            searchViewModel.getSearchList()
+        }
+
+        binding.chip4.setOnClickListener {
+            val chipMovie = binding.chip4.text.toString()
+            searchViewModel.getSearchList()
+        }
+
+    }
+    private fun videoOnClick(searchItemEntity: SearchVideoEntity) {
+        //Detail Fragment 여는 작업
     }
 }
