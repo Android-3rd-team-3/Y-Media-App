@@ -2,7 +2,6 @@ package com.example.ymediaapp.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.util.Date
 
 @Parcelize
 data class YoutubeVideoEntity( // 동영상
@@ -53,7 +52,7 @@ data class SearchVideoEntity(
     val title: String,
     val channel: String,
     val id: String,
-    val dateTime: Date
+    val dateTime: String
 )
 
 data class SearchVideoResultEntity(

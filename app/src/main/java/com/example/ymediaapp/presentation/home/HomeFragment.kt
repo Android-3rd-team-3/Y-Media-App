@@ -2,6 +2,7 @@ package com.example.ymediaapp.presentation.home
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ class HomeFragment : Fragment() {
     private val popularListAdapter by lazy {
         HomeVideoAdapter {
             videoOnClick(it)
+//            (activity as? FragmentDataListener)?.onDataReceived(it)
         }
     }
     //
@@ -122,6 +124,7 @@ class HomeFragment : Fragment() {
         }
         with(homeViewModel) {
             popularList.observe(viewLifecycleOwner) {
+                Log.d("bottomSheet","$it")
                 popularListAdapter.itemList = it
                 popularListAdapter.notifyDataSetChanged()
             }
@@ -151,7 +154,9 @@ class HomeFragment : Fragment() {
 
     private fun videoOnClick(youtubeItemEntity: YoutubeVideoEntity) {
         //todo Detail Fragment 여는 작업
-        listener?.onDataReceived(youtubeItemEntity)
+        Log.d("checkVideoOnClick","correct")
+//        listener?.onDataReceived(youtubeItemEntity)
+        (activity as? FragmentDataListener)?.onDataReceived(youtubeItemEntity)
     }
 
     private fun spinnerItemSelected(categoryEntity: CategoryEntity){

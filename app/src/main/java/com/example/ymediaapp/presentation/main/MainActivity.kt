@@ -1,22 +1,33 @@
 package com.example.ymediaapp.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.ymediaapp.R
+import com.example.ymediaapp.data.database.YoutubeRoomDatabase
+import com.example.ymediaapp.data.repository.VideoRepositoryImpl
 import com.example.ymediaapp.databinding.ActivityMainBinding
 import com.example.ymediaapp.presentation.detail.DetailFragment
+import com.example.ymediaapp.presentation.detail.DetailViewModel
+import com.example.ymediaapp.presentation.detail.DetailViewModelFactory
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 import com.example.ymediaapp.presentation.home.FragmentDataListener
+import com.example.ymediaapp.presentation.repository.VideoRepository
 
 class MainActivity : AppCompatActivity(), FragmentDataListener {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: DetailViewModel
+
+    //    private lateinit var repository: VideoRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,8 +39,13 @@ class MainActivity : AppCompatActivity(), FragmentDataListener {
             insets
         }
 
+        val repository = VideoRepositoryImpl(this)
+        val viewModelFactory = DetailViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
+
         //네비게이션을 담는 호스트
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_containerView) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_containerView) as NavHostFragment
 
         // 네비게이션 컨트롤러
         val navController = navHostFragment.navController
@@ -38,16 +54,23 @@ class MainActivity : AppCompatActivity(), FragmentDataListener {
         NavigationUI.setupWithNavController(binding.navigationView, navController)
 
 
-
-    }
-    override fun onDataReceived(data: YoutubeVideoEntity){
-        showBottomSheet(data)
     }
 
-        private fun showBottomSheet(selectedItem: YoutubeVideoEntity) {
-        val bottomSheetFragment = DetailFragment().apply{
-            arguments = bundleOf("ARG_ITEM" to selectedItem)
-        }
+    override fun onDataReceived(data: YoutubeVideoEntity) {
+        viewModel.setSelectedItem(data)
+        showBottomSheet()
+        Log.d("onDataReceived", "correct")
+    }
+
+    //        private fun showBottomSheet(selectedItem: YoutubeVideoEntity) {
+//        val bottomSheetFragment = DetailFragment().apply{
+//            arguments = bundleOf(ARG_ITEM to selectedItem)
+//        }
+//        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+//    }
+    private fun showBottomSheet() {
+        val bottomSheetFragment = DetailFragment()
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
+
 }

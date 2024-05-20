@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.R
+import com.example.ymediaapp.data.repository.VideoRepositoryImpl
 import com.example.ymediaapp.databinding.FragmentDetailBinding
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -93,16 +94,19 @@ class DetailFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // ViewModelProvider를 통해 ViewModel 가져오기
+        //val factory = DetailViewModelFactory(requireContext())
         viewModel = ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
 
-        val selectedItem = arguments?.getParcelable<YoutubeVideoEntity>("ARG_ITEM")
+        // ViewModelProvider를 통해 ViewModel 가져오기
+        //viewModel = ViewModelProvider(requireActivity(),defaultViewModelProviderFactory).get(DetailViewModel::class.java)
 
-        if (selectedItem != null) {
-            viewModel.setSelectedItem(selectedItem)
-        } else {
-            parentFragmentManager.popBackStack()
-        }
+//        val selectedItem = arguments?.getParcelable<YoutubeVideoEntity>(ARG_ITEM)
+//
+//        if (selectedItem != null) {
+//            viewModel.setSelectedItem(selectedItem)
+//        } else {
+//            parentFragmentManager.popBackStack()
+//        }
 
 
 //            fun bind(youtubeItemEntity: YoutubeVideoEntity){
@@ -181,6 +185,18 @@ class DetailFragment : BottomSheetDialogFragment() {
     }
 
 
+    companion object {
+        private const val ARG_ITEM = "selected_item"
+
+        fun newInstance(item: YoutubeVideoEntity): DetailFragment {
+            val fragment = DetailFragment()
+            val bundle = Bundle().apply {
+                putParcelable(ARG_ITEM, item)
+            }
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
 //    private fun showBottomSheet(selectedItem: YoutubeVideoEntity) {
 //        val bottomSheetFragment = DetailFragment().apply{
 //            arguments = bundleOf("ARG_ITEM" to YoutubeVideoEntity())
