@@ -11,6 +11,7 @@ import com.example.ymediaapp.presentation.repository.SearchRepository
 class SearchRepositoryImpl(
     private val youtubeService: YoutubeService
 ): SearchRepository {
+
     override suspend fun getPopularList(): YoutubeVideoResultEntity {
         return youtubeService.getPopularVideos().toEntity()
     }
@@ -30,6 +31,5 @@ class SearchRepositoryImpl(
     override suspend fun getSearchList(q: String): SearchVideoResultEntity {
         return youtubeService.searchVideos(q).toEntity()
     }
-
 
 }
