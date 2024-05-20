@@ -1,6 +1,7 @@
 package com.example.ymediaapp.presentation.repository
 
 import com.example.ymediaapp.presentation.entity.CategoryResultEntity
+import com.example.ymediaapp.presentation.entity.SearchVideoResultEntity
 import com.example.ymediaapp.presentation.entity.YoutubeChannelResultEntity
 import com.example.ymediaapp.presentation.entity.YoutubeVideoResultEntity
 
@@ -13,4 +14,6 @@ interface SearchRepository {
     suspend fun getChannelByCategoryList(channelIds: String): YoutubeChannelResultEntity
     // 카테고리 목록 받아오기(assignment true만?)
     suspend fun getCategoryList(): CategoryResultEntity
+    // 검색 동영상 받아오기
+    suspend fun getSearchList(q: String): SearchVideoResultEntity
 }
