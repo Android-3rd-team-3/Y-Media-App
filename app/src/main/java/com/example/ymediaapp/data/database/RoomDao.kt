@@ -1,5 +1,6 @@
 package com.example.ymediaapp.data.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,7 +10,7 @@ import androidx.room.Query
 interface RoomDao {
 
     @Query("SELECT * FROM RoomEntity")
-    fun getAllData(): List<RoomEntity>
+    fun getAllData(): LiveData<List<RoomEntity>>
 
     @Insert
     fun insertData(roomData: RoomEntity)
