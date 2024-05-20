@@ -11,6 +11,13 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="CustomChipChoice"
+        parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/chip_box_color</item>
+        <item name="android:textColor">@color/chip_box_text</item>
+    </style>
+
+
     <style name="spinner_item">
         <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
