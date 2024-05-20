@@ -6,9 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.data.repository.VideoRepositoryImpl
-import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
-import com.example.ymediaapp.presentation.repository.VideoRepository
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
+import com.example.ymediaapp.domain.repository.VideoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -27,12 +28,12 @@ class MyVideoViewModel(
     }
 }
 
-class MyVideoViewModelFactory(private val context: Context): ViewModelProvider.Factory {
+class MyVideoViewModelFactory: ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(MyVideoViewModel::class.java)) {
             return MyVideoViewModel(
-                VideoRepositoryImpl(context)
+                YMediaApplication.getInstance().provideVideoRepository()
             ) as T
         }
         throw IllegalArgumentException("Unknown Class")

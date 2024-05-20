@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.databinding.ItemMyVideoFavoriteBinding
-import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 
 //아이템 클래스 확정나면 구현
 class MyVideoRvAdapter()

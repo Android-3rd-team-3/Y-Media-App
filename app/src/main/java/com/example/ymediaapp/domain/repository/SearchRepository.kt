@@ -1,9 +1,9 @@
-package com.example.ymediaapp.presentation.repository
+package com.example.ymediaapp.domain.repository
 
-import com.example.ymediaapp.presentation.entity.CategoryResultEntity
-import com.example.ymediaapp.presentation.entity.SearchVideoResultEntity
-import com.example.ymediaapp.presentation.entity.YoutubeChannelResultEntity
-import com.example.ymediaapp.presentation.entity.YoutubeVideoResultEntity
+import com.example.ymediaapp.domain.entity.CategoryResultEntity
+import com.example.ymediaapp.domain.entity.SearchVideoResultEntity
+import com.example.ymediaapp.domain.entity.YoutubeChannelResultEntity
+import com.example.ymediaapp.domain.entity.YoutubeVideoResultEntity
 
 interface SearchRepository {
     // 인기 동영상 받아오기
