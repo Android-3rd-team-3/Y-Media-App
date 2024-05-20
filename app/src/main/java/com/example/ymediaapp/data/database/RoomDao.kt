@@ -13,9 +13,9 @@ interface RoomDao {
     fun getAllData(): LiveData<List<RoomEntity>>
 
     @Insert
-    fun insertData(roomData: RoomEntity)
+    suspend fun insertData(roomData: RoomEntity)
 
     @Delete
-    fun deleteData(roomData: RoomEntity)
+    suspend fun deleteData(roomData: RoomEntity)
 
 }
