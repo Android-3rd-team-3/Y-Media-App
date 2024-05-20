@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ymediaapp.databinding.FragmentHomeBinding
+import com.example.ymediaapp.presentation.entity.CategoryEntity
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 
 
@@ -20,7 +22,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private val categoryListAdapter by lazy {
+    private val categoryVideoListAdapter by lazy {
         HomeVideoAdapter {
             videoOnClick(it)
         }
@@ -31,8 +33,6 @@ class HomeFragment : Fragment() {
     private val homeViewModel by viewModels<HomeViewModel> {
         HomeViewModelFactory()
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,22 +61,44 @@ class HomeFragment : Fragment() {
         with(binding) {
             rvPopularVideo.apply {
                 adapter = popularListAdapter
-                layoutManager = LinearLayoutManager(requireActivity()).apply { orientation =  LinearLayoutManager.HORIZONTAL }
+                val horizontalLinearLayoutManager = LinearLayoutManager(requireActivity())
+                horizontalLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+                layoutManager = horizontalLinearLayoutManager
             }
 
             rvCategory.apply {
-                adapter = categoryListAdapter
-                layoutManager = LinearLayoutManager(requireActivity()).apply { orientation =  LinearLayoutManager.HORIZONTAL }
+                adapter = categoryVideoListAdapter
+                val horizontalLinearLayoutManager = LinearLayoutManager(requireActivity())
+                horizontalLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+                layoutManager = horizontalLinearLayoutManager
             }
 
             rvCategoryChannel.apply {
                 adapter = channelListAdapter
-                layoutManager = LinearLayoutManager(requireActivity()).apply { orientation =  LinearLayoutManager.HORIZONTAL }
+                val horizontalLinearLayoutManager = LinearLayoutManager(requireActivity())
+                horizontalLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+                layoutManager = horizontalLinearLayoutManager
             }
 
-            ivPopUp.setOnClickListener {
+            spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val item =  (parent?.adapter?.getItem(position) as? CategoryEntity) ?:
+                        CategoryEntity(
+                            "0",
+                            "Category"
+                        )
+                        spinnerItemSelected(item)
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
 
-            }
+                }
+
         }
         with(homeViewModel) {
             popularList.observe(viewLifecycleOwner) {
@@ -84,21 +106,35 @@ class HomeFragment : Fragment() {
                 popularListAdapter.notifyDataSetChanged()
             }
             categoryVideoList.observe(viewLifecycleOwner) {
-                categoryListAdapter.itemList = it
-                categoryListAdapter.notifyDataSetChanged()
+                getCategoryChannelList()
+                categoryVideoListAdapter.itemList = it
+                categoryVideoListAdapter.notifyDataSetChanged()
             }
             categoryChannelList.observe(viewLifecycleOwner) {
                 channelListAdapter.itemList = it
                 channelListAdapter.notifyDataSetChanged()
             }
+            categoryList.observe(viewLifecycleOwner){
+                binding.spinnerCategory.adapter = HomeSpinnerAdapter(requireActivity(), it)
+            }
         }
     }
 
     private fun initData(){
-        homeViewModel.getLists()
+        homeViewModel.apply{
+            getPopularList()
+            getCategoryList()
+            getCategoryVideoList()
+        }
+
     }
 
     private fun videoOnClick(youtubeItemEntity: YoutubeVideoEntity) {
-        //Detail Fragment 여는 작업
+        //todo Detail Fragment 여는 작업
     }
+
+    private fun spinnerItemSelected(categoryEntity: CategoryEntity){
+        homeViewModel.getCategoryVideoList(categoryEntity.id)
+    }
+
 }
