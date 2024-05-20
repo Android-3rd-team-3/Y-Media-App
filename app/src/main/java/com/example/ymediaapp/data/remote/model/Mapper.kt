@@ -50,5 +50,6 @@ fun YoutubeListResponse<VideoCategoryResponse>.toEntity() = CategoryResultEntity
 
 fun VideoCategoryResponse.toEntity() = CategoryEntity(
     id = id?:"",
-    name = snippet?.title?:""
+    name = snippet?.title?:"",
+    assignable = snippet?.assignable?:false
 )
