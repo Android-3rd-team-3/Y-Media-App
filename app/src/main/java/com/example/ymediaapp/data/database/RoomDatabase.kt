@@ -7,18 +7,18 @@ import androidx.room.RoomDatabase
 
 @Database(entities = arrayOf(RoomEntity::class), version = 1)
 
-abstract class RoomDatabase : RoomDatabase() {
+abstract class YoutubeRoomDatabase : RoomDatabase() {
 
     abstract fun getRoomDao() : RoomDao
 
     companion object {
         val databaseName = "db_room"
-        var appDatabase : RoomDatabase? = null
+        var appDatabase : YoutubeRoomDatabase? = null
 
-        fun getInstance(context : Context) : RoomDatabase? {
+        fun getInstance(context : Context) : YoutubeRoomDatabase? {
             if(appDatabase == null){
                 appDatabase = Room.databaseBuilder(context,
-                    RoomDatabase::class.java,
+                    YoutubeRoomDatabase::class.java,
                     databaseName).
                     //마이그레이션이 실패할 때 db테이블 재생성, 데이터 사라질 수 있음
                 fallbackToDestructiveMigration()

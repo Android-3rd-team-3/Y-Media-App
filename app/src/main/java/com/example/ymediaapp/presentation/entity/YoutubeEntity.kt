@@ -33,7 +33,8 @@ data class YoutubeChannelResultEntity(
 
 data class CategoryEntity(
     val id: String,
-    val name: String
+    val name: String,
+    val assignable: Boolean = false
 )
 
 data class CategoryResultEntity(

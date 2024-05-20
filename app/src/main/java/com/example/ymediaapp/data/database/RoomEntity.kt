@@ -12,6 +12,7 @@ data class RoomEntity(
     @ColumnInfo(name = "thumbnail") val thumbnail : String? = null,
     @ColumnInfo(name = "name") val name : String? = null,
     @ColumnInfo(name = "description") val description : String? = null,
+    @ColumnInfo(name = "channelId") val channelId : String? = null,
     @ColumnInfo(name = "isLike") val isLike : Boolean? = null
 
 )

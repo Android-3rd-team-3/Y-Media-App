@@ -1,6 +1,7 @@
 package com.example.ymediaapp.data.remote.api
 
 import com.example.ymediaapp.data.remote.model.ChannelResponse
+import com.example.ymediaapp.data.remote.model.SearchResponse
 import com.example.ymediaapp.data.remote.model.VideoCategoryResponse
 import com.example.ymediaapp.data.remote.model.VideoResponse
 import com.example.ymediaapp.data.remote.model.YoutubeListResponse
@@ -46,4 +47,13 @@ interface YoutubeService {
         @Query("part") part: String = "id, snippet",
         @Query("fields") fields: String = "kind, etag, nextPageToken, prevPageToken, pageInfo, items(kind, etag, id, snippet(title, description, thumbnails(default)))",
     ): YoutubeListResponse<ChannelResponse>
+
+    @GET("youtube/v3/search")
+    suspend fun searchVideos(
+        @Query("q") query: String,
+        @Query("type") type: String = "video",
+        @Query("order") order: String = "relevance",
+        @Query("part") part: String = "id, snippet",
+        @Query("fields") fields: String = "kind, etag, items(id(videoId), snippet(title, channelTitle, publishedAt, thumbnails(default) ))",
+    ): YoutubeListResponse<SearchResponse>
 }
