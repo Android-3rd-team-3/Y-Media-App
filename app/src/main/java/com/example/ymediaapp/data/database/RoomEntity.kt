@@ -9,10 +9,10 @@ import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 data class RoomEntity(
 
     @PrimaryKey val videoId: String,
-    @ColumnInfo(name = "thumbnail") val thumbnail : String? = null,
-    @ColumnInfo(name = "name") val name : String? = null,
-    @ColumnInfo(name = "description") val description : String? = null,
-    @ColumnInfo(name = "channelId") val channelId : String? = null,
+    @ColumnInfo(name = "thumbnail") val thumbnail : String,
+    @ColumnInfo(name = "name") val name : String,
+    @ColumnInfo(name = "description") val description : String,
+    @ColumnInfo(name = "channelId") val channelId : String,
     @ColumnInfo(name = "isLike") val isLike : Boolean
 
 )

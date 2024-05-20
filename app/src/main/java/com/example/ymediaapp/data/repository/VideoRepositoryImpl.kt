@@ -24,11 +24,11 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
                 room ->
             room.map {
                 YoutubeVideoEntity(
-                    it.thumbnail ?: "값 없음",
-                    it.name ?: "값 없음",
-                    it.description ?: "값 없음",
+                    it.thumbnail,
+                    it.name,
+                    it.description,
                     it.videoId,
-                    it.channelId ?: "값 없음",
+                    it.channelId,
                     it.isLike
                 )
             }
