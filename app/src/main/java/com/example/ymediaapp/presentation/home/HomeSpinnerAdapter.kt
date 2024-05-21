@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.example.ymediaapp.databinding.SpinnerItemDropdownHomeBinding
 import com.example.ymediaapp.databinding.SpinnerItemHomeBinding
-import com.example.ymediaapp.domain.entity.CategoryEntity
+import com.example.ymediaapp.presentation.model.CategoryModel
 
 class HomeSpinnerAdapter(
     context: Context,
-    items: List<CategoryEntity>,
-): ArrayAdapter<CategoryEntity>(context, 0, items) {
+    items: List<CategoryModel>,
+): ArrayAdapter<CategoryModel>(context, 0, items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding: SpinnerItemHomeBinding
         val view: View
