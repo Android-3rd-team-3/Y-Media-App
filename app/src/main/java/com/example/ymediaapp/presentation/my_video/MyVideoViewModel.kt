@@ -17,25 +17,6 @@ class MyVideoViewModel(
     private val videoRepository: VideoRepository
 ): ViewModel() {
 
-    private var _favoriteList = MutableLiveData<List<YoutubeVideoEntity>>()
-    val favoriteList: LiveData<List<YoutubeVideoEntity>> get() = _favoriteList
+    val favoriteList: LiveData<List<YoutubeVideoEntity>> = videoRepository.getVideoData()
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            val list = videoRepository.getVideoData()
-            _favoriteList.postValue(list)
-        }
-    }
-}
-
-class MyVideoViewModelFactory: ViewModelProvider.Factory {
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(MyVideoViewModel::class.java)) {
-            return MyVideoViewModel(
-                YMediaApplication.getInstance().provideVideoRepository()
-            ) as T
-        }
-        throw IllegalArgumentException("Unknown Class")
-    }
 }
