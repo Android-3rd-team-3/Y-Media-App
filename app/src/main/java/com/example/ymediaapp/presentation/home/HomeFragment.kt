@@ -98,7 +98,6 @@ class HomeFragment : Fragment() {
                     }
 
                 }
-
         }
         with(homeViewModel) {
             popularList.observe(viewLifecycleOwner) {
