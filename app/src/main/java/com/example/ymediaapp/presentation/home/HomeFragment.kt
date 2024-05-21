@@ -37,6 +37,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initContainer()
     }
 
     override fun onCreateView(
@@ -49,7 +50,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initContainer()
+        initViewModel()
         fetchRecyclerView()
         initView()
         initData()
@@ -58,12 +59,19 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         appContainer.homeContainer = null
     }
 
     private fun initContainer() {
         appContainer = (requireActivity().application as YMediaApplication).appContainer
         appContainer.homeContainer = HomeContainer(appContainer.searchRepository)
+    }
+
+    private fun initViewModel(){
         appContainer.homeContainer?.let {
             homeViewModel =
                 ViewModelProvider(this, it.homeViewModelFactory)[HomeViewModel::class.java]
