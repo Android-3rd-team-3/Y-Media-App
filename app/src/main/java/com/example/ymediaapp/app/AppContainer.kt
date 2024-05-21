@@ -13,5 +13,6 @@ class AppContainer(context: Context) {
 
     val myVideoViewModelFactory = MyVideoViewModelFactory(videoRepository)
     val homeViewModelFactory = HomeViewModelFactory(searchRepository)
+    val detailViewModelFactory = DetailViewModelFactory(videoRepository)
 }
 

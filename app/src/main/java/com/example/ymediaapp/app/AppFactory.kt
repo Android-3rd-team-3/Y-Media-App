@@ -2,6 +2,7 @@ package com.example.ymediaapp.app
 
 import com.example.ymediaapp.domain.repository.SearchRepository
 import com.example.ymediaapp.domain.repository.VideoRepository
+import com.example.ymediaapp.presentation.detail.DetailViewModel
 import com.example.ymediaapp.presentation.home.HomeViewModel
 import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 
@@ -20,4 +21,11 @@ class HomeViewModelFactory(private val searchRepository: SearchRepository) :Fact
         return HomeViewModel(searchRepository)
     }
 
+}
+
+class DetailViewModelFactory(private val videoRepository: VideoRepository) :
+    Factory<DetailViewModel> {
+    override fun create(): DetailViewModel {
+        return DetailViewModel(videoRepository)
+    }
 }

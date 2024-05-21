@@ -8,11 +8,19 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.ymediaapp.R
+import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.ActivityMainBinding
+import com.example.ymediaapp.presentation.detail.DetailFragment
+import com.example.ymediaapp.presentation.home.FragmentDataListener
+import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FragmentDataListener {
 
     private lateinit var binding: ActivityMainBinding
+    private val detailViewModel by lazy {
+        (this.application as YMediaApplication).appContainer.detailViewModelFactory.create()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -33,5 +41,17 @@ class MainActivity : AppCompatActivity() {
         // 바텀 네비게이션 뷰 와 네비게이션을 묶어준다
         NavigationUI.setupWithNavController(binding.navigationView, navController)
 
+
     }
+
+    override fun onDataReceived(data: YoutubeVideoModel) {
+        detailViewModel.setSelectedItem(data)
+        showBottomSheet()
+    }
+
+    private fun showBottomSheet() {
+        val bottomSheetFragment = DetailFragment()
+        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+    }
+
 }

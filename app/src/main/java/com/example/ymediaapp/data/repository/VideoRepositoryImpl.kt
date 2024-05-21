@@ -1,15 +1,14 @@
 package com.example.ymediaapp.data.repository
 
 import android.content.Context
-import android.view.animation.Transformation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import androidx.lifecycle.switchMap
 import com.example.ymediaapp.data.database.RoomDao
 import com.example.ymediaapp.data.database.RoomEntity
 import com.example.ymediaapp.data.database.YoutubeRoomDatabase
 import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 import com.example.ymediaapp.domain.repository.VideoRepository
+import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
 class VideoRepositoryImpl(val context: Context) : VideoRepository {
 
@@ -37,7 +36,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
         return entityList
     }
 
-    override suspend fun insertVideoData(video: YoutubeVideoEntity) {
+    override suspend fun insertVideoData(video: YoutubeVideoModel) {
         val roomData = RoomEntity(
             video.videoId,
             video.thumbnail,

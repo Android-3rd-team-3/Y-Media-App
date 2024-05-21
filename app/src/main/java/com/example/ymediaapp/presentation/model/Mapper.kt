@@ -26,3 +26,12 @@ fun CategoryEntity.toModel() = CategoryModel(
     name,
     assignable
 )
+
+fun YoutubeVideoModel.toEntity() = YoutubeVideoEntity(
+    thumbnail = thumbnail,
+    name = name,
+    description = description,
+    videoId = videoId,
+    channelId = channelId,
+    isLike = isLike
+)

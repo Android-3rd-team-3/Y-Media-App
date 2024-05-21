@@ -1,5 +1,6 @@
 package com.example.ymediaapp.presentation.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentHomeBinding
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 import com.example.ymediaapp.presentation.model.CategoryModel
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
-
+//
+interface FragmentDataListener{
+    fun onDataReceived(data: YoutubeVideoModel)
+}
+//
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -21,6 +27,10 @@ class HomeFragment : Fragment() {
             videoOnClick(it)
         }
     }
+
+    //
+    private var listener: FragmentDataListener? = null
+    //
 
     private val categoryVideoListAdapter by lazy {
         HomeVideoAdapter {
@@ -47,6 +57,16 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    override fun onAttach(context: Context){
+        super.onAttach(context)
+
+        if(context is FragmentDataListener){
+            listener = context
+        } else{
+            throw RuntimeException("$context must implement FragmentDataListener")
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -132,7 +152,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun videoOnClick(youtubeItemModel: YoutubeVideoModel) {
-        //todo Detail Fragment 여는 작업
+        listener?.onDataReceived(youtubeItemModel)
+        //(activity as? FragmentDataListener)?.onDataReceived(youtubeItemModel)
     }
 
     private fun spinnerItemSelected(categoryModel: CategoryModel){
