@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.ymediaapp.R
 import com.example.ymediaapp.databinding.ActivityMainBinding
+import com.example.ymediaapp.presentation.entity.SearchVideoEntity
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,4 +35,10 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navigationView, navController)
 
     }
+
+//    override fun onDataReceived(data: SearchVideoEntity) {
+//        viewModel.setSelectedItem(data)
+//        showBottomSheet()
+//    }
+
 }

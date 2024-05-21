@@ -12,6 +12,7 @@ import com.example.ymediaapp.databinding.FragmentSearchBinding
 import com.example.ymediaapp.presentation.entity.SearchVideoEntity
 
 
+
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -43,6 +44,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        observeViewModel()
         setupListeners()
     }
 
@@ -52,54 +54,56 @@ class SearchFragment : Fragment() {
     }
 
     private fun initView() {
-        with(binding) {
-            searchRecyclerView.apply {
-                adapter = searchListAdapter
-                layoutManager = GridLayoutManager(requireContext(), 2)
-            }
-
+        binding.searchRecyclerView.apply {
+            adapter = searchListAdapter
+            layoutManager = GridLayoutManager(requireContext(), 2)
         }
-        with(searchViewModel) {
-            searchList.observe(viewLifecycleOwner) {
+    }
+
+    private fun observeViewModel() {
+        searchViewModel.searchList.observe(viewLifecycleOwner) {
                 searchListAdapter.itemList = it
                 searchListAdapter.notifyDataSetChanged()
             }
-        }
     }
 
 
     private fun setupListeners() {
-        binding.searchButton.setOnClickListener {
-            val query = binding.searchEditText.text.toString()
+        with(binding) {
+        searchButton.setOnClickListener {
+            val query = searchEditText.text.toString()
             if (query.isNotEmpty()) {
                 searchViewModel.getSearchList(query)
             } else {
                 Toast.makeText(requireContext(), "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
-
-        binding.chip.setOnClickListener {
-            val query = binding.chip.text.toString()
-            searchViewModel.getSearchList(query)
+            chip.setOnClickListener {
+                val query = chip.text.toString()
+                searchEditText.setText(query)
+                searchViewModel.getSearchList(query)
+            }
+            chip2.setOnClickListener {
+                val query = chip2.text.toString()
+                searchEditText.setText(query)
+                searchViewModel.getSearchList(query)
+            }
+            chip3.setOnClickListener {
+                val query = chip3.text.toString()
+                searchEditText.setText(query)
+                searchViewModel.getSearchList(query)
+            }
+            chip4.setOnClickListener {
+                val query = chip4.text.toString()
+                searchEditText.setText(query)
+                searchViewModel.getSearchList(query)
+            }
         }
-
-        binding.chip2.setOnClickListener {
-            val query = binding.chip2.text.toString()
-            searchViewModel.getSearchList(query)
-        }
-
-        binding.chip3.setOnClickListener {
-            val query = binding.chip3.text.toString()
-            searchViewModel.getSearchList(query)
-        }
-
-        binding.chip4.setOnClickListener {
-            val query = binding.chip4.text.toString()
-            searchViewModel.getSearchList(query)
-        }
-
     }
     private fun videoOnClick(searchItemEntity: SearchVideoEntity) {
-        //Detail Fragment 여는 작업
+        (activity as? FragmentDataListener)?.onDataReceived(searchItemEntity)
     }
+}
+interface FragmentDataListener{
+    fun onDataReceived(data: SearchVideoEntity)
 }
