@@ -11,32 +11,27 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ymediaapp.app.AppContainer
+import com.example.ymediaapp.app.DetailContainer
 import com.example.ymediaapp.app.HomeContainer
 import com.example.ymediaapp.app.MyVideoContainer
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentHomeBinding
 import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
+import com.example.ymediaapp.presentation.detail.DetailViewModel
+import com.example.ymediaapp.presentation.main.MainViewModel
 import com.example.ymediaapp.presentation.model.CategoryModel
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 
-//
-interface FragmentDataListener{
-    fun onDataReceived(data: YoutubeVideoModel)
-}
-//
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var detailViewModel: DetailViewModel
     private val popularListAdapter by lazy {
         HomeVideoAdapter {
             videoOnClick(it)
         }
     }
-
-    //
-    private var listener: FragmentDataListener? = null
-    //
 
     private val categoryVideoListAdapter by lazy {
         HomeVideoAdapter {
@@ -49,6 +44,8 @@ class HomeFragment : Fragment() {
     private lateinit var appContainer: AppContainer
     private lateinit var homeViewModel: HomeViewModel
 
+    private lateinit var mainViewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -59,16 +56,6 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
-    }
-
-    override fun onAttach(context: Context){
-        super.onAttach(context)
-
-        if(context is FragmentDataListener){
-            listener = context
-        } else{
-            throw RuntimeException("$context must implement FragmentDataListener")
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,6 +78,17 @@ class HomeFragment : Fragment() {
             homeViewModel =
                 ViewModelProvider(this, it.homeViewModelFactory)[HomeViewModel::class.java]
         }
+
+        //
+        appContainer = (requireActivity().application as YMediaApplication).appContainer
+        appContainer.detailContainer = DetailContainer(appContainer.videoRepository)
+        appContainer.detailContainer?.let {
+            detailViewModel = ViewModelProvider(requireActivity(), it.detailViewModelFactory)[DetailViewModel::class.java]
+        }
+        //
+
+
+        mainViewModel=ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
     }
 
     private fun initView() {
@@ -167,8 +165,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun videoOnClick(youtubeItemModel: YoutubeVideoModel) {
-        listener?.onDataReceived(youtubeItemModel)
+        //listener?.onDataReceived(youtubeItemModel)
         //(activity as? FragmentDataListener)?.onDataReceived(youtubeItemModel)
+
+        //(activity as? FragmentDataListener)?.onDataReceived(youtubeItemModel)
+        mainViewModel.setSelectedItem(youtubeItemModel)
+
     }
 
     private fun spinnerItemSelected(categoryModel: CategoryModel) {

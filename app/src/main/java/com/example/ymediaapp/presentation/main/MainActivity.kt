@@ -1,11 +1,14 @@
 package com.example.ymediaapp.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.ymediaapp.R
@@ -16,14 +19,16 @@ import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.ActivityMainBinding
 import com.example.ymediaapp.presentation.detail.DetailFragment
 import com.example.ymediaapp.presentation.detail.DetailViewModel
-import com.example.ymediaapp.presentation.home.FragmentDataListener
+
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 
-class MainActivity : AppCompatActivity(), FragmentDataListener {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var appContainer: AppContainer
     private lateinit var detailViewModel: DetailViewModel
+
+    private lateinit var mainViewModel: MainViewModel
 
     private lateinit var binding: ActivityMainBinding
 //    private val detailViewModel by lazy {
@@ -60,15 +65,34 @@ class MainActivity : AppCompatActivity(), FragmentDataListener {
             detailViewModel = ViewModelProvider(this, it.detailViewModelFactory)[DetailViewModel::class.java]
         }
 
+        mainViewModel=ViewModelProvider(this).get(MainViewModel::class.java)
+
+        // LiveData 관찰
+        mainViewModel.selectedItem.observe(this) {
+            it?.let {
+                try {
+                    showBottomSheet(it)
+                    Log.d("main 1", "$it")
+                }
+                finally {
+                    Log.d("main 2","$it")
+                    mainViewModel.setSelectedItem(null)
+                }
+            }
+        }
+        //
+
     }
 
-    override fun onDataReceived(data: YoutubeVideoModel) {
-        detailViewModel.setSelectedItem(data)
-        showBottomSheet()
-    }
+//    override fun onDataReceived(data: YoutubeVideoModel) {
+//        detailViewModel.setSelectedItem(data)
+//        //showBottomSheet()
+//        //
+//    }
 
-    private fun showBottomSheet() {
+    private fun showBottomSheet(data: YoutubeVideoModel) {
         val bottomSheetFragment = DetailFragment()
+        bottomSheetFragment.arguments= bundleOf("clickItem" to data)
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
 

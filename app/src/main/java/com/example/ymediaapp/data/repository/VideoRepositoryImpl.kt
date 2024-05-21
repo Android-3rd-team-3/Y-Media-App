@@ -1,6 +1,7 @@
 package com.example.ymediaapp.data.repository
 
 import android.content.Context
+import android.content.LocusId
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.ymediaapp.data.database.RoomDao
@@ -15,13 +16,14 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
     lateinit var roomDB: YoutubeRoomDatabase
     lateinit var roomDao: RoomDao
 
-    init{
+    init {
         roomDB = YoutubeRoomDatabase.getInstance(context)!!
         roomDao = roomDB.getRoomDao()
-
     }
     override fun getVideoData(): LiveData<List<YoutubeVideoEntity>> {
 
+//        roomDB = YoutubeRoomDatabase.getInstance(context)!!
+//        roomDao = roomDB.getRoomDao()
 
         val entityList = roomDao.getAllData().map {
                 room ->
@@ -62,6 +64,20 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
             video.isLike
         )
         roomDao.deleteData(roomData)
+    }
+
+    override suspend fun getDataById(videoId: String): YoutubeVideoEntity? {
+        val roomEntity = roomDao.getDataById(videoId)
+        return roomEntity?.let {
+            YoutubeVideoEntity(
+                it.thumbnail,
+                it.name,
+                it.description,
+                it.videoId,
+                it.channelId,
+                it.isLike
+            )
+        }
     }
 
 

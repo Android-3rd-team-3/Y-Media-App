@@ -49,6 +49,14 @@ class DetailFragment : BottomSheetDialogFragment() {
             detailViewModel = ViewModelProvider(requireActivity(), it.detailViewModelFactory)[DetailViewModel::class.java]
         }
 
+        arguments?.let {
+            val item = it.getParcelable("clickItem",YoutubeVideoModel::class.java)
+            Log.d("detail it", "$it")
+            if (item != null) {
+                detailViewModel.setSelectedItem(item)
+            }
+        }
+
         binding.btnItemIsLike.setOnClickListener {
             detailViewModel.toggleLike()
         }

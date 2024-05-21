@@ -1,6 +1,5 @@
 package com.example.ymediaapp.app
 
-import android.content.Context
 import com.example.ymediaapp.app.network.RetrofitClient
 import com.example.ymediaapp.data.repository.SearchRepositoryImpl
 import com.example.ymediaapp.data.repository.VideoRepositoryImpl
@@ -10,11 +9,13 @@ import com.example.ymediaapp.presentation.detail.DetailViewModelFactory
 import com.example.ymediaapp.presentation.home.HomeViewModelFactory
 import com.example.ymediaapp.presentation.my_video.MyVideoViewModelFactory
 
-class AppContainer(context: Context) {
+class AppContainer() {
     private val youtubeService = RetrofitClient.youtubeService
 
     val searchRepository = SearchRepositoryImpl(youtubeService)
-    val videoRepository = VideoRepositoryImpl(context)
+    val videoRepository: VideoRepository by lazy {
+        VideoRepositoryImpl(YMediaApplication.getInstance()!!)
+    }
 
     var myVideoContainer: MyVideoContainer? = null
     var homeContainer: HomeContainer? = null
