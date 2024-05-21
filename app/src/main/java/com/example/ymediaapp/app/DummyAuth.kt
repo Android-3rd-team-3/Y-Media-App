@@ -1,4 +1,4 @@
-package com.example.ymediaapp.presentation.my_video
+package com.example.ymediaapp.app
 
 import androidx.annotation.DrawableRes
 import com.example.ymediaapp.R
