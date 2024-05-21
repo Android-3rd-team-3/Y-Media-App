@@ -65,7 +65,7 @@ fun formatDate(inputDateStr: String): String? {
 
         when {
             diffInYears > 0 -> "${diffInYears}년 전"
-            diffInMonths > 0 -> "${diffInMonths}달 전"
+            diffInMonths > 0 -> "${diffInMonths}개월 전"
             diffInDays > 0 -> "${diffInDays}일 전"
             diffInHours > 0 -> "${diffInHours}시간 전"
             diffInMinutes > 0 -> "${diffInMinutes}분 전"
