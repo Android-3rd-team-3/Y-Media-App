@@ -8,8 +8,8 @@ import androidx.lifecycle.switchMap
 import com.example.ymediaapp.data.database.RoomDao
 import com.example.ymediaapp.data.database.RoomEntity
 import com.example.ymediaapp.data.database.YoutubeRoomDatabase
-import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
-import com.example.ymediaapp.presentation.repository.VideoRepository
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
+import com.example.ymediaapp.domain.repository.VideoRepository
 
 class VideoRepositoryImpl(val context: Context) : VideoRepository {
 

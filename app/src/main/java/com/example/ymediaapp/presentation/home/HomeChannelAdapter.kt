@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.databinding.RvItemHomeBinding
-import com.example.ymediaapp.presentation.entity.YoutubeChannelEntity
+import com.example.ymediaapp.domain.entity.YoutubeChannelEntity
 
 //채널은 클릭 이벤트 없음
 class HomeChannelAdapter(

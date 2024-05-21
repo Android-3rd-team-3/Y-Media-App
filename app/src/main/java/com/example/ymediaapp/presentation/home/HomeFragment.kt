@@ -11,9 +11,8 @@ import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ymediaapp.databinding.FragmentHomeBinding
-import com.example.ymediaapp.presentation.entity.CategoryEntity
-import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
-import java.lang.RuntimeException
+import com.example.ymediaapp.domain.entity.CategoryEntity
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 
 //
 interface FragmentDataListener{

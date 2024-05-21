@@ -1,4 +1,4 @@
-package com.example.ymediaapp.presentation.entity
+package com.example.ymediaapp.domain.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

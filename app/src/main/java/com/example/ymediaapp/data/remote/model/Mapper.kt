@@ -1,13 +1,13 @@
 package com.example.ymediaapp.data.remote.model
 
-import com.example.ymediaapp.presentation.entity.CategoryEntity
-import com.example.ymediaapp.presentation.entity.CategoryResultEntity
-import com.example.ymediaapp.presentation.entity.SearchVideoEntity
-import com.example.ymediaapp.presentation.entity.SearchVideoResultEntity
-import com.example.ymediaapp.presentation.entity.YoutubeChannelEntity
-import com.example.ymediaapp.presentation.entity.YoutubeChannelResultEntity
-import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
-import com.example.ymediaapp.presentation.entity.YoutubeVideoResultEntity
+import com.example.ymediaapp.domain.entity.CategoryEntity
+import com.example.ymediaapp.domain.entity.CategoryResultEntity
+import com.example.ymediaapp.domain.entity.SearchVideoEntity
+import com.example.ymediaapp.domain.entity.SearchVideoResultEntity
+import com.example.ymediaapp.domain.entity.YoutubeChannelEntity
+import com.example.ymediaapp.domain.entity.YoutubeChannelResultEntity
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
+import com.example.ymediaapp.domain.entity.YoutubeVideoResultEntity
 import java.util.Date
 
 fun YoutubeListResponse<VideoResponse>.toEntity() = YoutubeVideoResultEntity(
@@ -74,3 +74,11 @@ fun SearchResponse.toEntity() = SearchVideoEntity(
     id = id?.videoId?:"",
     dateTime = snippet?.publishedAt?: Date())
 )
+
+//fun SearchResponse.toEntity() = SearchVideoEntity(
+//    thumbnail = snippet?.thumbnails?.default?.url?:"",
+//    title = snippet?.title?:"",
+//    channel = snippet?.channelTitle?:"",
+//    id = id?.videoId?:"",
+//    dateTime = snippet?.publishedAt?: Date())
+//)
