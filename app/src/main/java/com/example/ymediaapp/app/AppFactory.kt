@@ -1,10 +1,5 @@
 package com.example.ymediaapp.app
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.ymediaapp.app.network.RetrofitClient
-import com.example.ymediaapp.data.repository.SearchRepositoryImpl
 import com.example.ymediaapp.domain.repository.SearchRepository
 import com.example.ymediaapp.domain.repository.VideoRepository
 import com.example.ymediaapp.presentation.home.HomeViewModel
