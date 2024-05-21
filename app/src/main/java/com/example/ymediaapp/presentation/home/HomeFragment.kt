@@ -58,6 +58,7 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        appContainer.homeContainer = null
     }
 
     private fun initContainer() {
