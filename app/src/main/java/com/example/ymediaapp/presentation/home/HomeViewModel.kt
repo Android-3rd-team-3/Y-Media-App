@@ -60,14 +60,3 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
         return sb.toString()
     }
 }
-
-class HomeViewModelFactory : ViewModelProvider.Factory {
-    private val repository = SearchRepositoryImpl(RetrofitClient.youtubeService)
-
-    override fun <T : ViewModel> create(
-        modelClass: Class<T>,
-        extras: CreationExtras
-    ): T {
-        return HomeViewModel(repository) as T
-    }
-}
