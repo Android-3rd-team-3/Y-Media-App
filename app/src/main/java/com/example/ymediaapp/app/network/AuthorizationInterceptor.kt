@@ -1,4 +1,4 @@
-package com.example.ymediaapp.network
+package com.example.ymediaapp.app.network
 
 import okhttp3.Interceptor
 import okhttp3.Response

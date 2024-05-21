@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ymediaapp.databinding.FragmentSearchBinding
-import com.example.ymediaapp.presentation.entity.SearchVideoEntity
+import com.example.ymediaapp.domain.entity.SearchVideoEntity
 
 
 
