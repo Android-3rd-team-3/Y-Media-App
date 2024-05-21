@@ -1,9 +1,11 @@
 package com.example.ymediaapp.app
 
 import android.content.Context
+import androidx.lifecycle.ViewModelProvider
 import com.example.ymediaapp.app.network.RetrofitClient
 import com.example.ymediaapp.data.repository.SearchRepositoryImpl
 import com.example.ymediaapp.data.repository.VideoRepositoryImpl
+import com.example.ymediaapp.domain.repository.SearchRepository
 import com.example.ymediaapp.domain.repository.VideoRepository
 import com.example.ymediaapp.presentation.my_video.MyVideoViewModelFactory
 
