@@ -10,25 +10,36 @@ import com.example.ymediaapp.data.repository.SearchRepositoryImpl
 import com.example.ymediaapp.app.network.RetrofitClient
 import com.example.ymediaapp.domain.entity.SearchVideoEntity
 import com.example.ymediaapp.domain.repository.SearchRepository
+import com.example.ymediaapp.domain.repository.VideoRepository
 import kotlinx.coroutines.launch
 
 
-class SearchViewModel ( private val repository: SearchRepository): ViewModel() {
+class SearchViewModel ( private val searchRepository: SearchRepository): ViewModel() {
     private val _getSearchList= MutableLiveData<List<SearchVideoEntity>>()
     val searchList: LiveData<List<SearchVideoEntity>> get() = _getSearchList
 
     fun getSearchList(query: String) = viewModelScope.launch {
-        _getSearchList.value = repository.getSearchList(query).items
+        _getSearchList.value = searchRepository.getSearchList(query).items
     }
 }
 
-class SearchViewModelFactory: ViewModelProvider.Factory{
-    private val repository = SearchRepositoryImpl(RetrofitClient.youtubeService)
-
-    override fun <T : ViewModel> create(
-        modelClass: Class<T>,
-        extras: CreationExtras
-    ): T {
-        return SearchViewModel(repository) as T
+//class SearchViewModelFactory(private val searchRepository: SearchRepository): ViewModelProvider.Factory{
+//    private val repository = SearchRepositoryImpl(RetrofitClient.youtubeService)
+//
+//    override fun <T : ViewModel> create(
+//        modelClass: Class<T>,
+//        extras: CreationExtras
+//    ): T {
+//        return SearchViewModel(repository) as T
+//    }
+//}
+class SearchViewModelFactory(private val searchRepository: SearchRepository): ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
+            return SearchViewModel(
+                searchRepository = searchRepository
+            ) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel")
     }
 }
