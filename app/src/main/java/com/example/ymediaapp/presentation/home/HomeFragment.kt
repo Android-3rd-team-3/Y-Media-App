@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import com.example.ymediaapp.app.YMediaApplication
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ymediaapp.databinding.FragmentHomeBinding
@@ -40,8 +41,11 @@ class HomeFragment : Fragment() {
 
     private val channelListAdapter by lazy { HomeChannelAdapter() }
 
-    private val homeViewModel by viewModels<HomeViewModel> {
-        HomeViewModelFactory()
+    private val homeViewModel by lazy {
+        (requireActivity().application as YMediaApplication)
+            .appContainer
+            .homeViewModelFactory
+            .create()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

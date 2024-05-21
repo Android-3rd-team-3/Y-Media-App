@@ -1,6 +1,7 @@
 package com.example.ymediaapp.app.network
 
 import com.example.ymediaapp.data.remote.api.YoutubeService
+import com.example.ymediaapp.network.AuthorizationInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

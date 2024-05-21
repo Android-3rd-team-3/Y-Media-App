@@ -72,8 +72,9 @@ fun SearchResponse.toEntity() = SearchVideoEntity(
     title = snippet?.title?:"",
     channel = snippet?.channelTitle?:"",
     id = id?.videoId?:"",
-    dateTime = snippet?.publishedAt?: Date())
+    dateTime = (snippet?.publishedAt?: Date()).toString()
 )
+
 
 //fun SearchResponse.toEntity() = SearchVideoEntity(
 //    thumbnail = snippet?.thumbnails?.default?.url?:"",

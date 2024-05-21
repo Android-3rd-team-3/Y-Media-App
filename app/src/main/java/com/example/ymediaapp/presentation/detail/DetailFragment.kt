@@ -13,13 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.R
 import com.example.ymediaapp.data.repository.VideoRepositoryImpl
+import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentDetailBinding
-import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class DetailFragment : BottomSheetDialogFragment() {
 
-    private lateinit var viewModel: DetailViewModel
+    private lateinit var detailViewModel: DetailViewModel
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -35,19 +36,20 @@ class DetailFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
+        detailViewModel = ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
+
+
 
 
         binding.btnItemIsLike.setOnClickListener {
-            viewModel.toggleLike()
+            detailViewModel.toggleLike()
         }
 
         binding.btnShare.setOnClickListener {
-            viewModel.selectedItem.value?.let { it1 -> shareVideo(it1) }
+            detailViewModel.selectedItem.value?.let { it1: YoutubeVideoEntity -> shareVideo(it1) }
         }
-        //djfij
 
-        viewModel.selectedItem.observe(viewLifecycleOwner) {
+        detailViewModel.selectedItem.observe(viewLifecycleOwner) {
             if (it != null) {
                 with(binding) {
                     Glide.with(binding.root).load(it.thumbnail).into(ivThumbnail)
@@ -60,12 +62,12 @@ class DetailFragment : BottomSheetDialogFragment() {
                 updateLikeButton(it.isLike)
             }
         }
-        viewModel.shareItem.observe(viewLifecycleOwner) {
+        detailViewModel.shareItem.observe(viewLifecycleOwner) {
             if (it != null) {
                 try {
                     shareVideo(it)
                 } finally {
-                    viewModel.setShareItem(null)
+                    detailViewModel.setShareItem(null)
                 }
             }
         }

@@ -46,7 +46,7 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
     }
 
     fun getCategoryList() = viewModelScope.launch {
-        _getCategoryList.value = repository.getCategoryList().items
+        _getCategoryList.value = repository.getCategoryList().items.filter { it.assignable }
     }
 
     private fun getChannelIds(): String {
@@ -58,16 +58,5 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
         Log.d("string", sb.toString())
         if (sb.lastIndex > 0) sb.deleteAt(sb.lastIndex)
         return sb.toString()
-    }
-}
-
-class HomeViewModelFactory : ViewModelProvider.Factory {
-    private val repository = SearchRepositoryImpl(RetrofitClient.youtubeService)
-
-    override fun <T : ViewModel> create(
-        modelClass: Class<T>,
-        extras: CreationExtras
-    ): T {
-        return HomeViewModel(repository) as T
     }
 }

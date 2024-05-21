@@ -12,15 +12,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.ymediaapp.R
+import com.example.ymediaapp.app.DetailViewModelFactory
+import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.data.database.YoutubeRoomDatabase
 import com.example.ymediaapp.data.repository.VideoRepositoryImpl
 import com.example.ymediaapp.databinding.ActivityMainBinding
 import com.example.ymediaapp.presentation.detail.DetailFragment
 import com.example.ymediaapp.presentation.detail.DetailViewModel
-import com.example.ymediaapp.presentation.detail.DetailViewModelFactory
-import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 import com.example.ymediaapp.presentation.home.FragmentDataListener
-import com.example.ymediaapp.presentation.repository.VideoRepository
+import com.example.ymediaapp.domain.repository.VideoRepository
 
 class MainActivity : AppCompatActivity(), FragmentDataListener {
 
@@ -39,9 +40,13 @@ class MainActivity : AppCompatActivity(), FragmentDataListener {
             insets
         }
 
-        val repository = VideoRepositoryImpl(this)
-        val viewModelFactory = DetailViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
+//        val repository = VideoRepositoryImpl(this)
+//        val viewModelFactory = DetailViewModelFactory(repository)
+
+        //viewModel = (this.application as YMediaApplication).appContainer.detailViewModelFactory.create()
+
+        //viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(DetailViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
         //네비게이션을 담는 호스트
         val navHostFragment =

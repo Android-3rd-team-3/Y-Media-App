@@ -15,7 +15,7 @@ data class YoutubeVideoEntity( // 동영상
 
 data class YoutubeVideoResultEntity(
     val kind: String,
-    val eTag: String,
+    val eTag: String, // 데이터 변동이 있으면 새데이터 보내고 없으면 304 <<
     val nextPageToken: String,
     val prevPageToken: String,
     val items: List<YoutubeVideoEntity>
