@@ -1,16 +1,16 @@
 package com.example.ymediaapp.presentation.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentHomeBinding
-import com.example.ymediaapp.domain.entity.CategoryEntity
-import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
+import com.example.ymediaapp.presentation.model.CategoryModel
+import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
 
 class HomeFragment : Fragment() {
@@ -90,8 +90,8 @@ class HomeFragment : Fragment() {
                         position: Int,
                         id: Long
                     ) {
-                        val item =  (parent?.adapter?.getItem(position) as? CategoryEntity) ?:
-                        CategoryEntity(
+                        val item =  (parent?.adapter?.getItem(position) as? CategoryModel) ?:
+                        CategoryModel(
                             "0",
                             "Category"
                         )
@@ -131,12 +131,12 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun videoOnClick(youtubeItemEntity: YoutubeVideoEntity) {
+    private fun videoOnClick(youtubeItemModel: YoutubeVideoModel) {
         //todo Detail Fragment 여는 작업
     }
 
-    private fun spinnerItemSelected(categoryEntity: CategoryEntity){
-        homeViewModel.getCategoryVideoList(categoryEntity.id)
+    private fun spinnerItemSelected(categoryModel: CategoryModel){
+        homeViewModel.getCategoryVideoList(categoryModel.id)
     }
 
 }

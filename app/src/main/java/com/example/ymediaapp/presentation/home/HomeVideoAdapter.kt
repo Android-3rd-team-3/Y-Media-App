@@ -6,23 +6,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.databinding.RvItemHomeBinding
 import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
+import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
 class HomeVideoAdapter(
-    private val onClick: (YoutubeVideoEntity) -> Unit
+    private val onClick: (YoutubeVideoModel) -> Unit
 ): RecyclerView.Adapter<HomeVideoAdapter.HomeVideoViewHolder>() {
-    var itemList = listOf<YoutubeVideoEntity>()
+    var itemList = listOf<YoutubeVideoModel>()
     class HomeVideoViewHolder(
         private val binding: RvItemHomeBinding,
-        private val onClick: (YoutubeVideoEntity) -> Unit
+        private val onClick: (YoutubeVideoModel) -> Unit
     ): RecyclerView.ViewHolder(binding.root){
 
 
-        fun bind(youtubeItemEntity: YoutubeVideoEntity){
+        fun bind(youtubeItemModel: YoutubeVideoModel){
             with(binding){
-                Glide.with(binding.root).load(youtubeItemEntity.thumbnail).into(ivTitle)
-                tvTitle.text = youtubeItemEntity.name
+                Glide.with(binding.root).load(youtubeItemModel.thumbnail).into(ivTitle)
+                tvTitle.text = youtubeItemModel.name
                 itemView.setOnClickListener {
-                    onClick(youtubeItemEntity)
+                    onClick(youtubeItemModel)
                 }
             }
         }
