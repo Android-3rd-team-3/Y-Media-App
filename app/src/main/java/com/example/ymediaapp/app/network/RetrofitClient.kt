@@ -1,4 +1,4 @@
-package com.example.ymediaapp.network
+package com.example.ymediaapp.app.network
 
 import com.example.ymediaapp.data.remote.api.YoutubeService
 import okhttp3.OkHttpClient

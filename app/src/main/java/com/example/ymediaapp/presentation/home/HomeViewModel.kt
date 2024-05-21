@@ -8,11 +8,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.ymediaapp.data.repository.SearchRepositoryImpl
-import com.example.ymediaapp.network.RetrofitClient
-import com.example.ymediaapp.presentation.entity.CategoryEntity
-import com.example.ymediaapp.presentation.entity.YoutubeChannelEntity
-import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
-import com.example.ymediaapp.presentation.repository.SearchRepository
+import com.example.ymediaapp.app.network.RetrofitClient
+import com.example.ymediaapp.domain.entity.CategoryEntity
+import com.example.ymediaapp.domain.entity.YoutubeChannelEntity
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
+import com.example.ymediaapp.domain.repository.SearchRepository
 import kotlinx.coroutines.launch
 import java.lang.StringBuilder
 
