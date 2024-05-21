@@ -4,11 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.ymediaapp.data.repository.SearchRepositoryImpl
-import com.example.ymediaapp.app.network.RetrofitClient
 import com.example.ymediaapp.domain.entity.CategoryEntity
 import com.example.ymediaapp.domain.entity.YoutubeChannelEntity
 import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
