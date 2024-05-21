@@ -6,6 +6,7 @@ import com.example.ymediaapp.data.repository.SearchRepositoryImpl
 import com.example.ymediaapp.data.repository.VideoRepositoryImpl
 import com.example.ymediaapp.domain.repository.SearchRepository
 import com.example.ymediaapp.domain.repository.VideoRepository
+import com.example.ymediaapp.presentation.home.HomeViewModelFactory
 import com.example.ymediaapp.presentation.my_video.MyVideoViewModelFactory
 import com.example.ymediaapp.presentation.search.SearchViewModelFactory
 
@@ -17,6 +18,7 @@ class AppContainer(context: Context) {
 
     var myVideoContainer: MyVideoContainer? = null
     var searchContainer: SearchContainer? = null
+    var homeContainer: HomeContainer? = null
 
 }
 
@@ -35,3 +37,8 @@ class SearchContainer(
 }
 
 
+class HomeContainer(
+    private val searchRepository: SearchRepository
+) {
+    val homeViewModelFactory = HomeViewModelFactory(searchRepository)
+}

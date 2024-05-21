@@ -1,8 +1,8 @@
-package com.example.ymediaapp.domain.entity
+package com.example.ymediaapp.presentation.model
 
 import java.util.Date
 
-data class YoutubeVideoEntity( // 동영상
+data class YoutubeVideoModel( // 동영상
     val thumbnail: String,// 썸네일 URL
     val name: String,// 이름
     val description: String, // 설명
@@ -11,15 +11,15 @@ data class YoutubeVideoEntity( // 동영상
     val isLike: Boolean = false // 좋아요 List 포함 여부
 )
 
-data class YoutubeVideoResultEntity(
+data class YoutubeVideoResultModel(
     val kind: String,
-    val eTag: String, // 데이터 변동이 있으면 새데이터 보내고 없으면 304 <<
+    val eTag: String,
     val nextPageToken: String,
     val prevPageToken: String,
-    val items: List<YoutubeVideoEntity>
+    val items: List<YoutubeVideoModel>
 )
 
-data class YoutubeChannelEntity( // 채널
+data class YoutubeChannelModel( // 채널
     val thumbnail: String,// 썸네일 URL
     val name: String,// 이름
     val description: String, // 설명
@@ -27,25 +27,25 @@ data class YoutubeChannelEntity( // 채널
     //val videoList: List<YoutubeVideoEntity>// 비디오 리스트
 )
 
-data class YoutubeChannelResultEntity(
+data class YoutubeChannelResultModel(
     val kind: String,
     val eTag: String,
-    val items: List<YoutubeChannelEntity>
+    val items: List<YoutubeChannelModel>
 )
 
-data class CategoryEntity(
+data class CategoryModel(
     val id: String,
     val name: String,
     val assignable: Boolean = false
 )
 
-data class CategoryResultEntity(
+data class CategoryResultModel(
     val kind: String,
     val eTag: String,
-    val items: List<CategoryEntity>
+    val items: List<CategoryModel>
 )
 
-data class SearchVideoEntity(
+data class SearchVideoModel(
     val thumbnail: String,
     val title: String,
     val channel: String,
@@ -53,12 +53,12 @@ data class SearchVideoEntity(
     val dateTime: Date
 )
 
-data class SearchVideoResultEntity(
+data class SearchVideoResultModel(
     val kind: String,
     val eTag: String,
     val nextPageToken: String,
     val prevPageToken: String,
-    val items: List<SearchVideoEntity>
+    val items: List<SearchVideoModel>
 )
 
 
