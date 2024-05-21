@@ -12,7 +12,14 @@ import com.example.ymediaapp.presentation.model.YoutubeChannelModel
 class HomeChannelAdapter(
     //private val onClick: (YoutubeChannelEntity) -> Unit
 ): RecyclerView.Adapter<HomeChannelAdapter.HomeChannelViewHolder>() {
-    var itemList = listOf<YoutubeChannelModel>()
+    var itemList = listOf<YoutubeChannelModel>(
+        YoutubeChannelModel(
+            "",
+            "",
+            "",
+            ""
+        )
+    )
     class HomeChannelViewHolder(
         private val binding: RvItemHomeBinding,
         //private val onClick: (YoutubeChannelEntity) -> Unit
