@@ -26,6 +26,12 @@ class MyVideoFragment : Fragment() {
         MyVideoRvAdapter()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        appContainer = (requireActivity().application as YMediaApplication).appContainer
+        appContainer.myVideoContainer = MyVideoContainer(appContainer.videoRepository)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,8 +43,6 @@ class MyVideoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        appContainer = (requireActivity().application as YMediaApplication).appContainer
-        appContainer.myVideoContainer = MyVideoContainer(appContainer.videoRepository)
         appContainer.myVideoContainer?.let {
             myVideoViewModel = ViewModelProvider(this, it.myVideoViewModelFactory)[MyVideoViewModel::class.java]
             user = it.user
@@ -132,8 +136,11 @@ class MyVideoFragment : Fragment() {
 
     override fun onDestroyView() {
         _binding = null
-        appContainer.myVideoContainer = null
         super.onDestroyView()
     }
 
+    override fun onDestroy() {
+        appContainer.myVideoContainer = null
+        super.onDestroy()
+    }
 }
