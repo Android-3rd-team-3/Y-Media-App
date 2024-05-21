@@ -59,15 +59,8 @@ class MainActivity : AppCompatActivity(), FragmentDataListener {
     override fun onDataReceived(data: YoutubeVideoEntity) {
         viewModel.setSelectedItem(data)
         showBottomSheet()
-        Log.d("onDataReceived", "correct")
     }
 
-    //        private fun showBottomSheet(selectedItem: YoutubeVideoEntity) {
-//        val bottomSheetFragment = DetailFragment().apply{
-//            arguments = bundleOf(ARG_ITEM to selectedItem)
-//        }
-//        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
-//    }
     private fun showBottomSheet() {
         val bottomSheetFragment = DetailFragment()
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)

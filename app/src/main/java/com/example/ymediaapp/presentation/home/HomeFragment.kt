@@ -27,7 +27,6 @@ class HomeFragment : Fragment() {
     private val popularListAdapter by lazy {
         HomeVideoAdapter {
             videoOnClick(it)
-//            (activity as? FragmentDataListener)?.onDataReceived(it)
         }
     }
     //
@@ -153,9 +152,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun videoOnClick(youtubeItemEntity: YoutubeVideoEntity) {
-        //todo Detail Fragment 여는 작업
-        Log.d("checkVideoOnClick","correct")
-//        listener?.onDataReceived(youtubeItemEntity)
         (activity as? FragmentDataListener)?.onDataReceived(youtubeItemEntity)
     }
 

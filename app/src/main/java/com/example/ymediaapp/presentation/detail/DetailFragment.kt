@@ -17,65 +17,6 @@ import com.example.ymediaapp.databinding.FragmentDetailBinding
 import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-//import android.os.Bundle
-//import androidx.fragment.app.Fragment
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import com.example.ymediaapp.R
-//
-//// TODO: Rename parameter arguments, choose names that match
-//// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
-//
-///**
-// * A simple [Fragment] subclass.
-// * Use the [DetailFragment.newInstance] factory method to
-// * create an instance of this fragment.
-// */
-//class DetailFragment : Fragment() {
-//    // TODO: Rename and change types of parameters
-//    private var param1: String? = null
-//    private var param2: String? = null
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
-//    }
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_detail, container, false)
-//    }
-//
-//    companion object {
-//        /**
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment DetailFragment.
-//         */
-//        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            DetailFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
-//}
-
 class DetailFragment : BottomSheetDialogFragment() {
 
     private lateinit var viewModel: DetailViewModel
@@ -94,47 +35,16 @@ class DetailFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val factory = DetailViewModelFactory(requireContext())
         viewModel = ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
-
-        // ViewModelProvider를 통해 ViewModel 가져오기
-        //viewModel = ViewModelProvider(requireActivity(),defaultViewModelProviderFactory).get(DetailViewModel::class.java)
-
-//        val selectedItem = arguments?.getParcelable<YoutubeVideoEntity>(ARG_ITEM)
-//
-//        if (selectedItem != null) {
-//            viewModel.setSelectedItem(selectedItem)
-//        } else {
-//            parentFragmentManager.popBackStack()
-//        }
-
-
-//            fun bind(youtubeItemEntity: YoutubeVideoEntity){
-//                with (binding){
-//                    Glide.with(binding.root).load(youtubeItemEntity.thumbnail).into(ivThumbnail)
-//                    tvItemTitle.text = youtubeItemEntity.name
-//                    tvItemDescription.text = youtubeItemEntity.description
-//                    tvItemId.text = youtubeItemEntity.videoId
-//                    tvItemChannelId.text = youtubeItemEntity.channelId
-//
-//                    btnItemIsLike.setOnClickListener {
-//                        viewModel.toggleLike(selectedItem)
-//                    }
-//
-//                    binding.btnShare.setOnClickListener {
-//                        shareVideo(selectedItem)
-//                    }
-//                }
-//
 
 
         binding.btnItemIsLike.setOnClickListener {
             viewModel.toggleLike()
         }
 
-//        binding.btnShare.setOnClickListener {
-//            viewModel.selectedItem.value?.let { it1 -> shareVideo(it1) }
-//        }
+        binding.btnShare.setOnClickListener {
+            viewModel.selectedItem.value?.let { it1 -> shareVideo(it1) }
+        }
 
         viewModel.selectedItem.observe(viewLifecycleOwner) {
             if (it != null) {
@@ -149,12 +59,11 @@ class DetailFragment : BottomSheetDialogFragment() {
                 updateLikeButton(it.isLike)
             }
         }
-        viewModel.shareItem.observe(viewLifecycleOwner){
-            if(it!=null){
+        viewModel.shareItem.observe(viewLifecycleOwner) {
+            if (it != null) {
                 try {
                     shareVideo(it)
-                }
-                finally {
+                } finally {
                     viewModel.setShareItem(null)
                 }
             }
@@ -163,8 +72,6 @@ class DetailFragment : BottomSheetDialogFragment() {
 
     }
 
-
-    // Like 버튼 UI 업데이트 함수
     private fun updateLikeButton(isLiked: Boolean) {
         if (isLiked) {
             binding.btnItemIsLike.text = "Dislike"
@@ -183,27 +90,6 @@ class DetailFragment : BottomSheetDialogFragment() {
         }
         startActivity(Intent.createChooser(shareIntent, "Share video via"))
     }
-
-
-    companion object {
-        private const val ARG_ITEM = "selected_item"
-
-        fun newInstance(item: YoutubeVideoEntity): DetailFragment {
-            val fragment = DetailFragment()
-            val bundle = Bundle().apply {
-                putParcelable(ARG_ITEM, item)
-            }
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
-//    private fun showBottomSheet(selectedItem: YoutubeVideoEntity) {
-//        val bottomSheetFragment = DetailFragment().apply{
-//            arguments = bundleOf("ARG_ITEM" to YoutubeVideoEntity())
-//        }
-//        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
-//    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

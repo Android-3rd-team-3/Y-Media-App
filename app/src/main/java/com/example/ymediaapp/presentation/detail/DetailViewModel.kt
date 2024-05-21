@@ -44,12 +44,6 @@ class DetailViewModel(private val repository: VideoRepository) : ViewModel() {
     fun setShareItem(selectedItem: YoutubeVideoEntity?) {
         _shareItem.value = selectedItem
     }
-//    init{
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val videoList = repository.getVideoData()
-//
-//        }
-//    }
 
 }
 
