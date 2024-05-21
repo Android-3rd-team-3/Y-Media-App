@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.example.ymediaapp.databinding.SpinnerItemDropdownHomeBinding
 import com.example.ymediaapp.databinding.SpinnerItemHomeBinding
-import com.example.ymediaapp.presentation.entity.CategoryEntity
+import com.example.ymediaapp.domain.entity.CategoryEntity
 
 class HomeSpinnerAdapter(
     context: Context,

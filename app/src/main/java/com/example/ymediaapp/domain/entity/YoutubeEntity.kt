@@ -1,4 +1,4 @@
-package com.example.ymediaapp.presentation.entity
+package com.example.ymediaapp.domain.entity
 
 import java.util.Date
 

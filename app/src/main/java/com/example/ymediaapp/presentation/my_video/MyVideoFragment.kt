@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentMyVideoBinding
-import com.example.ymediaapp.presentation.entity.YoutubeVideoEntity
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 
 class MyVideoFragment : Fragment() {
 
@@ -19,9 +20,7 @@ class MyVideoFragment : Fragment() {
         MyVideoRvAdapter()
     }
 
-    private val myVideoViewModel: MyVideoViewModel by viewModels {
-        MyVideoViewModelFactory(this.requireActivity().applicationContext)
-    }
+    private lateinit var myVideoViewModel: MyVideoViewModel
 
     private val user = DummyAuth.getUser()
 
@@ -35,6 +34,11 @@ class MyVideoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        myVideoViewModel = (requireActivity().application as YMediaApplication)
+            .appContainer
+            .myVideoViewModelFactory
+            .create()
 
         binding.apply {
             Glide.with(this@MyVideoFragment)
