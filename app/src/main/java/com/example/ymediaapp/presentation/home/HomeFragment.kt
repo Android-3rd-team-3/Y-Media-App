@@ -6,17 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ymediaapp.app.AppContainer
 import com.example.ymediaapp.app.HomeContainer
-import com.example.ymediaapp.app.MyVideoContainer
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentHomeBinding
 import com.example.ymediaapp.presentation.model.CategoryModel
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
-import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 
 
 class HomeFragment : Fragment() {
