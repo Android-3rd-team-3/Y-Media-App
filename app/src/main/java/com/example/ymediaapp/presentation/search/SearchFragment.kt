@@ -13,8 +13,13 @@ import com.example.ymediaapp.domain.entity.SearchVideoEntity
 
 
 
+interface FragmentDataListener{
+    fun onDataReceived(data: SearchVideoEntity)
+}
+
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
+
     private val binding get() = _binding!!
     private val searchListAdapter by lazy {
         SearchAdapter {
@@ -26,7 +31,6 @@ class SearchFragment : Fragment() {
     private val searchViewModel by viewModels<SearchViewModel> {
         SearchViewModelFactory()
     }
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +50,7 @@ class SearchFragment : Fragment() {
         initView()
         observeViewModel()
         setupListeners()
+
     }
 
     override fun onDestroyView() {
@@ -66,7 +71,6 @@ class SearchFragment : Fragment() {
                 searchListAdapter.notifyDataSetChanged()
             }
     }
-
 
     private fun setupListeners() {
         with(binding) {
@@ -103,7 +107,4 @@ class SearchFragment : Fragment() {
     private fun videoOnClick(searchItemEntity: SearchVideoEntity) {
         (activity as? FragmentDataListener)?.onDataReceived(searchItemEntity)
     }
-}
-interface FragmentDataListener{
-    fun onDataReceived(data: SearchVideoEntity)
 }
