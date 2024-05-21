@@ -72,30 +72,30 @@ class SearchFragment : Fragment() {
         binding.searchButton.setOnClickListener {
             val query = binding.searchEditText.text.toString()
             if (query.isNotEmpty()) {
-                searchViewModel.getSearchList()
+                searchViewModel.getSearchList(query)
             } else {
                 Toast.makeText(requireContext(), "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
 
         binding.chip.setOnClickListener {
-            val chipKid = binding.chip.text.toString()
-            searchViewModel.getSearchList()
+            val query = binding.chip.text.toString()
+            searchViewModel.getSearchList(query)
         }
 
         binding.chip2.setOnClickListener {
-            val chipEnglishTraining = binding.chip2.text.toString()
-            searchViewModel.getSearchList()
+            val query = binding.chip2.text.toString()
+            searchViewModel.getSearchList(query)
         }
 
         binding.chip3.setOnClickListener {
-            val chipSleepMusic = binding.chip3.text.toString()
-            searchViewModel.getSearchList()
+            val query = binding.chip3.text.toString()
+            searchViewModel.getSearchList(query)
         }
 
         binding.chip4.setOnClickListener {
-            val chipMovie = binding.chip4.text.toString()
-            searchViewModel.getSearchList()
+            val query = binding.chip4.text.toString()
+            searchViewModel.getSearchList(query)
         }
 
     }
