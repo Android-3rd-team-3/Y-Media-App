@@ -7,12 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ymediaapp.app.AppContainer
+import com.example.ymediaapp.app.HomeContainer
+import com.example.ymediaapp.app.MyVideoContainer
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentHomeBinding
 import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 import com.example.ymediaapp.presentation.model.CategoryModel
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
+import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 
 //
 interface FragmentDataListener{
@@ -40,12 +46,8 @@ class HomeFragment : Fragment() {
 
     private val channelListAdapter by lazy { HomeChannelAdapter() }
 
-    private val homeViewModel by lazy {
-        (requireActivity().application as YMediaApplication)
-            .appContainer
-            .homeViewModelFactory
-            .create()
-    }
+    private lateinit var appContainer: AppContainer
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +73,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initContainer()
+        fetchRecyclerView()
         initView()
         initData()
     }
@@ -78,6 +82,15 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initContainer() {
+        appContainer = (requireActivity().application as YMediaApplication).appContainer
+        appContainer.homeContainer = HomeContainer(appContainer.searchRepository)
+        appContainer.homeContainer?.let {
+            homeViewModel =
+                ViewModelProvider(this, it.homeViewModelFactory)[HomeViewModel::class.java]
+        }
     }
 
     private fun initView() {
@@ -103,25 +116,27 @@ class HomeFragment : Fragment() {
                 layoutManager = horizontalLinearLayoutManager
             }
 
-            spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        val item =  (parent?.adapter?.getItem(position) as? CategoryModel) ?:
-                        CategoryModel(
+            spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val item =
+                        (parent?.adapter?.getItem(position) as? CategoryModel) ?: CategoryModel(
                             "0",
                             "Category"
                         )
-                        spinnerItemSelected(item)
-                    }
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
-
+                    spinnerItemSelected(item)
                 }
-        }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+            }
+
+        }}
+    private fun fetchRecyclerView() {
         with(homeViewModel) {
             popularList.observe(viewLifecycleOwner) {
                 popularListAdapter.itemList = it
@@ -142,8 +157,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initData(){
-        homeViewModel.apply{
+    private fun initData() {
+        homeViewModel.apply {
             getPopularList()
             getCategoryList()
             getCategoryVideoList()
@@ -156,7 +171,7 @@ class HomeFragment : Fragment() {
         //(activity as? FragmentDataListener)?.onDataReceived(youtubeItemModel)
     }
 
-    private fun spinnerItemSelected(categoryModel: CategoryModel){
+    private fun spinnerItemSelected(categoryModel: CategoryModel) {
         homeViewModel.getCategoryVideoList(categoryModel.id)
     }
 

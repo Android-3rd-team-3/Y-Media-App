@@ -14,10 +14,14 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
 
     lateinit var roomDB: YoutubeRoomDatabase
     lateinit var roomDao: RoomDao
-    override fun getVideoData(): LiveData<List<YoutubeVideoEntity>> {
 
+    init{
         roomDB = YoutubeRoomDatabase.getInstance(context)!!
         roomDao = roomDB.getRoomDao()
+
+    }
+    override fun getVideoData(): LiveData<List<YoutubeVideoEntity>> {
+
 
         val entityList = roomDao.getAllData().map {
                 room ->
@@ -36,7 +40,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
         return entityList
     }
 
-    override suspend fun insertVideoData(video: YoutubeVideoModel) {
+    override suspend fun insertVideoData(video: YoutubeVideoEntity) {
         val roomData = RoomEntity(
             video.videoId,
             video.thumbnail,

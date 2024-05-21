@@ -11,7 +11,15 @@ import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 class HomeVideoAdapter(
     private val onClick: (YoutubeVideoModel) -> Unit
 ): RecyclerView.Adapter<HomeVideoAdapter.HomeVideoViewHolder>() {
-    var itemList = listOf<YoutubeVideoModel>()
+    var itemList = listOf<YoutubeVideoModel>(
+        YoutubeVideoModel(
+            "",
+            "",
+            "",
+            "",
+            ""
+        )
+    )
     class HomeVideoViewHolder(
         private val binding: RvItemHomeBinding,
         private val onClick: (YoutubeVideoModel) -> Unit

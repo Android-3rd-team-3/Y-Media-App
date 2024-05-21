@@ -10,24 +10,26 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.R
+import com.example.ymediaapp.app.AppContainer
+import com.example.ymediaapp.app.DetailContainer
+import com.example.ymediaapp.app.MyVideoContainer
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentDetailBinding
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
+import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class DetailFragment : BottomSheetDialogFragment() {
 
+    private lateinit var appContainer: AppContainer
     private var _binding: FragmentDetailBinding? = null
+    private lateinit var detailViewModel: DetailViewModel
     private val binding get() = _binding!!
-//
+
+    //
 //    private val detailViewModel by lazy {
 //        (requireActivity().application as YMediaApplication).appContainer.detailViewModelFactory.create()
 //    }
-
-    private val detailViewModel by activityViewModels<DetailViewModel> {
-        (requireActivity().application as YMediaApplication).appContainer.detailViewModelFactory
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +43,11 @@ class DetailFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        appContainer = (requireActivity().application as YMediaApplication).appContainer
+        appContainer.detailContainer = DetailContainer(appContainer.videoRepository)
+        appContainer.detailContainer?.let {
+            detailViewModel = ViewModelProvider(requireActivity(), it.detailViewModelFactory)[DetailViewModel::class.java]
+        }
 
         binding.btnItemIsLike.setOnClickListener {
             detailViewModel.toggleLike()
@@ -63,8 +70,8 @@ class DetailFragment : BottomSheetDialogFragment() {
 
                 }
                 updateLikeButton(it.isLike)
-            }else{
-                Log.d("selected Null","isNull")
+            } else {
+                Log.d("selected Null", "isNull")
             }
         }
         detailViewModel.shareItem.observe(viewLifecycleOwner) {

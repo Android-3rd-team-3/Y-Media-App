@@ -4,12 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.ymediaapp.domain.repository.SearchRepository
+import com.example.ymediaapp.domain.repository.VideoRepository
 import com.example.ymediaapp.presentation.model.CategoryModel
 import com.example.ymediaapp.presentation.model.YoutubeChannelModel
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 import com.example.ymediaapp.presentation.model.toModel
+import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 import kotlinx.coroutines.launch
 import java.lang.StringBuilder
 
@@ -55,5 +58,16 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
         Log.d("string", sb.toString())
         if (sb.lastIndex > 0) sb.deleteAt(sb.lastIndex)
         return sb.toString()
+    }
+}
+
+class HomeViewModelFactory(private val searchRepository: SearchRepository): ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            return HomeViewModel(
+                repository = searchRepository
+            ) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel")
     }
 }
