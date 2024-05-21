@@ -45,6 +45,7 @@ class DetailFragment : BottomSheetDialogFragment() {
         binding.btnShare.setOnClickListener {
             viewModel.selectedItem.value?.let { it1 -> shareVideo(it1) }
         }
+        //djfij
 
         viewModel.selectedItem.observe(viewLifecycleOwner) {
             if (it != null) {
