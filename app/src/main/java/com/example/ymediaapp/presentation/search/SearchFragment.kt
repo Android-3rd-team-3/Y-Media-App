@@ -1,11 +1,15 @@
 package com.example.ymediaapp.presentation.search
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ymediaapp.databinding.FragmentSearchBinding
@@ -98,8 +102,36 @@ class SearchFragment : Fragment() {
             searchViewModel.getSearchList(query)
         }
 
+        binding.btnVoice.setOnClickListener {
+            startSpeechToText()
+        }
+
     }
     private fun videoOnClick(searchItemEntity: SearchVideoEntity) {
         //Detail Fragment 여는 작업
+    }
+
+    private val speechResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            if (results != null && results.isNotEmpty()) {
+                binding.searchEditText.setText(results[0])
+            }
+        } else {
+            Toast.makeText(requireContext(), "인식 실패", Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun startSpeechToText() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR") // 기본 언어를 한국어로 설정
+        intent.putExtra(RecognizerIntent.EXTRA_SUPPORTED_LANGUAGES, arrayOf("en-US", "ko-KR"))
+
+        try {
+            speechResultLauncher.launch(intent)
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "STT를 지원하지 않는 기기입니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 }
