@@ -11,8 +11,18 @@ import com.example.ymediaapp.presentation.model.CategoryModel
 
 class HomeSpinnerAdapter(
     context: Context,
-    private var items: MutableList<CategoryModel>,
+    items: List<CategoryModel>,
 ): ArrayAdapter<CategoryModel>(context, 0, items) {
+    private var itemList = items
+
+    override fun getItem(position: Int): CategoryModel? {
+        return itemList[position]
+    }
+
+    override fun getCount(): Int {
+        return itemList.size
+    }
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding: SpinnerItemHomeBinding
         val view: View
@@ -52,9 +62,7 @@ class HomeSpinnerAdapter(
     }
 
     fun updateItems(newItems: List<CategoryModel>) {
-        items = newItems.toMutableList()
-        clear()
-        addAll(newItems)
+        itemList = newItems
         notifyDataSetChanged()
     }
 

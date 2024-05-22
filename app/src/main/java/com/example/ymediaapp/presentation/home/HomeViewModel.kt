@@ -27,29 +27,44 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
     val categoryList: LiveData<List<CategoryModel>> get() = _getCategoryList
 
     fun getPopularList() = viewModelScope.launch {
-        // 데이터베이스에서 받아오게(API 요청 part: snippet, chart: mostPopular)
-        _getPopularList.value = repository.getPopularList().items.map { it.toModel() }
+        _getPopularList.value = try {
+            repository.getPopularList().items.map { it.toModel() }
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     fun getCategoryVideoList(categoryId: String = "0") = viewModelScope.launch {
-        // 데이터 베이스에서 받아오게 만들기
-        _getCategoryVideoList.value =
+        _getCategoryVideoList.value = try {
             repository.getVideoByCategoryList(categoryId).items.map { it.toModel() }
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     fun getCategoryChannelList() = viewModelScope.launch {
         val channelIds = getChannelIds()
-        _getCategoryChannelList.value =
+        _getCategoryChannelList.value = try {
             repository.getChannelByCategoryList(channelIds).items.map { it.toModel() }
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     fun getCategoryList() = viewModelScope.launch {
-        _getCategoryList.value =
+        _getCategoryList.value = try {
             repository.getCategoryList().items.filter { it.assignable }.map { it.toModel() }
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     private fun getChannelIds(): String {
-        return (categoryVideoList.value ?: listOf()).joinToString(", ") { it.channelId }
+        return try {
+            (categoryVideoList.value ?: listOf()).joinToString(", ") { it.channelId }
+        } catch (e: Exception) {
+            ""
+        }
     }
 }
 

@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
     private lateinit var appContainer: AppContainer
     private lateinit var homeViewModel: HomeViewModel
     private val spinnerAdapter by lazy {
-        HomeSpinnerAdapter(requireActivity(), mutableListOf())
+        HomeSpinnerAdapter(requireActivity(), listOf())
     }
 
     private lateinit var mainViewModel: MainViewModel
