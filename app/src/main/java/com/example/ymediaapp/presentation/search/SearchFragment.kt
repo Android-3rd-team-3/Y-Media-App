@@ -16,30 +16,30 @@ import com.example.ymediaapp.app.AppContainer
 import com.example.ymediaapp.app.SearchContainer
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentSearchBinding
-import com.example.ymediaapp.domain.entity.SearchVideoEntity
 import com.example.ymediaapp.presentation.main.MainViewModel
+import com.example.ymediaapp.presentation.model.SearchVideoModel
 
 
-interface FragmentDataListener{
-    fun onDataReceived(data: SearchVideoEntity)
-}
 
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
 
     private lateinit var appContainer: AppContainer
-    private lateinit var searchViewModel: SearchViewModel
+
 
     private val availableLanguages = arrayOf("English", "한국어")
     private val languageCodes = arrayOf("en-US", "ko-KR")
     private var selectedLanguageCode = "ko-KR"
 
     private val binding get() = _binding!!
+
+
     private val searchListAdapter by lazy {
         SearchAdapter {
-            videoOnClick(it)
-        }
+            videoOnClick(it)        }
     }
+
+    private lateinit var searchViewModel: SearchViewModel
 
     //
     private lateinit var mainViewModel: MainViewModel
@@ -83,6 +83,7 @@ class SearchFragment : Fragment() {
         appContainer.searchContainer?.let {
             searchViewModel = ViewModelProvider(this, it.searchViewModelFactory)[SearchViewModel::class.java]
         }
+        mainViewModel=ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
     }
 
     private fun initView() {
@@ -170,7 +171,11 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun videoOnClick(searchItemEntity: SearchVideoEntity) {
-        (activity as? FragmentDataListener)?.onDataReceived(searchItemEntity)
+//    private fun videoOnClick(searchItemEntity: SearchVideoEntity) {
+//        (activity as? FragmentDataListener)?.onDataReceived(searchItemEntity)
+//    }
+
+    private fun videoOnClick(searchItemModel: SearchVideoModel) {
+        mainViewModel.setSelecteSearchdItem(searchItemModel)
     }
 }

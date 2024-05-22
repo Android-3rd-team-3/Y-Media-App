@@ -11,16 +11,20 @@ import com.example.ymediaapp.app.network.RetrofitClient
 import com.example.ymediaapp.domain.entity.SearchVideoEntity
 import com.example.ymediaapp.domain.repository.SearchRepository
 import com.example.ymediaapp.domain.repository.VideoRepository
+import com.example.ymediaapp.presentation.model.SearchVideoModel
+import com.example.ymediaapp.presentation.model.toModel
 import kotlinx.coroutines.launch
 
 
 class SearchViewModel ( private val searchRepository: SearchRepository): ViewModel() {
-    private val _getSearchList= MutableLiveData<List<SearchVideoEntity>>()
-    val searchList: LiveData<List<SearchVideoEntity>> get() = _getSearchList
+    private val _getSearchList= MutableLiveData<List<SearchVideoModel>>()
+    val searchList: LiveData<List<SearchVideoModel>> get() = _getSearchList
 
     fun getSearchList(query: String) = viewModelScope.launch {
-        _getSearchList.value = searchRepository.getSearchList(query).items
-    }
+//        _getSearchList.value = searchRepository.getSearchList(query).items
+//    }
+    _getSearchList.value = searchRepository.getSearchList(query).items.map { it.toModel() }
+}
 }
 
 class SearchViewModelFactory(private val searchRepository: SearchRepository): ViewModelProvider.Factory {
