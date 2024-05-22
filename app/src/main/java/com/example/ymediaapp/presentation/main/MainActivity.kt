@@ -25,17 +25,12 @@ import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 
 class MainActivity : AppCompatActivity(){
 
-    private lateinit var appContainer: AppContainer
-    private lateinit var detailViewModel: DetailViewModel
+//    private lateinit var appContainer: AppContainer
+//    private lateinit var detailViewModel: DetailViewModel
 
     private lateinit var mainViewModel: MainViewModel
 
     private lateinit var binding: ActivityMainBinding
-//    private val detailViewModel by lazy {
-//        (this.application as YMediaApplication).detailViewModelFactory.create()
-//    }
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +54,11 @@ class MainActivity : AppCompatActivity(){
         NavigationUI.setupWithNavController(binding.navigationView, navController)
 
 
-        appContainer = (this.application as YMediaApplication).appContainer
-        appContainer.detailContainer = DetailContainer(appContainer.videoRepository)
-        appContainer.detailContainer?.let {
-            detailViewModel = ViewModelProvider(this, it.detailViewModelFactory)[DetailViewModel::class.java]
-        }
+//        appContainer = (this.application as YMediaApplication).appContainer
+//        appContainer.detailContainer = DetailContainer(appContainer.videoRepository)
+//        appContainer.detailContainer?.let {
+//            detailViewModel = ViewModelProvider(this, it.detailViewModelFactory)[DetailViewModel::class.java]
+//        }
 
         mainViewModel=ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -80,15 +75,7 @@ class MainActivity : AppCompatActivity(){
                 }
             }
         }
-        //
-
     }
-
-//    override fun onDataReceived(data: YoutubeVideoModel) {
-//        detailViewModel.setSelectedItem(data)
-//        //showBottomSheet()
-//        //
-//    }
 
     private fun showBottomSheet(data: YoutubeVideoModel) {
         val bottomSheetFragment = DetailFragment()

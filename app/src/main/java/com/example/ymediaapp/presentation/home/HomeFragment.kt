@@ -26,7 +26,6 @@ import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var detailViewModel: DetailViewModel
     private val popularListAdapter by lazy {
         HomeVideoAdapter {
             videoOnClick(it)
@@ -78,15 +77,6 @@ class HomeFragment : Fragment() {
             homeViewModel =
                 ViewModelProvider(this, it.homeViewModelFactory)[HomeViewModel::class.java]
         }
-
-        //
-        appContainer = (requireActivity().application as YMediaApplication).appContainer
-        appContainer.detailContainer = DetailContainer(appContainer.videoRepository)
-        appContainer.detailContainer?.let {
-            detailViewModel = ViewModelProvider(requireActivity(), it.detailViewModelFactory)[DetailViewModel::class.java]
-        }
-        //
-
 
         mainViewModel=ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
     }
@@ -165,10 +155,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun videoOnClick(youtubeItemModel: YoutubeVideoModel) {
-        //listener?.onDataReceived(youtubeItemModel)
-        //(activity as? FragmentDataListener)?.onDataReceived(youtubeItemModel)
-
-        //(activity as? FragmentDataListener)?.onDataReceived(youtubeItemModel)
         mainViewModel.setSelectedItem(youtubeItemModel)
 
     }

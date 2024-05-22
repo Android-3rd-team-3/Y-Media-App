@@ -26,10 +26,6 @@ class DetailFragment : BottomSheetDialogFragment() {
     private lateinit var detailViewModel: DetailViewModel
     private val binding get() = _binding!!
 
-    //
-//    private val detailViewModel by lazy {
-//        (requireActivity().application as YMediaApplication).appContainer.detailViewModelFactory.create()
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +63,6 @@ class DetailFragment : BottomSheetDialogFragment() {
 
         detailViewModel.selectedItem.observe(viewLifecycleOwner) {
 
-            Log.d("it check", "$it")
             if (it != null) {
                 with(binding) {
                     Glide.with(binding.root).load(it.thumbnail).into(ivThumbnail)
@@ -78,8 +73,6 @@ class DetailFragment : BottomSheetDialogFragment() {
 
                 }
                 updateLikeButton(it.isLike)
-            } else {
-                Log.d("selected Null", "isNull")
             }
         }
         detailViewModel.shareItem.observe(viewLifecycleOwner) {
