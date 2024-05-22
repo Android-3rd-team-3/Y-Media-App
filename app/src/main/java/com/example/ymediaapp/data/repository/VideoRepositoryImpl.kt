@@ -1,7 +1,7 @@
 package com.example.ymediaapp.data.repository
 
 import android.content.Context
-import android.view.animation.Transformation
+import android.content.LocusId
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
@@ -10,15 +10,18 @@ import com.example.ymediaapp.data.database.RoomEntity
 import com.example.ymediaapp.data.database.YoutubeRoomDatabase
 import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 import com.example.ymediaapp.domain.repository.VideoRepository
+import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
 class VideoRepositoryImpl(val context: Context) : VideoRepository {
 
-    lateinit var roomDB: YoutubeRoomDatabase
-    lateinit var roomDao: RoomDao
-    override fun getVideoData(): LiveData<List<YoutubeVideoEntity>> {
+    var roomDB: YoutubeRoomDatabase
+    var roomDao: RoomDao
 
+    init {
         roomDB = YoutubeRoomDatabase.getInstance(context)!!
         roomDao = roomDB.getRoomDao()
+    }
+    override fun getVideoData(): LiveData<List<YoutubeVideoEntity>> {
 
         val entityList = roomDao.getAllData().map {
                 room ->
@@ -58,5 +61,16 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
         roomDao.deleteData(roomData)
     }
 
-
+    override suspend fun getDataById(videoId: String): YoutubeVideoEntity? {
+        val roomEntity = roomDao.getDataById(videoId)
+        return roomEntity?.let {
+            YoutubeVideoEntity(
+                it.thumbnail,
+                it.name,
+                it.description,
+                it.videoId,
+                it.channelId
+            )
+        }
+    }
 }
