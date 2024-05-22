@@ -1,22 +1,28 @@
 package com.example.ymediaapp.presentation.search
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.speech.RecognizerIntent
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ymediaapp.databinding.FragmentSearchBinding
 import com.example.ymediaapp.domain.entity.SearchVideoEntity
 import com.example.ymediaapp.presentation.main.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 class SearchFragment : Fragment() {
@@ -36,6 +42,7 @@ class SearchFragment : Fragment() {
         SearchViewModelFactory()
     }
 
+    private val RECORD_AUDIO_REQUEST_CODE = 1
     private val availableLanguages = arrayOf("English", "한국어")
     private val languageCodes = arrayOf("en-US", "ko-KR")
     private var selectedLanguageCode = "ko-KR"
@@ -58,7 +65,7 @@ class SearchFragment : Fragment() {
         initView()
         setupListeners()
         //
-        mainViewModel= ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         //
     }
 
@@ -115,25 +122,76 @@ class SearchFragment : Fragment() {
         }
 
         binding.btnVoice.setOnClickListener {
-            showSelectionDialog()
+            onClickRequestPermission(it)
         }
 
     }
-    private fun videoOnClick(searchItemEntity: SearchVideoEntity) {
-        //Detail Fragment 여는 작업
-    }
 
-    private val speechResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data = result.data
-            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-            if (results != null && results.isNotEmpty()) {
-                binding.searchEditText.setText(results[0])
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Log.i("Permission: ", "Granted")
+            } else {
+                Log.i("Permission: ", "Denied")
             }
-        } else {
-            Toast.makeText(requireContext(), "인식 실패", Toast.LENGTH_SHORT).show()
+        }
+
+    fun onClickRequestPermission(view: View) {
+        when {
+            ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                // 권한이 허용된 경우, 언어 선택 다이얼로그 표시
+                showSelectionDialog()
+            }
+
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                requireActivity(),
+                Manifest.permission.RECORD_AUDIO
+            ) -> {
+                this.showSnackbar(
+                    view,
+                    "PERMISSON REQUIRED",
+                    Snackbar.LENGTH_INDEFINITE,
+                    "OK"
+                ) {
+                    requestPermissionLauncher.launch(
+                        Manifest.permission.RECORD_AUDIO
+                    )
+                }
+            }
+
+            else -> {
+                // 권한이 거부된 경우, 권한 거부 다이얼로그 표시
+                showPermissionDeniedDialog()
+            }
         }
     }
+
+    private fun showPermissionDeniedDialog() {
+        AlertDialog.Builder(requireContext())
+            .setMessage("오디오 녹음 권한이 거부되었습니다. 설정에서 권한을 허용해주세요.")
+            .setPositiveButton("설정 가기") { dialog, _ ->
+                dialog.dismiss()
+                openAppSettings()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun openAppSettings() {
+        val intent = Intent().apply {
+            action = android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            data = android.net.Uri.parse("package:" + requireContext().packageName)
+        }
+        startActivity(intent)
+    }
+
     private fun showSelectionDialog() {
         AlertDialog.Builder(requireContext())
             .setTitle("검색할 언어를 선택해 주세요.")
@@ -146,13 +204,54 @@ class SearchFragment : Fragment() {
 
     private fun startSpeechToText() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, selectedLanguageCode)
 
         try {
             speechResultLauncher.launch(intent)
         } catch (e: Exception) {
-            Toast.makeText(requireContext(), "STT를 지원하지 않는 기기입니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "STT를 지원하지 않는 기기입니다.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private val speechResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                if (results != null && results.isNotEmpty()) {
+                    binding.searchEditText.setText(results[0])
+                }
+            } else {
+                Toast.makeText(requireContext(), "인식 실패", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private fun videoOnClick(searchItemEntity: SearchVideoEntity) {
+        //Detail Fragment 여는 작업
+    }
+
+    fun Fragment.showSnackbar(
+        view: View,
+        msg: String,
+        length: Int,
+        actionMessage: CharSequence? = null,
+        action: (View) -> Unit = {}
+    ) {
+        val snackbar = Snackbar.make(view, msg, length)
+        if (actionMessage != null) {
+            snackbar.setAction(actionMessage) {
+                action(view)
+            }.show()
+        } else {
+            snackbar.show()
         }
     }
 }
