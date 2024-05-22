@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
-        updateRecyclerView()
+        initObserve()
         initView()
         initData()
     }
@@ -133,7 +133,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun updateRecyclerView() {
+    private fun initObserve() {
         with(homeViewModel) {
             popularList.observe(viewLifecycleOwner) {
                 popularListAdapter.itemList = it
