@@ -12,6 +12,7 @@ import com.example.ymediaapp.app.AppContainer
 import com.example.ymediaapp.app.HomeContainer
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentHomeBinding
+import com.example.ymediaapp.presentation.main.MainViewModel
 import com.example.ymediaapp.presentation.model.CategoryModel
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
@@ -37,6 +38,8 @@ class HomeFragment : Fragment() {
     private val spinnerAdapter by lazy {
         HomeSpinnerAdapter(requireActivity(), mutableListOf(CategoryModel("0", "Category")))
     }
+
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +82,8 @@ class HomeFragment : Fragment() {
             homeViewModel =
                 ViewModelProvider(this, it.homeViewModelFactory)[HomeViewModel::class.java]
         }
+        mainViewModel=ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
     }
 
     private fun initView() {
@@ -159,7 +164,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun videoOnClick(youtubeItemModel: YoutubeVideoModel) {
-        //todo Detail Fragment 여는 작업
+        mainViewModel.setSelectedItem(youtubeItemModel)
+
     }
 
     private fun spinnerItemSelected(categoryModel: CategoryModel) {

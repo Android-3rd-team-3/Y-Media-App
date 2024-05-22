@@ -1,14 +1,17 @@
 package com.example.ymediaapp.presentation.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.util.Date
-
+@Parcelize
 data class YoutubeVideoModel( // 동영상
     val thumbnail: String,// 썸네일 URL
     val name: String,// 이름
     val description: String, // 설명
     val videoId: String, // 해당 동영상의 ID
     val channelId: String, // 채널id
-)
+):Parcelable
+
 
 data class YoutubeVideoResultModel(
     val kind: String,

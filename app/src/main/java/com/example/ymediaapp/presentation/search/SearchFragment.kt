@@ -1,15 +1,22 @@
 package com.example.ymediaapp.presentation.search
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ymediaapp.databinding.FragmentSearchBinding
 import com.example.ymediaapp.domain.entity.SearchVideoEntity
+import com.example.ymediaapp.presentation.main.MainViewModel
 
 
 class SearchFragment : Fragment() {
@@ -21,11 +28,17 @@ class SearchFragment : Fragment() {
         }
     }
 
+    //
+    private lateinit var mainViewModel: MainViewModel
+    //
 
     private val searchViewModel by viewModels<SearchViewModel> {
         SearchViewModelFactory()
     }
 
+    private val availableLanguages = arrayOf("English", "한국어")
+    private val languageCodes = arrayOf("en-US", "ko-KR")
+    private var selectedLanguageCode = "ko-KR"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +57,9 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         setupListeners()
+        //
+        mainViewModel= ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        //
     }
 
     override fun onDestroyView() {
@@ -98,8 +114,45 @@ class SearchFragment : Fragment() {
             searchViewModel.getSearchList(query)
         }
 
+        binding.btnVoice.setOnClickListener {
+            showSelectionDialog()
+        }
+
     }
     private fun videoOnClick(searchItemEntity: SearchVideoEntity) {
         //Detail Fragment 여는 작업
+    }
+
+    private val speechResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            if (results != null && results.isNotEmpty()) {
+                binding.searchEditText.setText(results[0])
+            }
+        } else {
+            Toast.makeText(requireContext(), "인식 실패", Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun showSelectionDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("검색할 언어를 선택해 주세요.")
+            .setItems(availableLanguages) { dialog, which ->
+                selectedLanguageCode = languageCodes[which]
+                startSpeechToText()
+            }
+            .show()
+    }
+
+    private fun startSpeechToText() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, selectedLanguageCode)
+
+        try {
+            speechResultLauncher.launch(intent)
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "STT를 지원하지 않는 기기입니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 }
