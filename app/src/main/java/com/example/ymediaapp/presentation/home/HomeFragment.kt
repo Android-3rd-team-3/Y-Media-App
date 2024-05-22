@@ -16,6 +16,7 @@ import com.example.ymediaapp.presentation.main.MainViewModel
 import com.example.ymediaapp.presentation.model.CategoryModel
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
+
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -37,6 +38,7 @@ class HomeFragment : Fragment() {
     private val spinnerAdapter by lazy {
         HomeSpinnerAdapter(requireActivity(), listOf())
     }
+
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +75,6 @@ class HomeFragment : Fragment() {
     private fun initContainer() {
         appContainer = (requireActivity().application as YMediaApplication).appContainer
         appContainer.homeContainer = HomeContainer(appContainer.searchRepository)
-
     }
 
     private fun initViewModel() {
@@ -149,7 +150,6 @@ class HomeFragment : Fragment() {
             }
             categoryList.observe(viewLifecycleOwner) {
                 spinnerAdapter.updateItems(it)
-
             }
         }
     }
