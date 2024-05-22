@@ -23,16 +23,6 @@ class SearchViewModel ( private val searchRepository: SearchRepository): ViewMod
     }
 }
 
-//class SearchViewModelFactory(private val searchRepository: SearchRepository): ViewModelProvider.Factory{
-//    private val repository = SearchRepositoryImpl(RetrofitClient.youtubeService)
-//
-//    override fun <T : ViewModel> create(
-//        modelClass: Class<T>,
-//        extras: CreationExtras
-//    ): T {
-//        return SearchViewModel(repository) as T
-//    }
-//}
 class SearchViewModelFactory(private val searchRepository: SearchRepository): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {

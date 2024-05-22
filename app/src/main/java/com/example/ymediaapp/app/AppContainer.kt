@@ -33,7 +33,6 @@ class SearchContainer(
     private val searchRepository: SearchRepository
 ) {
     val searchViewModelFactory = SearchViewModelFactory(searchRepository)
-    val user = DummyAuth.getUser()
 }
 
 
