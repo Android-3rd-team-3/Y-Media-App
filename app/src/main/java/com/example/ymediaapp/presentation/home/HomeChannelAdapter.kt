@@ -10,14 +10,7 @@ import com.example.ymediaapp.presentation.model.YoutubeChannelModel
 //채널은 클릭 이벤트 없음
 class HomeChannelAdapter(
 ): RecyclerView.Adapter<HomeChannelAdapter.HomeChannelViewHolder>() {
-    var itemList = listOf(
-        YoutubeChannelModel(
-            "",
-            "",
-            "",
-            ""
-        )
-    )
+    var itemList = listOf<YoutubeChannelModel>()
     class HomeChannelViewHolder(
         private val binding: RvItemHomeBinding,
     ): RecyclerView.ViewHolder(binding.root){
