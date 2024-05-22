@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ymediaapp.app.AppContainer
-import com.example.ymediaapp.app.DetailContainer
 import com.example.ymediaapp.app.HomeContainer
+import com.example.ymediaapp.app.DetailContainer
 import com.example.ymediaapp.app.MyVideoContainer
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentHomeBinding
@@ -31,7 +31,6 @@ class HomeFragment : Fragment() {
             videoOnClick(it)
         }
     }
-
     private val categoryVideoListAdapter by lazy {
         HomeVideoAdapter {
             videoOnClick(it)
@@ -47,6 +46,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initContainer()
     }
 
     override fun onCreateView(
@@ -70,6 +70,23 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        appContainer.homeContainer = null
+    }
+
+    private fun initContainer() {
+        appContainer = (requireActivity().application as YMediaApplication).appContainer
+        appContainer.homeContainer = HomeContainer(appContainer.searchRepository)
+    }
+
+    private fun initViewModel(){
+        appContainer.homeContainer?.let {
+            homeViewModel =
+                ViewModelProvider(this, it.homeViewModelFactory)[HomeViewModel::class.java]
+        }
+    }
+
     private fun initContainer() {
         appContainer = (requireActivity().application as YMediaApplication).appContainer
         appContainer.homeContainer = HomeContainer(appContainer.searchRepository)
@@ -80,6 +97,7 @@ class HomeFragment : Fragment() {
 
         mainViewModel=ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
     }
+//여기 수정하기!!!!!
 
     private fun initView() {
         with(binding) {
@@ -122,8 +140,9 @@ class HomeFragment : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
             }
+        }
+    }
 
-        }}
     private fun fetchRecyclerView() {
         with(homeViewModel) {
             popularList.observe(viewLifecycleOwner) {
