@@ -5,21 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.databinding.RvItemHomeBinding
-import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
 class HomeVideoAdapter(
     private val onClick: (YoutubeVideoModel) -> Unit
 ): RecyclerView.Adapter<HomeVideoAdapter.HomeVideoViewHolder>() {
-    var itemList = listOf<YoutubeVideoModel>(
-        YoutubeVideoModel(
-            "",
-            "",
-            "",
-            "",
-            ""
-        )
-    )
+    var itemList = listOf<YoutubeVideoModel>()
     class HomeVideoViewHolder(
         private val binding: RvItemHomeBinding,
         private val onClick: (YoutubeVideoModel) -> Unit
