@@ -6,17 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.R
 import com.example.ymediaapp.app.AppContainer
 import com.example.ymediaapp.app.DetailContainer
-import com.example.ymediaapp.app.MyVideoContainer
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentDetailBinding
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
-import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class DetailFragment : BottomSheetDialogFragment() {
@@ -84,7 +81,6 @@ class DetailFragment : BottomSheetDialogFragment() {
                 }
             }
         }
-
 
     }
 

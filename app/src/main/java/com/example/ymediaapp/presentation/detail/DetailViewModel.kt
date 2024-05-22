@@ -1,17 +1,14 @@
 package com.example.ymediaapp.presentation.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 import com.example.ymediaapp.domain.repository.VideoRepository
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 import com.example.ymediaapp.presentation.model.toEntity
 import com.example.ymediaapp.presentation.model.toModel
-import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private val repository: VideoRepository) : ViewModel() {
@@ -47,8 +44,6 @@ class DetailViewModel(private val repository: VideoRepository) : ViewModel() {
     fun setShareItem(selectedItem: YoutubeVideoModel?) {
         _shareItem.value = selectedItem
     }
-
-
 }
 
 class DetailViewModelFactory(private val videoRepository: VideoRepository) :

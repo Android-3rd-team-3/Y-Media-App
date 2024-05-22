@@ -13,17 +13,14 @@ import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
 class VideoRepositoryImpl(val context: Context) : VideoRepository {
 
-    lateinit var roomDB: YoutubeRoomDatabase
-    lateinit var roomDao: RoomDao
+    var roomDB: YoutubeRoomDatabase
+    var roomDao: RoomDao
 
     init {
         roomDB = YoutubeRoomDatabase.getInstance(context)!!
         roomDao = roomDB.getRoomDao()
     }
     override fun getVideoData(): LiveData<List<YoutubeVideoEntity>> {
-
-//        roomDB = YoutubeRoomDatabase.getInstance(context)!!
-//        roomDao = roomDB.getRoomDao()
 
         val entityList = roomDao.getAllData().map {
                 room ->
@@ -79,6 +76,4 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
             )
         }
     }
-
-
 }
