@@ -44,6 +44,10 @@ class DetailViewModel(private val repository: VideoRepository) : ViewModel() {
     fun setShareItem(selectedItem: YoutubeVideoModel?) {
         _shareItem.value = selectedItem
     }
+
+    fun shareItem() {
+        _shareItem.value = _selectedItem.value
+    }
 }
 
 class DetailViewModelFactory(private val videoRepository: VideoRepository) :

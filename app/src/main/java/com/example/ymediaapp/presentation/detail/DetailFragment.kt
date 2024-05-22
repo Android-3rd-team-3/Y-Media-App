@@ -23,6 +23,15 @@ class DetailFragment : BottomSheetDialogFragment() {
     private lateinit var detailViewModel: DetailViewModel
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initContainer()
+    }
+
+    private fun initContainer() {
+        appContainer = (requireActivity().application as YMediaApplication).appContainer
+        appContainer.detailContainer = DetailContainer(appContainer.videoRepository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,14 +45,11 @@ class DetailFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        appContainer = (requireActivity().application as YMediaApplication).appContainer
-        appContainer.detailContainer = DetailContainer(appContainer.videoRepository)
-        appContainer.detailContainer?.let {
-            detailViewModel = ViewModelProvider(requireActivity(), it.detailViewModelFactory)[DetailViewModel::class.java]
-        }
+
+        initViewModel()
 
         arguments?.let {
-            val item = it.getParcelable("clickItem",YoutubeVideoModel::class.java)
+            val item = it.getParcelable("clickItem", YoutubeVideoModel::class.java)
             Log.d("detail it", "$it")
             if (item != null) {
                 detailViewModel.setSelectedItem(item)
@@ -55,7 +61,8 @@ class DetailFragment : BottomSheetDialogFragment() {
         }
 
         binding.btnShare.setOnClickListener {
-            detailViewModel.selectedItem.value?.let { it1: YoutubeVideoModel -> shareVideo(it1) }
+            //detailViewModel.selectedItem.value?.let { it1: YoutubeVideoModel -> shareVideo(it1) }
+            detailViewModel.shareItem()
         }
 
         detailViewModel.selectedItem.observe(viewLifecycleOwner) {
@@ -65,9 +72,6 @@ class DetailFragment : BottomSheetDialogFragment() {
                     Glide.with(binding.root).load(it.thumbnail).into(ivThumbnail)
                     tvItemTitle.text = it.name
                     tvItemDescription.text = it.description
-                    tvItemId.text = it.videoId
-                    tvItemChannelId.text = it.channelId
-
                 }
                 updateLikeButton(it.isLike)
             }
@@ -82,6 +86,15 @@ class DetailFragment : BottomSheetDialogFragment() {
             }
         }
 
+    }
+
+    private fun initViewModel() {
+        appContainer.detailContainer?.let {
+            detailViewModel = ViewModelProvider(
+                requireActivity(),
+                it.detailViewModelFactory
+            )[DetailViewModel::class.java]
+        }
     }
 
     private fun updateLikeButton(isLiked: Boolean) {
@@ -106,6 +119,11 @@ class DetailFragment : BottomSheetDialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        appContainer.detailContainer = null
     }
 
 }
