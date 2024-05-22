@@ -41,6 +41,7 @@
 - [ ] Repository Pattern
 - [ ] Glide
 - [ ] Navigation(Jetpack) + bottomNavigationView
+- [ ] recyclerView
 
 ## 트러블 슈팅
 
