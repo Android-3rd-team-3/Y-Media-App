@@ -1,9 +1,6 @@
 package com.example.ymediaapp.presentation.search
 
 import android.app.Activity
-import android.app.AlertDialog
-import android.content.Intent
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
@@ -13,10 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.ViewModelProvider
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ymediaapp.app.AppContainer
@@ -156,7 +149,7 @@ class SearchFragment : Fragment() {
         }
     }
     private fun showSelectionDialog() {
-        AlertDialog.Builder(requireContext())
+        android.app.AlertDialog.Builder(requireContext())
             .setTitle("검색할 언어를 선택해 주세요.")
             .setItems(availableLanguages) { dialog, which ->
                 selectedLanguageCode = languageCodes[which]
