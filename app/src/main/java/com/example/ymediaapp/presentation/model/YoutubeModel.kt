@@ -26,7 +26,6 @@ data class YoutubeChannelModel( // 채널
     val name: String,// 이름
     val description: String, // 설명
     val channelId: String
-    //val videoList: List<YoutubeVideoEntity>// 비디오 리스트
 )
 
 data class YoutubeChannelResultModel(
