@@ -7,14 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.ymediaapp.domain.repository.SearchRepository
-import com.example.ymediaapp.domain.repository.VideoRepository
 import com.example.ymediaapp.presentation.model.CategoryModel
 import com.example.ymediaapp.presentation.model.YoutubeChannelModel
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 import com.example.ymediaapp.presentation.model.toModel
-import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 
 class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
     private val _getPopularList = MutableLiveData<List<YoutubeVideoModel>>()

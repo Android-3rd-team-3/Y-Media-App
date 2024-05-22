@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.databinding.RvItemHomeBinding
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
 class HomeVideoAdapter(
