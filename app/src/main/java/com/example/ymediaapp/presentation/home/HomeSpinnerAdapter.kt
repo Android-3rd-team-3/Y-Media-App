@@ -13,6 +13,16 @@ class HomeSpinnerAdapter(
     context: Context,
     items: List<CategoryModel>,
 ): ArrayAdapter<CategoryModel>(context, 0, items) {
+    private var itemList = items
+
+    override fun getItem(position: Int): CategoryModel? {
+        return itemList[position]
+    }
+
+    override fun getCount(): Int {
+        return itemList.size
+    }
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding: SpinnerItemHomeBinding
         val view: View
@@ -49,6 +59,11 @@ class HomeSpinnerAdapter(
         binding.tvSpinnerItem.text = item?.name
 
         return view
+    }
+
+    fun updateItems(newItems: List<CategoryModel>) {
+        itemList = newItems
+        notifyDataSetChanged()
     }
 
 }

@@ -34,7 +34,9 @@ class HomeFragment : Fragment() {
 
     private lateinit var appContainer: AppContainer
     private lateinit var homeViewModel: HomeViewModel
-
+    private val spinnerAdapter by lazy {
+        HomeSpinnerAdapter(requireActivity(), listOf())
+    }
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +55,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
-        fetchRecyclerView()
+        initObserve()
         initView()
         initData()
     }
@@ -74,12 +76,12 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun initViewModel(){
+    private fun initViewModel() {
         appContainer.homeContainer?.let {
             homeViewModel =
                 ViewModelProvider(this, it.homeViewModelFactory)[HomeViewModel::class.java]
         }
-        mainViewModel=ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
     }
 
@@ -106,28 +108,31 @@ class HomeFragment : Fragment() {
                 layoutManager = horizontalLinearLayoutManager
             }
 
-            spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    val item =
-                        (parent?.adapter?.getItem(position) as? CategoryModel) ?: CategoryModel(
-                            "0",
-                            "Category"
-                        )
-                    spinnerItemSelected(item)
-                }
+            spinnerCategory.apply {
+                adapter = spinnerAdapter
+                onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val item =
+                            (parent?.adapter?.getItem(position) as? CategoryModel) ?: CategoryModel(
+                                "0",
+                                "Category"
+                            )
+                        spinnerItemSelected(item)
+                    }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
                 }
             }
         }
     }
 
-    private fun fetchRecyclerView() {
+    private fun initObserve() {
         with(homeViewModel) {
             popularList.observe(viewLifecycleOwner) {
                 popularListAdapter.itemList = it
@@ -142,8 +147,9 @@ class HomeFragment : Fragment() {
                 channelListAdapter.itemList = it
                 channelListAdapter.notifyDataSetChanged()
             }
-            categoryList.observe(viewLifecycleOwner){
-                binding.spinnerCategory.adapter = HomeSpinnerAdapter(requireActivity(), it)
+            categoryList.observe(viewLifecycleOwner) {
+                spinnerAdapter.updateItems(it)
+
             }
         }
     }
