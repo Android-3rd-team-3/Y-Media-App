@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.LocusId
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import com.example.ymediaapp.data.database.RoomDao
 import com.example.ymediaapp.data.database.RoomEntity
 import com.example.ymediaapp.data.database.YoutubeRoomDatabase
@@ -30,8 +31,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
                     it.name,
                     it.description,
                     it.videoId,
-                    it.channelId,
-                    //it.isLike
+                    it.channelId
                 )
             }
         }
@@ -45,8 +45,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
             video.thumbnail,
             video.name,
             video.description,
-            video.channelId,
-            //video.isLike
+            video.channelId
         )
         roomDao.insertData(roomData)
     }
@@ -57,8 +56,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
             video.thumbnail,
             video.name,
             video.description,
-            video.channelId,
-            //video.isLike
+            video.channelId
         )
         roomDao.deleteData(roomData)
     }
@@ -71,8 +69,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
                 it.name,
                 it.description,
                 it.videoId,
-                it.channelId,
-                //it.isLike
+                it.channelId
             )
         }
     }
