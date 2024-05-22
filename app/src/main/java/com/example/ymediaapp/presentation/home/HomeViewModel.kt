@@ -1,20 +1,16 @@
 package com.example.ymediaapp.presentation.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.ymediaapp.domain.repository.SearchRepository
-import com.example.ymediaapp.domain.repository.VideoRepository
 import com.example.ymediaapp.presentation.model.CategoryModel
 import com.example.ymediaapp.presentation.model.YoutubeChannelModel
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 import com.example.ymediaapp.presentation.model.toModel
-import com.example.ymediaapp.presentation.my_video.MyVideoViewModel
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 
 class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
     private val _getPopularList = MutableLiveData<List<YoutubeVideoModel>>()
@@ -37,33 +33,30 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
 
     fun getCategoryVideoList(categoryId: String = "0") = viewModelScope.launch {
         // 데이터 베이스에서 받아오게 만들기
-        _getCategoryVideoList.value = repository.getVideoByCategoryList(categoryId).items.map { it.toModel() }
+        _getCategoryVideoList.value =
+            repository.getVideoByCategoryList(categoryId).items.map { it.toModel() }
     }
 
     fun getCategoryChannelList() = viewModelScope.launch {
         val channelIds = getChannelIds()
-        _getCategoryChannelList.value = repository.getChannelByCategoryList(channelIds).items.map { it.toModel() }
+        _getCategoryChannelList.value =
+            repository.getChannelByCategoryList(channelIds).items.map { it.toModel() }
     }
 
     fun getCategoryList() = viewModelScope.launch {
-        _getCategoryList.value = repository.getCategoryList().items.filter { it.assignable }.map { it.toModel() }
+        _getCategoryList.value =
+            repository.getCategoryList().items.filter { it.assignable }.map { it.toModel() }
     }
 
     private fun getChannelIds(): String {
-        val sb = StringBuilder()
-        (categoryVideoList.value ?: listOf()).forEach {
-            sb.append(it.channelId)
-            sb.append(", ")
-        }
-        Log.d("string", sb.toString())
-        if (sb.lastIndex > 0) sb.deleteAt(sb.lastIndex)
-        return sb.toString()
+        return (categoryVideoList.value ?: listOf()).joinToString(", ") { it.channelId }
     }
 }
 
-class HomeViewModelFactory(private val searchRepository: SearchRepository): ViewModelProvider.Factory {
+class HomeViewModelFactory(private val searchRepository: SearchRepository) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(
                 repository = searchRepository
             ) as T

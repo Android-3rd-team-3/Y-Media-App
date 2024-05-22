@@ -11,7 +11,7 @@ import com.example.ymediaapp.presentation.model.CategoryModel
 
 class HomeSpinnerAdapter(
     context: Context,
-    items: List<CategoryModel>,
+    private var items: MutableList<CategoryModel>,
 ): ArrayAdapter<CategoryModel>(context, 0, items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding: SpinnerItemHomeBinding
@@ -49,6 +49,13 @@ class HomeSpinnerAdapter(
         binding.tvSpinnerItem.text = item?.name
 
         return view
+    }
+
+    fun updateItems(newItems: List<CategoryModel>) {
+        items = newItems.toMutableList()
+        clear()
+        addAll(newItems)
+        notifyDataSetChanged()
     }
 
 }
