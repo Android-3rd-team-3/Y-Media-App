@@ -35,13 +35,13 @@
 
 ## 사용 기술 소개
 
-- [ ] MVVM
 - [ ] Retrofit
-- [ ] Clean Architecture
-- [ ] Repository Pattern
 - [ ] Glide
 - [ ] Navigation(Jetpack) + bottomNavigationView
 - [ ] recyclerView
+- [ ] Clean Architecture
+- [ ] Repository Pattern
+- [ ] MVVM
 
 ## 트러블 슈팅
 
