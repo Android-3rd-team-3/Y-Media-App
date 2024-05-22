@@ -61,7 +61,6 @@ class DetailFragment : BottomSheetDialogFragment() {
         }
 
         binding.btnShare.setOnClickListener {
-            //detailViewModel.selectedItem.value?.let { it1: YoutubeVideoModel -> shareVideo(it1) }
             detailViewModel.shareItem()
         }
 
@@ -73,7 +72,6 @@ class DetailFragment : BottomSheetDialogFragment() {
                     tvItemTitle.text = it.name
                     tvItemDescription.text = it.description
                 }
-                updateLikeButton(it.isLike)
             }
         }
         detailViewModel.shareItem.observe(viewLifecycleOwner) {
@@ -84,6 +82,10 @@ class DetailFragment : BottomSheetDialogFragment() {
                     detailViewModel.setShareItem(null)
                 }
             }
+        }
+
+        detailViewModel.isLikeStatus.observe(viewLifecycleOwner) { isLiked ->
+            updateLikeButton(isLiked)
         }
 
     }

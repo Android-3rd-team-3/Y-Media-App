@@ -24,42 +24,6 @@ class DetailViewModel(private val repository: VideoRepository) : ViewModel() {
     private val _isLikeStatus = MutableLiveData<Boolean>()
     val isLikeStatus: LiveData<Boolean> get() = _isLikeStatus
 
-
-//    fun toggleLike() {
-//        selectedItem.value.let {
-//
-//        }
-//        if (selectedItem.value != null) {
-//            //let 으로 바꾸기, it
-//            // isLike를 데이터베이스에 있는지 없는지를 가지고 livedata 달아주기
-//
-//            _selectedItem.value = selectedItem.value!!.copy(isLike = !selectedItem.value!!.isLike)
-//            viewModelScope.launch {
-//                repository.insertVideoData(selectedItem.value!!.toEntity())
-//            }
-//        }
-//    }
-
-//    fun toggleLike() {
-//        _selectedItem.value?.let { selectedItemModel ->
-//            val isCurrentlyLiked = _isLikeStatus.value ?: false
-//            val updatedLikeStatus = !isCurrentlyLiked
-//            _isLikeStatus.value = updatedLikeStatus
-//
-//            val selectedItemEntity = selectedItemModel.toEntity()
-//
-//            viewModelScope.launch {
-//                if (updatedLikeStatus) {
-//                    // 좋아요 상태가 변경되었으므로 데이터베이스에 추가
-//                    repository.insertVideoData(selectedItemEntity)
-//                } else {
-//                    // 좋아요 상태가 변경되었으므로 데이터베이스에서 삭제
-//                    repository.deleteVideoData(selectedItemEntity)
-//                }
-//            }
-//        }
-//    }
-
     fun toggleLike() {
         selectedItem.value?.let { item ->
             viewModelScope.launch {
@@ -74,34 +38,6 @@ class DetailViewModel(private val repository: VideoRepository) : ViewModel() {
             }
         }
     }
-
-//    init {
-//        // isLikeStatus 초기화
-//        _selectedItem.observeForever { selectedItem ->
-//            viewModelScope.launch {
-//                val videoEntity = repository.getDataById(selectedItem.videoId)?.toModel()
-//                _isLikeStatus.value = videoEntity != null
-//            }
-//        }
-//    }
-//
-////    fun setIsLikeStatus(selectedItem: YoutubeVideoModel) {
-////        viewModelScope.launch {
-////            val videoEntity = repository.getDataById(selectedItem.videoId)
-////            _isLikeStatus.value = videoEntity != null
-////        }
-////    }
-
-//    fun setSelectedItem(selectedItem: YoutubeVideoModel) {
-//        viewModelScope.launch {
-//            val videoEntity = repository.getDataById(selectedItem.videoId)
-//            if (videoEntity == null) {
-//                _selectedItem.value = selectedItem
-//            } else {
-//                videoEntity?.let { _selectedItem.value = it.toModel() }
-//            }
-//        }
-//    }
 
     fun setSelectedItem(selectedItem: YoutubeVideoModel) {
         _selectedItem.value = selectedItem
