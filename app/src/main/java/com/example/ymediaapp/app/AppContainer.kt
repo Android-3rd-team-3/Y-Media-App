@@ -24,7 +24,7 @@ class AppContainer() {
 }
 
 class MyVideoContainer(
-    private val videoRepository: VideoRepository
+    videoRepository: VideoRepository
 ) {
     val myVideoViewModelFactory = MyVideoViewModelFactory(videoRepository)
     val user = DummyAuth.getUser()

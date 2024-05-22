@@ -1,24 +1,29 @@
 package com.example.ymediaapp.presentation.my_video
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
+import androidx.lifecycle.map
 import com.example.ymediaapp.domain.repository.VideoRepository
-import kotlinx.coroutines.launch
+import com.example.ymediaapp.presentation.model.YoutubeVideoModel
+import com.example.ymediaapp.presentation.model.toModel
+import java.io.IOException
 
 class MyVideoViewModel(
-    private val videoRepository: VideoRepository
+    videoRepository: VideoRepository
 ): ViewModel() {
 
-    val favoriteList: LiveData<List<YoutubeVideoEntity>> = videoRepository.getVideoData()
-
-    fun addItem(item: YoutubeVideoEntity) = viewModelScope.launch {
-        videoRepository.insertVideoData(item)
+    val favoriteList: LiveData<List<YoutubeVideoModel>> = try {
+        videoRepository.getVideoData().map { list ->
+            list.map {
+                it.toModel()
+            }
+        }
+    } catch (e: IOException) {
+        MutableLiveData(emptyList())
     }
+
 }
 
 class MyVideoViewModelFactory(private val videoRepository: VideoRepository): ViewModelProvider.Factory {
