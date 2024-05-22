@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ymediaapp.databinding.FragmentSearchBinding
@@ -30,6 +31,9 @@ class SearchFragment : Fragment() {
         SearchViewModelFactory()
     }
 
+    private val availableLanguages = arrayOf("English", "한국어")
+    private val languageCodes = arrayOf("en-US", "ko-KR")
+    private var selectedLanguageCode = "ko-KR"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,7 +107,7 @@ class SearchFragment : Fragment() {
         }
 
         binding.btnVoice.setOnClickListener {
-            startSpeechToText()
+            showSelectionDialog()
         }
 
     }
@@ -122,11 +126,20 @@ class SearchFragment : Fragment() {
             Toast.makeText(requireContext(), "인식 실패", Toast.LENGTH_SHORT).show()
         }
     }
+    private fun showSelectionDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("검색할 언어를 선택해 주세요.")
+            .setItems(availableLanguages) { dialog, which ->
+                selectedLanguageCode = languageCodes[which]
+                startSpeechToText()
+            }
+            .show()
+    }
+
     private fun startSpeechToText() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR") // 기본 언어를 한국어로 설정
-        intent.putExtra(RecognizerIntent.EXTRA_SUPPORTED_LANGUAGES, arrayOf("en-US", "ko-KR"))
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, selectedLanguageCode)
 
         try {
             speechResultLauncher.launch(intent)
