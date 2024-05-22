@@ -12,9 +12,11 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ymediaapp.databinding.FragmentSearchBinding
 import com.example.ymediaapp.domain.entity.SearchVideoEntity
+import com.example.ymediaapp.presentation.main.MainViewModel
 
 
 class SearchFragment : Fragment() {
@@ -26,6 +28,9 @@ class SearchFragment : Fragment() {
         }
     }
 
+    //
+    private lateinit var mainViewModel: MainViewModel
+    //
 
     private val searchViewModel by viewModels<SearchViewModel> {
         SearchViewModelFactory()
@@ -52,6 +57,9 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         setupListeners()
+        //
+        mainViewModel= ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        //
     }
 
     override fun onDestroyView() {

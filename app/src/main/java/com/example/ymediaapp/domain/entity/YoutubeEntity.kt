@@ -8,7 +8,7 @@ data class YoutubeVideoEntity( // 동영상
     val description: String, // 설명
     val videoId: String, // 해당 동영상의 ID
     val channelId: String, // 채널id
-    val isLike: Boolean = false // 좋아요 List 포함 여부
+//    val isLike: Boolean = false // 좋아요 List 포함 여부
 )
 
 data class YoutubeVideoResultEntity(
@@ -36,7 +36,7 @@ data class YoutubeChannelResultEntity(
 data class CategoryEntity(
     val id: String,
     val name: String,
-    val assignable: Boolean = false
+    val assignable: Boolean
 )
 
 data class CategoryResultEntity(

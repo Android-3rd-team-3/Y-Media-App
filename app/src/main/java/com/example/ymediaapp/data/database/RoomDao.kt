@@ -19,7 +19,7 @@ interface RoomDao {
     @Delete
     suspend fun deleteData(roomData: RoomEntity)
 
-    @Query("SELECT * FROM RoomEntity WHERE videoId = :videoId")
+    @Query("SELECT * FROM RoomEntity WHERE videoId = :videoId LIMIT 1")
     suspend fun getDataById(videoId: String): RoomEntity?
 
 }

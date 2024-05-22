@@ -18,7 +18,7 @@ fun YoutubeVideoEntity.toModel() = YoutubeVideoModel(
     description,
     videoId,
     channelId,
-    isLike
+    //isLike
 )
 
 fun CategoryEntity.toModel() = CategoryModel(
@@ -33,5 +33,5 @@ fun YoutubeVideoModel.toEntity() = YoutubeVideoEntity(
     description = description,
     videoId = videoId,
     channelId = channelId,
-    isLike = isLike
+    //isLike = isLike
 )
