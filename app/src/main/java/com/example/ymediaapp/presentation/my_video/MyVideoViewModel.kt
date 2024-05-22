@@ -21,9 +21,6 @@ class MyVideoViewModel(
         }
     }
 
-    fun addItem(item: YoutubeVideoEntity) = viewModelScope.launch {
-        videoRepository.insertVideoData(item)
-    }
 }
 
 class MyVideoViewModelFactory(private val videoRepository: VideoRepository): ViewModelProvider.Factory {
