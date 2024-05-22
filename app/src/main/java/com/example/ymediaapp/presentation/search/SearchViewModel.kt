@@ -21,10 +21,8 @@ class SearchViewModel ( private val searchRepository: SearchRepository): ViewMod
     val searchList: LiveData<List<SearchVideoModel>> get() = _getSearchList
 
     fun getSearchList(query: String) = viewModelScope.launch {
-//        _getSearchList.value = searchRepository.getSearchList(query).items
-//    }
-    _getSearchList.value = searchRepository.getSearchList(query).items.map { it.toModel() }
-}
+        _getSearchList.value = searchRepository.getSearchList(query).items.map { it.toModel() }
+    }
 }
 
 class SearchViewModelFactory(private val searchRepository: SearchRepository): ViewModelProvider.Factory {

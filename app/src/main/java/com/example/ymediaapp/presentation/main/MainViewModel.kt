@@ -11,14 +11,8 @@ class MainViewModel : ViewModel() {
     private val _selectedItem = MutableLiveData<YoutubeVideoModel?>()
     val selectedItem: LiveData<YoutubeVideoModel?> get() = _selectedItem
 
-    private val _selectedSearchItem = MutableLiveData<SearchVideoModel?>()
-    val selectedSearchItem: LiveData<SearchVideoModel?> get() = _selectedSearchItem
 
     fun setSelectedItem(selectedItem: YoutubeVideoModel?) {
         _selectedItem.value = selectedItem
-    }
-
-    fun setSelecteSearchdItem(selectedSearchItem: SearchVideoModel) {
-        _selectedSearchItem.value = selectedSearchItem
     }
 }

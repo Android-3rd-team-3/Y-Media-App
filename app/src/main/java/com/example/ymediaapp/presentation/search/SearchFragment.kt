@@ -19,7 +19,7 @@ import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentSearchBinding
 import com.example.ymediaapp.presentation.main.MainViewModel
 import com.example.ymediaapp.presentation.model.SearchVideoModel
-
+import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
 
 class SearchFragment : Fragment() {
@@ -80,6 +80,11 @@ class SearchFragment : Fragment() {
         _binding = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        appContainer.searchContainer = null
+    }
+
     private fun initViewModel(){
         appContainer.searchContainer?.let {
             searchViewModel = ViewModelProvider(this, it.searchViewModelFactory)[SearchViewModel::class.java]
@@ -107,6 +112,7 @@ class SearchFragment : Fragment() {
             val query = searchEditText.text.toString()
             if (query.isNotEmpty()) {
                 searchViewModel.getSearchList(query)
+                clearChipSelection()
             } else {
                 Toast.makeText(requireContext(), "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -137,6 +143,10 @@ class SearchFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun clearChipSelection() {
+            binding.chipGroup.clearCheck()
     }
 
     private fun showSelectionDialog() {
@@ -182,7 +192,12 @@ class SearchFragment : Fragment() {
 
 
     private fun videoOnClick(searchItemModel: SearchVideoModel) {
-        mainViewModel.setSelecteSearchdItem(searchItemModel)
+//        mainViewModel.setSelecteSearchdItem(searchItemModel)
     }
+
+//    private fun videoOnClick(youtubeItemModel: YoutubeVideoModel) {
+//        mainViewModel.setSelectedItem(youtubeItemModel)
+//
+//    }
 }
 
