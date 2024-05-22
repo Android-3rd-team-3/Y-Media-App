@@ -34,8 +34,7 @@ class MyVideoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appContainer = (requireActivity().application as YMediaApplication).appContainer
-        appContainer.myVideoContainer = MyVideoContainer(appContainer.videoRepository)
+        initContainer()
     }
 
     override fun onCreateView(
@@ -49,11 +48,27 @@ class MyVideoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        appContainer.myVideoContainer?.let {
-            myVideoViewModel = ViewModelProvider(this, it.myVideoViewModelFactory)[MyVideoViewModel::class.java]
-            user = it.user
-        }
+        initData()
+        initView()
+        setObserver()
+    }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        appContainer.myVideoContainer = null
+        super.onDestroy()
+    }
+
+    private fun initContainer() {
+        appContainer = (requireActivity().application as YMediaApplication).appContainer
+        appContainer.myVideoContainer = MyVideoContainer(appContainer.videoRepository)
+    }
+
+    private fun initView() {
         binding.apply {
             Glide.with(this@MyVideoFragment)
                 .load(user.profileImage)
@@ -67,21 +82,21 @@ class MyVideoFragment : Fragment() {
             tvChannelDescription.text = user.channelDescription
             rvFavoriteVideos.adapter = rvAdapter
         }
+    }
 
+    private fun initData() {
+        appContainer.myVideoContainer?.let {
+            myVideoViewModel =
+                ViewModelProvider(this, it.myVideoViewModelFactory)[MyVideoViewModel::class.java]
+            user = it.user
+        }
+    }
+
+    private fun setObserver() {
         with(myVideoViewModel) {
             favoriteList.observe(viewLifecycleOwner) {
                 rvAdapter.submitList(it)
             }
         }
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        appContainer.myVideoContainer = null
-        super.onDestroy()
     }
 }
