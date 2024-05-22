@@ -28,8 +28,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
                     it.name,
                     it.description,
                     it.videoId,
-                    it.channelId,
-                    it.isLike
+                    it.channelId
                 )
             }
         }
@@ -43,8 +42,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
             video.thumbnail,
             video.name,
             video.description,
-            video.channelId,
-            video.isLike
+            video.channelId
         )
         roomDao.insertData(roomData)
     }
@@ -55,8 +53,7 @@ class VideoRepositoryImpl(val context: Context) : VideoRepository {
             video.thumbnail,
             video.name,
             video.description,
-            video.channelId,
-            video.isLike
+            video.channelId
         )
         roomDao.deleteData(roomData)
     }
