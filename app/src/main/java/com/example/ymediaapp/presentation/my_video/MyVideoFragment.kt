@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.app.AppContainer
@@ -12,6 +13,7 @@ import com.example.ymediaapp.app.MyVideoContainer
 import com.example.ymediaapp.app.User
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentMyVideoBinding
+import com.example.ymediaapp.presentation.main.MainViewModel
 
 class MyVideoFragment : Fragment() {
 
@@ -22,9 +24,11 @@ class MyVideoFragment : Fragment() {
     private lateinit var myVideoViewModel: MyVideoViewModel
     private lateinit var user: User
 
+    private val mainViewModel: MainViewModel by activityViewModels()
+
     private val rvAdapter by lazy {
         MyVideoRvAdapter {
-            //todo 클릭리스너
+            mainViewModel.setSelectedItem(it)
         }
     }
 
