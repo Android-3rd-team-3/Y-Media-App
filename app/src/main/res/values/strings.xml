@@ -8,4 +8,8 @@
     <string name="category">Category</string>
     <string name="channel_by_category">Channel By Category</string>
     <string name="favorited_video">좋아요 한 동영상</string>
+    <string name="dislike">Dislike</string>
+    <string name="like">Like</string>
+    <string name="share_video_text">Check out this video: %1$s</string>
+    <string name="share_video_via">Share video via</string>
 </resources>

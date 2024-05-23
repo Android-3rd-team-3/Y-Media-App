@@ -1,26 +1,19 @@
 package com.example.ymediaapp.data.repository
 
 import android.content.Context
-import android.content.LocusId
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import androidx.lifecycle.switchMap
 import com.example.ymediaapp.data.database.RoomDao
 import com.example.ymediaapp.data.database.RoomEntity
 import com.example.ymediaapp.data.database.YoutubeRoomDatabase
 import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 import com.example.ymediaapp.domain.repository.VideoRepository
-import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
 class VideoRepositoryImpl(val context: Context) : VideoRepository {
 
-    var roomDB: YoutubeRoomDatabase
-    var roomDao: RoomDao
+    private val roomDB: YoutubeRoomDatabase = YoutubeRoomDatabase.getInstance(context)!!
+    private val roomDao: RoomDao = roomDB.getRoomDao()
 
-    init {
-        roomDB = YoutubeRoomDatabase.getInstance(context)!!
-        roomDao = roomDB.getRoomDao()
-    }
     override fun getVideoData(): LiveData<List<YoutubeVideoEntity>> {
 
         val entityList = roomDao.getAllData().map {
