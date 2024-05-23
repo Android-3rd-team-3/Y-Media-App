@@ -9,10 +9,12 @@ import com.example.ymediaapp.presentation.detail.DetailViewModelFactory
 import com.example.ymediaapp.presentation.home.HomeViewModelFactory
 import com.example.ymediaapp.presentation.my_video.MyVideoViewModelFactory
 
-class AppContainer() {
+class AppContainer {
     private val youtubeService = RetrofitClient.youtubeService
 
-    val searchRepository = SearchRepositoryImpl(youtubeService)
+    val searchRepository: SearchRepository by lazy {
+        SearchRepositoryImpl(youtubeService)
+    }
     val videoRepository: VideoRepository by lazy {
         VideoRepositoryImpl(YMediaApplication.getInstance()!!)
     }
