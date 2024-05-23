@@ -3,6 +3,7 @@ package com.example.ymediaapp.domain.repository
 import com.example.ymediaapp.domain.entity.CategoryResultEntity
 import com.example.ymediaapp.domain.entity.SearchVideoResultEntity
 import com.example.ymediaapp.domain.entity.YoutubeChannelResultEntity
+import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 import com.example.ymediaapp.domain.entity.YoutubeVideoResultEntity
 
 interface SearchRepository {
@@ -16,4 +17,6 @@ interface SearchRepository {
     suspend fun getCategoryList(): CategoryResultEntity
     // 검색 동영상 받아오기
     suspend fun getSearchList(q: String): SearchVideoResultEntity
+    // Id값으로 동영상 받아오기
+    suspend fun getVideoById(id: String): YoutubeVideoResultEntity
 }
