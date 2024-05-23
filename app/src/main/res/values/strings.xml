@@ -20,4 +20,9 @@
     <string name="search_dialog_text">검색할 언어를 선택해 주세요.</string>
     <string name="search_dialog_toast">STT를 지원하지 않는 기기입니다.</string>
     <string name="search_dialog_fail">인식 실패</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_video">My Videos</string>
+
+
 </resources>
