@@ -23,6 +23,9 @@
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
     <string name="menu_video">My Videos</string>
+    <string name="error_title">Error</string>
+    <string name="error_share">공유 중 오류 발생</string>
+    <string name="share_text_plain">text/plain</string>
 
 
 </resources>

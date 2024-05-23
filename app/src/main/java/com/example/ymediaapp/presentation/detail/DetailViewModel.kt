@@ -22,16 +22,23 @@ class DetailViewModel(private val repository: VideoRepository) : ViewModel() {
     private val _isLikeStatus = MutableLiveData<Boolean>()
     val isLikeStatus: LiveData<Boolean> get() = _isLikeStatus
 
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> get() = _error
+
     fun toggleLike() {
         selectedItem.value?.let { item ->
             viewModelScope.launch {
-                val videoEntity = repository.getDataById(item.videoId)
-                if (videoEntity == null) {
-                    repository.insertVideoData(item.toEntity())
-                    _isLikeStatus.postValue(true)
-                } else {
-                    repository.deleteVideoData(item.toEntity())
-                    _isLikeStatus.postValue(false)
+                try {
+                    val videoEntity = repository.getDataById(item.videoId)
+                    if (videoEntity == null) {
+                        repository.insertVideoData(item.toEntity())
+                        _isLikeStatus.postValue(true)
+                    } else {
+                        repository.deleteVideoData(item.toEntity())
+                        _isLikeStatus.postValue(false)
+                    }
+                } catch (e: Exception) {
+                    _error.postValue(e.message)
                 }
             }
         }
@@ -40,8 +47,12 @@ class DetailViewModel(private val repository: VideoRepository) : ViewModel() {
     fun setSelectedItem(selectedItem: YoutubeVideoModel) {
         _selectedItem.value = selectedItem
         viewModelScope.launch {
-            val videoEntity = repository.getDataById(selectedItem.videoId)
-            _isLikeStatus.postValue(videoEntity != null)
+            try {
+                val videoEntity = repository.getDataById(selectedItem.videoId)
+                _isLikeStatus.postValue(videoEntity != null)
+            } catch (e: Exception) {
+                _error.postValue(e.message)
+            }
         }
     }
 
