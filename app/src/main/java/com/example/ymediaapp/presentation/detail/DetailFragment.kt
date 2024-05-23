@@ -2,7 +2,6 @@ package com.example.ymediaapp.presentation.detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +49,6 @@ class DetailFragment : BottomSheetDialogFragment() {
 
         arguments?.let {
             val item = it.getParcelable("clickItem", YoutubeVideoModel::class.java)
-            Log.d("detail it", "$it")
             if (item != null) {
                 detailViewModel.setSelectedItem(item)
             }
@@ -101,10 +99,10 @@ class DetailFragment : BottomSheetDialogFragment() {
 
     private fun updateLikeButton(isLiked: Boolean) {
         if (isLiked) {
-            binding.btnItemIsLike.text = "Dislike"
+            binding.btnItemIsLike.text = getString(R.string.dislike)
             binding.btnItemIsLike.setBackgroundResource(R.drawable.bg_btn_dislike)
         } else {
-            binding.btnItemIsLike.text = "Like"
+            binding.btnItemIsLike.text = getString(R.string.like)
             binding.btnItemIsLike.setBackgroundResource(R.drawable.bg_btn_like)
         }
     }
@@ -112,10 +110,10 @@ class DetailFragment : BottomSheetDialogFragment() {
     private fun shareVideo(item: YoutubeVideoModel) {
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "Check out this video: ${item.name}")
+            putExtra(Intent.EXTRA_TEXT, getString(R.string.share_video_text, item.name))
             type = "text/plain"
         }
-        startActivity(Intent.createChooser(shareIntent, "Share video via"))
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_video_via)))
     }
 
     override fun onDestroyView() {
