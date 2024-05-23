@@ -40,5 +40,4 @@
         app:layout_constraintTop_toBottomOf="@id/cvThumbnailParent"
         tools:text="아이템 타이틀 아이템 타이틀 아이템 타이틀 아이템 타이틀 아이템 타이틀 아이템 타이틀" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
