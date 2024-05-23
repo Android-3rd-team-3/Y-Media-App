@@ -1,7 +1,6 @@
 package com.example.ymediaapp.presentation.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -48,10 +47,8 @@ class MainActivity : AppCompatActivity(){
             it?.let {
                 try {
                     showBottomSheet(it)
-                    Log.d("main 1", "$it")
                 }
                 finally {
-                    Log.d("main 2","$it")
                     mainViewModel.setSelectedItem(null)
                 }
             }

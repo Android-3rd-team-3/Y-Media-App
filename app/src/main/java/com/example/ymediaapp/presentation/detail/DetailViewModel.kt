@@ -8,9 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.ymediaapp.domain.repository.VideoRepository
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 import com.example.ymediaapp.presentation.model.toEntity
-import com.example.ymediaapp.presentation.model.toModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.selects.select
 
 class DetailViewModel(private val repository: VideoRepository) : ViewModel() {
 
