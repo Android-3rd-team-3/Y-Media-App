@@ -8,7 +8,7 @@ class AuthorizationInterceptor: Interceptor {
         val newRequest = chain.request().newBuilder()
             .addHeader(
                 "x-goog-api-key",
-                "AIzaSyCiMgoVsaUNtMh2pws6geCEU7Mu-rK46rg"
+                "AIzaSyCTzGpYqvQaLJVaClM17hp9NLSIaPJTyug"
             )
             .build()
         return chain.proceed(newRequest)
