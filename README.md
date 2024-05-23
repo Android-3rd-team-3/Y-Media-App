@@ -1,37 +1,19 @@
-## 앱 이름 넣을 자리
+## Y-Media App
 유튜브 API를 이용해 관심 동영상을 리스트 형태로 저장 및 관리할 수 있게 하는 앱
 
 ## 기능 소개
 
-### 메인 화면
+### 홈 화면 & 디테일 화면
 
-|기능1|기능2|기능3|
-|:-----:|:-----:|:-----:|
-| gif 들어갈 예정 | gif 들어갈 예정 | gif 들어갈 예정 |
-
-### 홈 화면
-
-|기능1|기능2|기능3|
-|:-----:|:-----:|:-----:|
-| gif 들어갈 예정 | gif 들어갈 예정 | gif 들어갈 예정 |
-
-### 내 비디오 화면  
-
-|기능1|기능2|기능3|
-|:-----:|:-----:|:-----:|
-| gif 들어갈 예정 | gif 들어갈 예정 | gif 들어갈 예정 |
-
-### 디테일 화면
-
-|기능1|기능2|기능3|
-|:-----:|:-----:|:-----:|
-| gif 들어갈 예정 | gif 들어갈 예정 | gif 들어갈 예정 |
+|즐겨찾기|영상 저장|카테고리별 추천 동영상|즐겨찾기 삭제|
+|:-----:|:-----:|:-----:|:-----:|
+|![룸 저장 - Clipchamp로 제작](https://github.com/Android-3rd-team-3/Y-Media-App/assets/157380033/3f57bb0d-651a-48df-8a40-e814201392e8)| ![앱 재시작시 룸 데이터 복구](https://github.com/Android-3rd-team-3/Y-Media-App/assets/157380033/8678f197-0539-4706-ada5-204c89980850)| ![카테고리 별 동영상 - Clipchamp로 제작](https://github.com/Android-3rd-team-3/Y-Media-App/assets/157380033/af2a516a-9ad4-4428-aea6-1bf8d0e21195)|![홈 디테일 왔다갔다 - Clipchamp로 제작](https://github.com/Android-3rd-team-3/Y-Media-App/assets/157380033/6c10f1ab-e9d4-4c68-9a60-69361596a784) |
 
 ### 서치 화면
 
-|기능1|기능2|기능3|
+| 동영상 검색| 키워드 검색 | 음성검색 |
 |:-----:|:-----:|:-----:|
-| gif 들어갈 예정 | gif 들어갈 예정 | gif 들어갈 예정 |
+|![단순 검색 - Clipchamp로 제작](https://github.com/Android-3rd-team-3/Y-Media-App/assets/157380033/d9a16806-21bf-4b70-9d9a-2bee8ec046d1)|![검색 프리셋 - Clipchamp로 제작](https://github.com/Android-3rd-team-3/Y-Media-App/assets/157380033/953be99f-922a-4528-b66c-e006928bf02f) |![음성 검색 - Clipchamp로 제작](https://github.com/Android-3rd-team-3/Y-Media-App/assets/157380033/4d725328-6c56-4b17-b989-0b38304c68a6)|
 
 ## 프로젝트 소개
 
