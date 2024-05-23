@@ -141,10 +141,12 @@ class HomeFragment : Fragment() {
             }
             categoryVideoList.observe(viewLifecycleOwner) {
                 getCategoryChannelList()
+                binding.rvCategory.scrollToPosition(0)
                 categoryVideoListAdapter.itemList = it
                 categoryVideoListAdapter.notifyDataSetChanged()
             }
             categoryChannelList.observe(viewLifecycleOwner) {
+                binding.rvCategoryChannel.scrollToPosition(0)
                 channelListAdapter.itemList = it
                 channelListAdapter.notifyDataSetChanged()
             }

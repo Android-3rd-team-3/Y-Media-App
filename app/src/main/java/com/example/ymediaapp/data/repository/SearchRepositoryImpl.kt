@@ -32,8 +32,8 @@ class SearchRepositoryImpl(
         return youtubeService.searchVideos(q).toEntity()
     }
 
-    override suspend fun getVideoById(q: String): YoutubeVideoResultEntity {
-        return youtubeService.getVideosById(q).toEntity()
+    override suspend fun getVideoById(id: String): YoutubeVideoResultEntity {
+        return youtubeService.getVideosById(id).toEntity()
     }
 
 }
