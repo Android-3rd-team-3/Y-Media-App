@@ -18,7 +18,7 @@
         style="@style/head_line_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Popular Video"
+        android:text="@string/popular_video"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Category"
+        android:text="@string/category"
         tools:listitem="@layout/spinner_item_home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvPopularVideo" />
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Channel By Category"
+        android:text="@string/channel_by_category"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvCategory" />
 
