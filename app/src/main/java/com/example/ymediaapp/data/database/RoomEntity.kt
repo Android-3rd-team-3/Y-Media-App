@@ -3,7 +3,6 @@ package com.example.ymediaapp.data.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 
 @Entity
 data class RoomEntity(
