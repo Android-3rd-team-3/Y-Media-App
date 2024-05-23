@@ -55,6 +55,6 @@ interface YoutubeService {
         @Query("order") order: String = "relevance",
         @Query("part") part: String = "id, snippet",
         @Query("maxResults") maxResults: Int = 25,
-        @Query("fields") fields: String = "kind, etag, items(id(videoId), snippet(title, channelTitle, publishedAt, thumbnails(default) ))",
+        @Query("fields") fields: String = "kind, etag, items(id(videoId), snippet(title, channelTitle, publishedAt, thumbnails(default))",
     ): YoutubeListResponse<SearchResponse>
 }

@@ -192,7 +192,14 @@ class SearchFragment : Fragment() {
 
 
     private fun videoOnClick(searchItemModel: SearchVideoModel) {
-//        mainViewModel.setSelecteSearchdItem(searchItemModel)
+        val youtubeVideoModel = YoutubeVideoModel(
+            videoId = searchItemModel.id,
+            name = searchItemModel.title,
+            thumbnail = searchItemModel.thumbnail,
+            channelId = searchItemModel.channel,
+            description = searchItemModel.dateTime.toString()
+        )
+        mainViewModel.setSelectedItem(youtubeVideoModel)
     }
 
 //    private fun videoOnClick(youtubeItemModel: YoutubeVideoModel) {
