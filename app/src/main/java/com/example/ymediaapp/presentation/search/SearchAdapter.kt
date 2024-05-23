@@ -6,29 +6,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.databinding.SearchItemBinding
 import com.example.ymediaapp.domain.entity.SearchVideoEntity
+import com.example.ymediaapp.presentation.model.SearchVideoModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class SearchAdapter(
-    private val onClick: (SearchVideoEntity) -> Unit
+    private val onClick: (SearchVideoModel) -> Unit
 ): RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>() {
-    var itemList = listOf<SearchVideoEntity>()
+    var itemList = listOf<SearchVideoModel>()
     class SearchItemViewHolder(
         private val binding: SearchItemBinding,
-        private val onClick: (SearchVideoEntity) -> Unit
+        private val onClick: (SearchVideoModel) -> Unit
     ): RecyclerView.ViewHolder(binding.root){
 
 
-        fun bind(searchItemEntity: SearchVideoEntity){
+        fun bind(searchVideoModel: SearchVideoModel){
             with(binding){
-                Glide.with(binding.root).load(searchItemEntity.thumbnail).into(itemImageView)
-                itemTitleTextView.text = searchItemEntity.title
-                itemChannelTextView.text = searchItemEntity.channel
-                itemDateTimeTextView.text = formatDate(searchItemEntity.dateTime.toString())
+                Glide.with(binding.root).load(searchVideoModel.thumbnail).into(itemImageView)
+                itemTitleTextView.text = searchVideoModel.title
+                itemChannelTextView.text = searchVideoModel.channel
+                itemDateTimeTextView.text = formatDate(searchVideoModel.dateTime.toString())
                 itemView.setOnClickListener {
-                    onClick(searchItemEntity)
+                    onClick(searchVideoModel)
                 }
             }
         }

@@ -14,35 +14,46 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.ymediaapp.app.AppContainer
+import com.example.ymediaapp.app.SearchContainer
+import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentSearchBinding
 import com.example.ymediaapp.domain.entity.SearchVideoEntity
 import com.example.ymediaapp.presentation.main.MainViewModel
+import com.example.ymediaapp.presentation.model.SearchVideoModel
+import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
 
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
-    private val binding get() = _binding!!
-    private val searchListAdapter by lazy {
-        SearchAdapter {
-            videoOnClick(it)
-        }
-    }
 
-    //
-    private lateinit var mainViewModel: MainViewModel
-    //
+    private lateinit var appContainer: AppContainer
 
-    private val searchViewModel by viewModels<SearchViewModel> {
-        SearchViewModelFactory()
-    }
 
     private val availableLanguages = arrayOf("English", "한국어")
     private val languageCodes = arrayOf("en-US", "ko-KR")
     private var selectedLanguageCode = "ko-KR"
 
+    private val binding get() = _binding!!
+
+
+    private val searchListAdapter by lazy {
+        SearchAdapter {
+            videoOnClick(it)        }
+    }
+
+    private lateinit var searchViewModel: SearchViewModel
+
+    //
+    private lateinit var mainViewModel: MainViewModel
+    //
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        appContainer = (requireActivity().application as YMediaApplication).appContainer
+        appContainer.searchContainer = SearchContainer(appContainer.searchRepository)
+
     }
 
     override fun onCreateView(
@@ -55,8 +66,12 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initViewModel()
         initView()
+        observeViewModel()
         setupListeners()
+
         //
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         //
@@ -67,57 +82,79 @@ class SearchFragment : Fragment() {
         _binding = null
     }
 
-    private fun initView() {
-        with(binding) {
-            searchRecyclerView.apply {
-                adapter = searchListAdapter
-                layoutManager = GridLayoutManager(requireContext(), 2)
-            }
+    override fun onDestroy() {
+        super.onDestroy()
+        appContainer.searchContainer = null
+    }
 
+    private fun initViewModel(){
+        appContainer.searchContainer?.let {
+            searchViewModel = ViewModelProvider(this, it.searchViewModelFactory)[SearchViewModel::class.java]
         }
+        mainViewModel=ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+    }
+
+    private fun initView() {
+        binding.searchRecyclerView.apply {
+            adapter = searchListAdapter
+            layoutManager = GridLayoutManager(requireContext(), 2)
+        }
+    }
+
+    private fun observeViewModel() {
         with(searchViewModel) {
             searchList.observe(viewLifecycleOwner) {
                 searchListAdapter.itemList = it
                 searchListAdapter.notifyDataSetChanged()
             }
-        }
-    }
-
-
-    private fun setupListeners() {
-        binding.searchButton.setOnClickListener {
-            val query = binding.searchEditText.text.toString()
-            if (query.isNotEmpty()) {
-                searchViewModel.getSearchList(query)
-            } else {
-                Toast.makeText(requireContext(), "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show()
+            videoById.observe(viewLifecycleOwner) {
+                mainViewModel.setSelectedItem(it)
             }
         }
 
-        binding.chip.setOnClickListener {
-            val query = binding.chip.text.toString()
-            searchViewModel.getSearchList(query)
+    }
+
+    private fun setupListeners() {
+        with(binding) {
+            searchButton.setOnClickListener {
+                val query = searchEditText.text.toString()
+                if (query.isNotEmpty()) {
+                    searchViewModel.getSearchList(query)
+                    clearChipSelection()
+                } else {
+                    Toast.makeText(requireContext(), "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            chip.setOnClickListener {
+                val query = chip.text.toString()
+                searchEditText.setText(query)
+                searchViewModel.getSearchList(query)
+            }
+            chip2.setOnClickListener {
+                val query = chip2.text.toString()
+                searchEditText.setText(query)
+                searchViewModel.getSearchList(query)
+            }
+            chip3.setOnClickListener {
+                val query = chip3.text.toString()
+                searchEditText.setText(query)
+                searchViewModel.getSearchList(query)
+            }
+            chip4.setOnClickListener {
+                val query = chip4.text.toString()
+                searchEditText.setText(query)
+                searchViewModel.getSearchList(query)
+            }
+
+            binding.btnVoice.setOnClickListener {
+                showSelectionDialog()
+            }
         }
 
-        binding.chip2.setOnClickListener {
-            val query = binding.chip2.text.toString()
-            searchViewModel.getSearchList(query)
-        }
+    }
 
-        binding.chip3.setOnClickListener {
-            val query = binding.chip3.text.toString()
-            searchViewModel.getSearchList(query)
-        }
-
-        binding.chip4.setOnClickListener {
-            val query = binding.chip4.text.toString()
-            searchViewModel.getSearchList(query)
-        }
-
-        binding.btnVoice.setOnClickListener {
-            showSelectionDialog()
-        }
-
+    private fun clearChipSelection() {
+        binding.chipGroup.clearCheck()
     }
 
     private fun showSelectionDialog() {
@@ -148,7 +185,6 @@ class SearchFragment : Fragment() {
             ).show()
         }
     }
-
     private val speechResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -162,8 +198,11 @@ class SearchFragment : Fragment() {
             }
         }
 
-    private fun videoOnClick(searchItemEntity: SearchVideoEntity) {
-        //Detail Fragment 여는 작업
+
+    private fun videoOnClick(searchItemModel: SearchVideoModel) {
+        searchViewModel.getVideoById(searchItemModel.id)
+
+
     }
 
 }
