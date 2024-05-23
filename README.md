@@ -33,15 +33,25 @@
 |:-----:|:-----:|:-----:|
 | gif 들어갈 예정 | gif 들어갈 예정 | gif 들어갈 예정 |
 
-## 사용 기술 소개
+## 프로젝트 소개
 
-- [ ] Retrofit
-- [ ] Glide
-- [ ] Navigation(Jetpack) + bottomNavigationView
-- [ ] recyclerView
+### 디자인 패턴
+
 - [ ] Clean Architecture
-- [ ] Repository Pattern
-- [ ] MVVM
+- [ ] Application Container Architecture
+- [ ] MVVM pattern
+- [ ] Repository pattern
+
+### 기술 스택
+
+- [ ] 비동기 처리: Coroutines
+- [ ] 데이터 처리: Room
+- [ ] API통신: Retrofit, Youtube Data API v3
+- [ ] 이미지 로더: Glide
+
+### 개발 기간
+2024.5/13 ~ 5/23
+
 
 ## 트러블 슈팅
 
@@ -63,11 +73,18 @@
 - 해결 과정:
 
   Application Container Architecture를 도입하여 Presentation Layer에서 필요한 Data Layer의 정보를 Container에서 주입하는 것으로 변경하여 해결했다
+
+### [구조] context 초기화 시점 문제
+- 원인: Application이 초기화 되기 전(onCreate 전)에 RoomDatabase의 companion object 안의 코드가 실행되며 시점이 맞지 않는 문제가 발생했다
+- 해결 과정:
+
+  by lazy를 사용해 초기화 시점을 늦춰서 해결했다
+
+
   
 ## 프로젝트 와이어프레임
 
 <img width="325" alt="image" src="https://github.com/Android-3rd-team-3/Y-Media-App/assets/157380033/5798e715-5f1f-4be7-94e8-342c4be64cc3">
 
 
-## 개발 기간
-2024.5/13 ~ 5/23 
+ 
