@@ -22,7 +22,7 @@
         android:maxLines="2"
         android:paddingStart="3dp"
         android:paddingEnd="3dp"
-        android:text="Lorem ipsum dolor sit amet consectetur."
+        android:text="@string/lorem"
         style="@style/body_text_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
