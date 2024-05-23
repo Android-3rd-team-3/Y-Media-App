@@ -1,6 +1,7 @@
 package com.example.ymediaapp.presentation.model
 
 import com.example.ymediaapp.domain.entity.CategoryEntity
+import com.example.ymediaapp.domain.entity.SearchVideoEntity
 import com.example.ymediaapp.domain.entity.YoutubeChannelEntity
 import com.example.ymediaapp.domain.entity.YoutubeVideoEntity
 
@@ -32,4 +33,20 @@ fun YoutubeVideoModel.toEntity() = YoutubeVideoEntity(
     description = description,
     videoId = videoId,
     channelId = channelId
+)
+
+fun SearchVideoEntity.toModel() = SearchVideoModel(
+    thumbnail,
+    title,
+    channel,
+    id,
+    dateTime
+)
+
+fun SearchVideoModel.toEntity() = SearchVideoEntity(
+    thumbnail = thumbnail,
+    title = title,
+    channel = channel,
+    id = id,
+    dateTime = dateTime
 )
