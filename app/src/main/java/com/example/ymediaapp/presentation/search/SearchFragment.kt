@@ -1,27 +1,27 @@
 package com.example.ymediaapp.presentation.search
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.ymediaapp.R
 import com.example.ymediaapp.app.AppContainer
 import com.example.ymediaapp.app.SearchContainer
 import com.example.ymediaapp.app.YMediaApplication
 import com.example.ymediaapp.databinding.FragmentSearchBinding
-import com.example.ymediaapp.domain.entity.SearchVideoEntity
 import com.example.ymediaapp.presentation.main.MainViewModel
 import com.example.ymediaapp.presentation.model.SearchVideoModel
-import com.example.ymediaapp.presentation.model.YoutubeVideoModel
 
 
 class SearchFragment : Fragment() {
@@ -36,7 +36,6 @@ class SearchFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-
     private val searchListAdapter by lazy {
         SearchAdapter {
             videoOnClick(it)        }
@@ -44,9 +43,8 @@ class SearchFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
 
-    //
     private lateinit var mainViewModel: MainViewModel
-    //
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,21 +69,21 @@ class SearchFragment : Fragment() {
         initView()
         observeViewModel()
         setupListeners()
-
-        //
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-        //
+        observeVideoById()
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
         appContainer.searchContainer = null
     }
+
 
     private fun initViewModel(){
         appContainer.searchContainer?.let {
@@ -102,16 +100,19 @@ class SearchFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        with(searchViewModel) {
-            searchList.observe(viewLifecycleOwner) {
-                searchListAdapter.itemList = it
-                searchListAdapter.notifyDataSetChanged()
-            }
-            videoById.observe(viewLifecycleOwner) {
+        searchViewModel.searchList.observe(viewLifecycleOwner) {
+            searchListAdapter.itemList = it
+            searchListAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun observeVideoById() {
+        searchViewModel.videoById.observe(viewLifecycleOwner) { video ->
+            video?.let {
                 mainViewModel.setSelectedItem(it)
+                searchViewModel.clearVideoById()
             }
         }
-
     }
 
     private fun setupListeners() {
@@ -121,8 +122,9 @@ class SearchFragment : Fragment() {
                 if (query.isNotEmpty()) {
                     searchViewModel.getSearchList(query)
                     clearChipSelection()
+                    hideKeyboard()
                 } else {
-                    Toast.makeText(requireContext(), "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.search_edit_toast), Toast.LENGTH_SHORT).show()
                 }
             }
             chip.setOnClickListener {
@@ -153,13 +155,18 @@ class SearchFragment : Fragment() {
 
     }
 
+    private fun hideKeyboard() {
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+
     private fun clearChipSelection() {
         binding.chipGroup.clearCheck()
     }
 
     private fun showSelectionDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle("검색할 언어를 선택해 주세요.")
+            .setTitle(getString(R.string.search_dialog_text))
             .setItems(availableLanguages) { dialog, which ->
                 selectedLanguageCode = languageCodes[which]
                 startSpeechToText()
@@ -180,7 +187,7 @@ class SearchFragment : Fragment() {
         } catch (e: Exception) {
             Toast.makeText(
                 requireContext(),
-                "STT를 지원하지 않는 기기입니다.",
+                getString(R.string.search_dialog_toast),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -194,14 +201,13 @@ class SearchFragment : Fragment() {
                     binding.searchEditText.setText(results[0])
                 }
             } else {
-                Toast.makeText(requireContext(), "인식 실패", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.search_dialog_fail), Toast.LENGTH_SHORT).show()
             }
         }
 
 
     private fun videoOnClick(searchItemModel: SearchVideoModel) {
         searchViewModel.getVideoById(searchItemModel.id)
-
 
     }
 

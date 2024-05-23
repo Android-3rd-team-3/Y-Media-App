@@ -72,7 +72,7 @@
             style="@style/CustomChipChoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="키즈"
+            android:text="@string/search_chip_kid"
             android:textSize="11sp" />
 
         <com.google.android.material.chip.Chip
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="영어교육"
+            android:text="@string/search_chip_englishEd"
             android:textSize="11sp" />
 
         <com.google.android.material.chip.Chip
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="수면음악"
+            android:text="@string/search_chip_music"
             android:textSize="11sp" />
 
         <com.google.android.material.chip.Chip
@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="영화"
+            android:text="@string/search_chip_movie"
             android:textSize="11sp" />
 
     </com.google.android.material.chip.ChipGroup>

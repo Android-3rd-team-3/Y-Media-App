@@ -5,10 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.ymediaapp.data.repository.SearchRepositoryImpl
-import com.example.ymediaapp.app.network.RetrofitClient
-import com.example.ymediaapp.domain.entity.SearchVideoEntity
 import com.example.ymediaapp.domain.repository.SearchRepository
 import com.example.ymediaapp.presentation.model.SearchVideoModel
 import com.example.ymediaapp.presentation.model.YoutubeVideoModel
@@ -20,8 +16,8 @@ class SearchViewModel ( private val searchRepository: SearchRepository): ViewMod
     private val _getSearchList= MutableLiveData<List<SearchVideoModel>>()
     val searchList: LiveData<List<SearchVideoModel>> get() = _getSearchList
 
-    private val _getVideoById = MutableLiveData<YoutubeVideoModel>()
-    val videoById: LiveData<YoutubeVideoModel> get() = _getVideoById
+    private val _getVideoById = MutableLiveData<YoutubeVideoModel?>()
+    val videoById: LiveData<YoutubeVideoModel?> get() = _getVideoById
 
     fun getSearchList(query: String) = viewModelScope.launch {
         _getSearchList.value = searchRepository.getSearchList(query).items.map { it.toModel() }
@@ -29,6 +25,10 @@ class SearchViewModel ( private val searchRepository: SearchRepository): ViewMod
 
     fun getVideoById(id: String) = viewModelScope.launch {
         _getVideoById.value = searchRepository.getVideoById(id).items[0].toModel()
+    }
+
+    fun clearVideoById() {
+        _getVideoById.value = null
     }
 }
 

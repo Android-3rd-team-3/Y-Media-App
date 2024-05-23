@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.databinding.SearchItemBinding
-import com.example.ymediaapp.domain.entity.SearchVideoEntity
 import com.example.ymediaapp.presentation.model.SearchVideoModel
 import java.text.SimpleDateFormat
 import java.util.Date
