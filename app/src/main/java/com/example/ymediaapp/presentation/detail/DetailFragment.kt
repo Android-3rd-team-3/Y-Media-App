@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.ymediaapp.R
@@ -76,6 +77,11 @@ class DetailFragment : BottomSheetDialogFragment() {
             if (it != null) {
                 try {
                     shareVideo(it)
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.error_share), Toast.LENGTH_SHORT
+                    ).show()
                 } finally {
                     detailViewModel.setShareItem(null)
                 }
@@ -84,6 +90,12 @@ class DetailFragment : BottomSheetDialogFragment() {
 
         detailViewModel.isLikeStatus.observe(viewLifecycleOwner) { isLiked ->
             updateLikeButton(isLiked)
+        }
+
+        detailViewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            errorMessage?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
@@ -111,7 +123,7 @@ class DetailFragment : BottomSheetDialogFragment() {
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, getString(R.string.share_video_text, item.name))
-            type = "text/plain"
+            type = getString(R.string.share_text_plain)
         }
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_video_via)))
     }
