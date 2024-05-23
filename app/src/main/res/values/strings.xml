@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">Y Media App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="lorem">Lorem ipsum dolor sit amet consectetur.</string>
+    <string name="popular_video">Popular Video</string>
+    <string name="category">Category</string>
+    <string name="channel_by_category">Channel By Category</string>
+    <string name="favorited_video">좋아요 한 동영상</string>
+    <string name="dislike">Dislike</string>
+    <string name="like">Like</string>
+    <string name="share_video_text">Check out this video: %1$s</string>
+    <string name="share_video_via">Share video via</string>
+    <string name="search_edit_toast">검색어를 입력해 주세요.</string>
+    <string name="search_chip_kid">키즈</string>
+    <string name="search_chip_englishEd">영어교육</string>
+    <string name="search_chip_music">수면음악</string>
+    <string name="search_chip_movie">영화</string>
+    <string name="search_dialog_text">검색할 언어를 선택해 주세요.</string>
+    <string name="search_dialog_toast">STT를 지원하지 않는 기기입니다.</string>
+    <string name="search_dialog_fail">인식 실패</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_video">My Videos</string>
+    <string name="error_title">Error</string>
+    <string name="error_share">공유 중 오류 발생</string>
+    <string name="share_text_plain">text/plain</string>
+
+
 </resources>
