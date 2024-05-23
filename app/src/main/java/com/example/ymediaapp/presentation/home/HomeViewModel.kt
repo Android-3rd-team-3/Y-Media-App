@@ -50,7 +50,7 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
     fun getCategoryChannelList() = viewModelScope.launch {
         val channelIds = getChannelIds()
         _getCategoryChannelList.value = try {
-            repository.getChannelByCategoryList(channelIds).items.map { it.toModel() }
+            repository.getChannelByCategoryList(channelIds).items.map { it.toModel() }.sortedBy { it.channelId }
         } catch (e: Exception) {
             emptyList()
         }
