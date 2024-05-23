@@ -26,6 +26,11 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
 
     val categoryList: LiveData<List<CategoryModel>> get() = _getCategoryList
 
+
+    private val _getCurrentCategoryId = MutableLiveData<String?>()
+
+    val currentCategoryId: LiveData<String?> get() = _getCurrentCategoryId
+
     fun getPopularList() = viewModelScope.launch {
         _getPopularList.value = try {
             repository.getPopularList().items.map { it.toModel() }
@@ -45,7 +50,7 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
     fun getCategoryChannelList() = viewModelScope.launch {
         val channelIds = getChannelIds()
         _getCategoryChannelList.value = try {
-            repository.getChannelByCategoryList(channelIds).items.map { it.toModel() }
+            repository.getChannelByCategoryList(channelIds).items.map { it.toModel() }.sortedBy { it.channelId }
         } catch (e: Exception) {
             emptyList()
         }
@@ -59,6 +64,10 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
         }
     }
 
+    fun setCategoryId(id: String){
+        _getCurrentCategoryId.value = id
+    }
+
     private fun getChannelIds(): String {
         return try {
             (categoryVideoList.value ?: listOf()).joinToString(", ") { it.channelId }
@@ -66,6 +75,7 @@ class HomeViewModel(private val repository: SearchRepository) : ViewModel() {
             ""
         }
     }
+
 }
 
 class HomeViewModelFactory(private val searchRepository: SearchRepository) :

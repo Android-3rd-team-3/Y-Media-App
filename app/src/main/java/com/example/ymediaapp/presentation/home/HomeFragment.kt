@@ -160,7 +160,6 @@ class HomeFragment : Fragment() {
         homeViewModel.apply {
             getPopularList()
             getCategoryList()
-            getCategoryVideoList()
         }
 
     }
@@ -171,7 +170,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun spinnerItemSelected(categoryModel: CategoryModel) {
-        homeViewModel.getCategoryVideoList(categoryModel.id)
+       with(homeViewModel){
+           if (categoryModel.id != currentCategoryId.value){
+               getCategoryVideoList(categoryModel.id)
+               setCategoryId(categoryModel.id)
+           }
+       }
     }
 
 }
