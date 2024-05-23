@@ -11,7 +11,7 @@
 
     <android.widget.EditText
         android:id="@+id/searchEditText"
-        android:layout_width="294dp"
+        android:layout_width="254dp"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/search_box"
@@ -19,8 +19,7 @@
         android:inputType="text"
         app:layout_constraintEnd_toStartOf="@+id/searchButton"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnVoice"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -37,12 +36,25 @@
         android:id="@+id/searchButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/ic_search_btn"
         app:layout_constraintBottom_toBottomOf="@+id/searchEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/searchEditText"
+        app:layout_constraintTop_toTopOf="@+id/searchEditText" />
+
+    <android.widget.ImageButton
+        android:id="@+id/btnVoice"
+        android:layout_width="30dp"
+        android:layout_height="43.5dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/ic_voice"
+        app:layout_constraintBottom_toBottomOf="@+id/searchEditText"
+        app:layout_constraintEnd_toStartOf="@+id/searchEditText"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/searchEditText" />
 
     <com.google.android.material.chip.ChipGroup
@@ -51,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         app:chipSpacingHorizontal="5dp"
-        app:layout_constraintStart_toStartOf="@+id/searchEditText"
+        app:layout_constraintStart_toStartOf="@+id/btnVoice"
         app:layout_constraintTop_toBottomOf="@+id/searchEditText"
         app:singleSelection="true">
 
@@ -60,7 +72,7 @@
             style="@style/CustomChipChoice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="키즈"
+            android:text="@string/search_chip_kid"
             android:textSize="11sp" />
 
         <com.google.android.material.chip.Chip
@@ -69,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="영어교육"
+            android:text="@string/search_chip_englishEd"
             android:textSize="11sp" />
 
         <com.google.android.material.chip.Chip
@@ -78,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="수면음악"
+            android:text="@string/search_chip_music"
             android:textSize="11sp" />
 
         <com.google.android.material.chip.Chip
@@ -87,20 +99,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="영화"
+            android:text="@string/search_chip_movie"
             android:textSize="11sp" />
 
     </com.google.android.material.chip.ChipGroup>
-
-    <Button
-        android:id="@+id/btnVoice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="321dp"
-        tools:layout_editor_absoluteY="93dp"
-        app:layout_constraintTop_toBottomOf="@+id/searchButton"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
