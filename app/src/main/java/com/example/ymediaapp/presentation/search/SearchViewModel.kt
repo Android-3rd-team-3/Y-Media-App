@@ -20,11 +20,21 @@ class SearchViewModel ( private val searchRepository: SearchRepository): ViewMod
     val videoById: LiveData<YoutubeVideoModel?> get() = _getVideoById
 
     fun getSearchList(query: String) = viewModelScope.launch {
-        _getSearchList.value = searchRepository.getSearchList(query).items.map { it.toModel() }
+        _getSearchList.value = try {
+            searchRepository.getSearchList(query).items.map { it.toModel() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emptyList()
+        }
     }
 
     fun getVideoById(id: String) = viewModelScope.launch {
-        _getVideoById.value = searchRepository.getVideoById(id).items[0].toModel()
+        _getVideoById.value = try {
+            searchRepository.getVideoById(id).items[0].toModel()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
     fun clearVideoById() {
